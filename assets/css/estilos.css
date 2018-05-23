@@ -1,0 +1,46 @@
+#gameContainer {
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#btnConfig {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+#sideBarConfig {
+    width: 1000px;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: -1000px;
+    height: 100vh;
+    z-index: 11;
+    background: #fff;
+    transition: all 0.4s;
+    overflow-y: auto;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sideBarConfig.active {
+    right: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+    #sideBarConfig {
+        width: 90vw;
+        right: -90vw;
+    }
+}
+
+#overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #FFFFFF55;
+    z-index: 10;
+    display: none;
+}
