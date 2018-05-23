@@ -14,6 +14,7 @@
 #sideBarConfig {
     width: 1000px;
     padding: 20px;
+    color: aqua;
     position: fixed;
     top: 0;
     right: -1000px;
