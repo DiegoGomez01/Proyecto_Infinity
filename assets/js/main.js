@@ -1,7 +1,14 @@
 $(document).ready(function () {
     $("#btnConfig").on("click", function () {
         $('#sideBarConfig').addClass('active');
+        $('#cerrarConfig').addClass('active');
         $('#overlay').fadeIn();
+    });
+
+    $("#cerrarConfig").on("click", function () {
+        $('#sideBarConfig').removeClass('active');
+        $('#cerrarConfig').removeClass('active');
+        $('#overlay').fadeOut();
     });
     
     var ancho = $(window).width();
