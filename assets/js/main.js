@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $("#btnConfig").on("click", function () {
         $('#sideBarConfig').addClass('active');
         $('#overlay').fadeIn();
@@ -14,6 +15,7 @@ $(document).ready(function () {
 
     var activarCosto=false;
     var posicionesLineas=[];
+
     var ancho = $(window).width();
     var alto = $(window).height();
 

@@ -7,15 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Proyecto Infinity</title>
     <link rel="icon" href="assets/images/favicon.png">
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/phaser.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/alertify.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/phaser.min.js"></script>
+    <script type="text/javascript" src="assets/js/creacion.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
     <script src="assets/js/Objects/Objects.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
-
+    <link rel="stylesheet" type="text/css" href="assets/css/alertify.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
 </head>
 
 <body>
@@ -23,11 +25,169 @@
 <button id="costo" class="btn btn-light">Costo</button>
 
     <div id="overlay"></div>
-    <div id="sideBarConfig">
-        <div class="fa fa-calendar"></div>
+    <div id="cerrarConfig" class="btnICON fa fa-arrow-circle-right fa-2x active"></div>
+    <div id="sideBarConfig" class="active">
+        <div class="row">
+            <h1 class="titulo display-3 m-auto">Proyecto Infinity</h1>
+        </div>
+        <button id="btnCrearNebu" class="btn btnGEN btn-lg">Crear Nebulosa</button>
+        <button id="btnpruebaAle" class="btn btnGEN btn-lg">Prueba Alertify</button>
+        <div class="container p-4">
+            <h2 id="crearTituloInfo" class="titulo border-bottom text-center">Creación de nebulosa</h2>
+            <div class="form-group row">
+                <label for="inputNombre" class="col-sm-2 col-form-label">Nombre:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputNombre" value="Nebulosa 1">
+                </div>
+            </div>
+            <div id="nebulosaEsPeligrosa" class="form-check mt-3 mb-3">
+                <input id="checkNebulosaEsPeligrosa" class="form-check-input " type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="checkNebulosaEsPeligrosa" style="color: #D64541">
+                    Es Peligrosa
+                </label>
+            </div>
+            <div class="container">
+                <h4 class="titulo border-bottom">Estilos</h4>
+                <div id="tipoPlanetaSelect" class="form-group row justify-content-center d-none">
+                    <div class="col-sm-8">
+                        <select id="selectTipoPlaneta" class="custom-select custom-select-lg" value="1">
+                            <option value="1" selected>Planeta</option>
+                            <option value="2">Estación de Combustible</option>
+                            <option value="3">Teletransportador</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="estilosElementos" class="d-flex flex-wrap justify-content-center">
+                    <div class="estiloNebulosa imgEstilo activo">
+                        <img class="mt-3" src="assets/images/nebulosa1.png" width="100" height="75">
+                    </div>
+                    <div class="estiloNebulosa imgEstilo">
+                        <img class="mt-1" src="assets/images/nebulosa2.png" width="100" height="95">
+                    </div>
+                    <div class="estiloNebulosa imgEstilo">
+                        <img class="mt-1" src="assets/images/nebulosa3.png" width="100" height="100">
+                    </div>
+                    <div class="estiloNebulosa imgEstilo">
+                        <img class="mt-1" src="assets/images/nebulosa4.png" width="100" height="100">
+                    </div>
+                    <div class="estiloNebulosa imgEstilo p-1">
+                        <img class="mt-4" src="assets/images/nebulosa5.png" width="100" height="58">
+                    </div>
+                    <div class="estiloSistemaSolar imgEstilo activo d-none">
+                        <img class="mt-1" src="assets/images/sistemasolar1.png" width="100" height="100">
+                    </div>
+                    <div class="estiloSistemaSolar imgEstilo d-none">
+                        <img class="mt-1" src="assets/images/sistemasolar2.png" width="100" height="100">
+                    </div>
+                    <div class="estiloSistemaSolar imgEstilo d-none p-1">
+                        <img class="ml-2" src="assets/images/sistemasolar3.png" width="66" height="100">
+                    </div>
+                    <div class="estiloPlaneta imgEstilo activo d-none p-1" data-tipoPlaneta="1">
+                        <img src="assets/images/planeta1.png" width="100" height="100">
+                    </div>
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="2">
+                        <img src="assets/images/planeta2.png" width="100" height="100">
+                    </div>
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="3">
+                        <img src="assets/images/planeta3.png" width="100" height="100">
+                    </div>
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="4">
+                        <img src="assets/images/planeta4.png" width="100" height="100">
+                    </div>
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="5">
+                        <img src="assets/images/planeta5.png" width="100" height="100">
+                    </div>
+                    <div class="estiloTTransportador imgEstilo activo d-none" data-tipoPlaneta="6">
+                        <img src="assets/images/teletransportador.gif" width="100" height="100">
+                    </div>
+                    <div class="estiloTTransportador imgEstilo d-none p-1" data-tipoPlaneta="7">
+                        <img src="assets/images/teletransportador2.gif" width="100" height="100">
+                    </div>
+                    <div class="estiloEEspacial imgEstilo activo d-none" data-tipoPlaneta="7">
+                        <img src="assets/images/spaceStation.png" width="100" height="100">
+                    </div>
+                </div>
+            </div>
+            <div id="materialesPlaneta" class="container d-none">
+                <h4 class="titulo border-bottom">Materiales</h4>
+                <div class="border rounded p-2 mb-1">
+                    <label class="font-weight-bold d-inline-block" for="cantIridioRango" style="color: #FFF8E1;">IRIDIO: </label>
+                    <p id="cantIridio" class="font-weight-bold d-inline-block mb-0">1000T</p>
+                    <input type="range" class="custom-range" id="cantIridioRango" value="1000" min="0" max="8000" onchange="updateCantIridio(this.value);">
+                </div>
+                <div class="border rounded p-2 mb-1">
+                    <label class="font-weight-bold d-inline-block" for="cantPlatinoRango" style="color:#F2F1EF;">PLATINO: </label>
+                    <p id="cantPlatino" class="font-weight-bold d-inline-block mb-0">1000T</p>
+                    <input type="range" class="custom-range" id="cantPlatinoRango" value="1000" min="0" max="8000" onchange="updateCantPlatino(this.value);">
+                </div>
+                <div class="border rounded p-2 mb-1">
+                    <label class="font-weight-bold d-inline-block" for="cantPaladioRango" style="color: #757575;">PALADIO: </label>
+                    <p id="cantPaladio" class="font-weight-bold d-inline-block mb-0">1000T</p>
+                    <input type="range" class="custom-range" id="cantPaladioRango" value="1000" min="0" max="8000" onchange="updateCantPaladio(this.value);">
+                </div>
+                <div class="border rounded p-2">
+                    <label class="titulo font-weight-bold d-inline-block" for="cantEZeroRango">ELEMENTO ZERO: </label>
+                    <p id="cantEZero" class="font-weight-bold d-inline-block mb-0">1000T</p>
+                    <input type="range" class="custom-range" id="cantEZeroRango" value="1000" min="0" max="8000" onchange="updateCantEZero(this.value);">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center m-3">
+                <button id="btnUbicar" class="btn btnGEN btn-lg mr-2">Ubicar&nbsp;
+                    <i class="fa fa-map-marker-alt"></i>
+                </button>
+            </div>
+            <div id="listaContainer">
+                <h4 id="listaElementosTituloInfo" class="titulo border-bottom">Lista de Sistema Solares</h4>
+                <div class="container">
+                    <ul id="listaElementos" class="list-group listaDeElementos">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                Elemento 1
+                                <i class="btnICON fa fa-sign-in-alt fa-2x"></i>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                Elemento 2
+                                <i class="btnICON fa fa-sign-in-alt fa-2x"></i>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                Elemento 3
+                                <i class="btnICON fa fa-sign-in-alt fa-2x"></i>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                Elemento 4
+                                <i class="btnICON fa fa-sign-in-alt fa-2x"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row d-flex justify-content-center p-2">
+                    <button id="btnCrearElemento" class="btn btnGEN btn-lg mr-2">Crear Sistema Solar&nbsp;
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4">
+                <div class="p-3">
+                    <button id="btnGuardar" class="btn btnGEN btn-lg">Guardar&nbsp;
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
+                <div class="p-3">
+                    <button id="btnCancelar" class="btn btnGEN btn-lg" style="background-color: #D50000; color: #FFFFFF;">Cancelar&nbsp;
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="gameContainer" class="container-fluid">
-        <button id="btnConfig" class="btn btn-light">Configuración</button>
+        <div id="btnConfig" class="fa fa-cog fa-2x btnICON p-3"></div>
     </div>
 </body>
 
