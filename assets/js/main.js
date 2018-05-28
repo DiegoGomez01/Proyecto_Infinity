@@ -1,8 +1,4 @@
 $(document).ready(function () {
-    $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#overlay').fadeIn();
-    });
     
     var ancho = $(window).width();
     var alto = $(window).height();
