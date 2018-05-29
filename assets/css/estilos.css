@@ -140,8 +140,7 @@ ALERTS STYLE
     overflow-y: auto;
 }
 
-.ajs-footer {
-    background-color: #9B1800;
+div.ajs-footer {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: flex !important;
@@ -151,26 +150,21 @@ ALERTS STYLE
 }
 
 .btn-primario {
-    background-color: #9B1800;
+    background-color: #22A7F0;
     border: 0px;
     letter-spacing: 2px;
     color: #FFFFFF;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 400;
-    /* padding: 5px; */
 }
 
-.btn-primario:hover {
-    background-color: #A81A00;
-}
-
-.btn-secundario:hover {
-    background-color: #9E9E9E;
+.btn-primario:hover, .btn-secundario:hover {
+    border: 1px solid #424242;
 }
 
 .btn-secundario {
-    background-color: #757575;
+    background-color: #6C7A89;
     border: 0px;
     letter-spacing: 2px;
     color: #FFFFFF;
@@ -183,7 +177,7 @@ ALERTS STYLE
 .alertify-titulo-info {
     margin: 0;
     text-align: center;
-    color: #9B1800;
+    color: #00B0FF;
 }
 
 .texto-advertencia {

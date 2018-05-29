@@ -1,5 +1,40 @@
 $(document).ready(function () {
 
+    alertify.defaults = {
+        autoReset: true,
+        basic: false,
+        closable: false,
+        closableByDimmer: false,
+        frameless: false,
+        maintainFocus: true,
+        maximizable: false,
+        modal: true,
+        movable: false,
+        moveBounded: false,
+        overflow: true,
+        padding: false,
+        pinnable: true,
+        pinned: true,
+        preventBodyShift: false,
+        resizable: false,
+        startMaximized: false,
+        transition: "zoom",
+        notifier: {
+            delay: 5,
+            position: 'bottom-right',
+            closeButton: false
+        },
+        glossary: {
+            ok: 'Aceptar',
+            cancel: 'Cancelar'
+        },
+        theme: {
+            input: "form-control",
+            ok: "btn btn-primario",
+            cancel: "btn btn-secundario"
+        }
+    };
+
     var nivelCreacion = 1; //Niveles 0-Galaxia, 1-Nebulosa, 2-Sistema Solar y 3-Planeta
 
     $("#btnConfig").on("click", function () {
@@ -19,19 +54,42 @@ $(document).ready(function () {
     });
     //PRUEBA ALERTIFY
     $("#btnpruebaAle").on("click", function () {
-        alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>',''
-        , function () {
-            $("#acptTerminos").attr('checked', true);
-        }, function () {
-            $("#acptTerminos").removeAttr('checked');
-        }).set({
+        var origen = "nebulosa 1";
+        var destino = "nebulosa 2";
+        alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>', '<div class="input-group mb-3">' +
+            '<div class="input-group-prepend">' +
+            '<span class="input-group-text">Origen:&nbsp;&nbsp;</span>' +
+            '</div>' +
+            '<input id="inputOrigenCamino" type="text" class="form-control" placeholder="Elemento de Origen" value="' + origen + '" disabled>' +
+            '</div>' +
+            '<div class="input-group mb-3">' +
+            '<div class="input-group-prepend">' +
+            '<span class="input-group-text">Destino:</span>' +
+            '</div>' +
+            '<input id="inputDestinoCamino" type="text" class="form-control" placeholder="Elemento de Destino" value="' + destino + '" disabled>' +
+            '</div>' +
+            '<div class="input-group mb-3">' +
+            '<div class="input-group-prepend">' +
+            '<span class="input-group-text">Costo:</span>' +
+            '</div>' +
+            '<input id="inputCostoCamino" type="text" class="form-control" placeholder="Costo del camino">' +
+            '</div>',
+            function () {
+                var costo = document.getElementById("inputCostoCamino").value;
+                if ($.isNumeric(costo)) {
+                    alert("si");
+                    alert(costo);
+                    alertify.confirm().destroy();
+                }
+            },
+            function () {
+                alert("no");
+            }).set({
             labels: {
                 cancel: 'Cancelar',
                 ok: 'Guardar'
             },
-            closable: true,
-            closableByDimmer: true,
-            reverseButtons: true
+            reverseButtons: false
         });
     });
 
@@ -164,6 +222,10 @@ $(document).ready(function () {
                 $("#cantEZeroRango").val(1000);
                 break;
         }
+        $("#cantIridioRango").change();
+        $("#cantPlatinoRango").change();
+        $("#cantPaladioRango").change();
+        $("#cantEZeroRango").change();
     });
     $('.estiloEEspacial').on("click", function () {
         if (!$(this).hasClass("activo")) {

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     var ancho = $(window).width();
     var alto = $(window).height();
 
