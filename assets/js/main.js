@@ -1,21 +1,5 @@
 $(document).ready(function () {
 
-    $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#overlay').fadeIn();
-    });
-    $("#prueba").on("click", function () {
-        newNebulosa();
-    });
-
-    $("#costo").on("click", function () {
-        !activarCosto?activarCosto=true:activarCosto=false;
-        console.log(activarCosto);
-    });
-
-    var activarCosto=false;
-    var posicionesLineas=[];
-
     var ancho = $(window).width();
     var alto = $(window).height();
 
