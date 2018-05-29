@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     alertify.defaults = {
         autoReset: true,
         basic: false,
