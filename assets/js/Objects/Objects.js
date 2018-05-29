@@ -5,6 +5,8 @@ class Galaxia {
         this.Nebulosas = [];
         this.lineas=[];
         this.matrizAdy=[];
+
+        this.lineasXmatriz=[];
     }
 }
 

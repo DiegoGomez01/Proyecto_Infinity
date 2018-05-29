@@ -36,11 +36,10 @@ $(document).ready(function () {
 
     function update() {
         updateLineGalaxia();
-        //line1.fromSprite(handle1, handle2, false);
     }
 
     function render() {
-        renderLines(galaxia.lineas);
+        printLines(galaxia.lineas);
     }
 
     function startGame(){
@@ -56,7 +55,7 @@ $(document).ready(function () {
         imagePrueba.inputEnabled=true;
         imagePrueba.events.onInputUp.add(clickSprite,{idNeb:idNeb},this);
         imagePrueba.input.enableDrag();
-        galaxia.Nebulosas.push(nebulosa);
+        galaxia.Nebulosas.push(imagePrueba);
         addColumnMatrizAdy(galaxia.matrizAdy);
     }
 
@@ -67,20 +66,22 @@ $(document).ready(function () {
             posicionesLineas.push(pointer.position.y);
             elementoSeleccionado.push(this.idNeb);
             if(posicionesLineas.length===4){
-                var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
-                galaxia.lineas.push(line);
-                printLines(galaxia.lineas);
-                idElementoSeleccionado1=elementoSeleccionado[0];
-                idElementoSeleccionado2=elementoSeleccionado[1];
-                alertify.prompt("Por favor ingrese el costo.", "",
-                    function(evt, value ){
-                        galaxia.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2]=parseInt(value);
-                        galaxia.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1]=parseInt(value);
-                    });
-                //updateLineGalaxia(line,galaxia.Nebulosas[idElementoSeleccionado1],galaxia.Nebulosas[idElementoSeleccionado2]);
+                if(elementoSeleccionado[0]!==elementoSeleccionado[1]) {
+                    var line = new Phaser.Line(0, 0, 0, 0);
+                    //var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
+                    galaxia.lineas.push(line);
+                    printLines(galaxia.lineas);
+                    idElementoSeleccionado1 = elementoSeleccionado[0];
+                    idElementoSeleccionado2 = elementoSeleccionado[1];
+                    alertify.prompt("Por favor ingrese el costo.", "",
+                        function (evt, value) {
+                            galaxia.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2] = parseInt(value);
+                            galaxia.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1] = parseInt(value);
+                        });
+                    galaxia.lineasXmatriz.push([line, idElementoSeleccionado1, idElementoSeleccionado2]);
+                }
                 elementoSeleccionado=[];
                 posicionesLineas=[];
-                console.log(galaxia.matrizAdy);
             }
         }else{
             console.log(galaxia.Nebulosas);
@@ -94,14 +95,10 @@ $(document).ready(function () {
         });
     }
 
-    function renderLines(arrayLineas){
-        arrayLineas.forEach(function(line) {
-            game.debug.geom(line);
+    function updateLineGalaxia(){
+        galaxia.lineasXmatriz.forEach(function(element) {
+            element[0].fromSprite(galaxia.Nebulosas[element[1]],galaxia.Nebulosas[element[2]],false);
         });
-    }
-
-    function updateLineGalaxia(linea,elemento1,elemento2){
-        //linea.fromSprite(elemento1, elemento2, false);
     }
 
     function addColumnMatrizAdy(matriz) {
