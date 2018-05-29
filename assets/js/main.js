@@ -1,24 +1,5 @@
 $(document).ready(function () {
 
-<<<<<<< HEAD
-=======
-    $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#overlay').fadeIn();
-    });
-    $("#prueba").on("click", function () {
-        newNebulosa();
-    });
-
-    $("#costo").on("click", function () {
-        !activarCosto?activarCosto=true:activarCosto=false;
-        console.log(activarCosto);
-    });
-
-    var activarCosto=false;
-    var posicionesLineas=[];
-
->>>>>>> 76583c8a332b7484f1a953d92c275484d39efe9a
     var ancho = $(window).width();
     var alto = $(window).height();
 
