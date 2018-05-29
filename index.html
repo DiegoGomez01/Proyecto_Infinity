@@ -32,6 +32,7 @@
         </div>
         <button id="btnCrearNebu" class="btn btnGEN btn-lg">Crear Nebulosa</button>
         <button id="btnpruebaAle" class="btn btnGEN btn-lg">Prueba Alertify</button>
+
         <div class="container p-4">
             <h2 id="crearTituloInfo" class="titulo border-bottom text-center">Creación de nebulosa</h2>
             <div class="form-group row">
@@ -97,14 +98,17 @@
                     <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="5">
                         <img src="assets/images/planeta5.png" width="100" height="100">
                     </div>
-                    <div class="estiloTTransportador imgEstilo activo d-none" data-tipoPlaneta="6">
-                        <img src="assets/images/teletransportador.gif" width="100" height="100">
+                    <div class="estiloTTransportador imgEstilo activo d-none" >
+                        <img src="assets/images/teletransportador1.gif" width="100" height="100">
                     </div>
-                    <div class="estiloTTransportador imgEstilo d-none p-1" data-tipoPlaneta="7">
-                        <img src="assets/images/teletransportador2.gif" width="100" height="100">
+                    <div class="estiloTTransportador imgEstilo d-none p-1">
+                        <img src="assets/images/teletransportador2.gif" width="95" height="100">
                     </div>
-                    <div class="estiloEEspacial imgEstilo activo d-none" data-tipoPlaneta="7">
-                        <img src="assets/images/spaceStation.png" width="100" height="100">
+                    <div class="estiloEEspacial imgEstilo activo d-none">
+                        <img src="assets/images/estacionEspacial1.png" width="100" height="100">
+                    </div>
+                    <div class="estiloEEspacial imgEstilo d-none p-1">
+                        <img src="assets/images/estacionEspacial2.png" width="100" height="100">
                     </div>
                 </div>
             </div>
@@ -112,23 +116,23 @@
                 <h4 class="titulo border-bottom">Materiales</h4>
                 <div class="border rounded p-2 mb-1">
                     <label class="font-weight-bold d-inline-block" for="cantIridioRango" style="color: #FFF8E1;">IRIDIO: </label>
-                    <p id="cantIridio" class="font-weight-bold d-inline-block mb-0">1000T</p>
-                    <input type="range" class="custom-range" id="cantIridioRango" value="1000" min="0" max="8000" onchange="updateCantIridio(this.value);">
+                    <p id="cantIridio" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
+                    <input type="range" class="custom-range" id="cantIridioRango" value="1000" min="0" max="8000">
                 </div>
                 <div class="border rounded p-2 mb-1">
                     <label class="font-weight-bold d-inline-block" for="cantPlatinoRango" style="color:#F2F1EF;">PLATINO: </label>
-                    <p id="cantPlatino" class="font-weight-bold d-inline-block mb-0">1000T</p>
-                    <input type="range" class="custom-range" id="cantPlatinoRango" value="1000" min="0" max="8000" onchange="updateCantPlatino(this.value);">
+                    <p id="cantPlatino" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
+                    <input type="range" class="custom-range" id="cantPlatinoRango" value="1000" min="0" max="8000">
                 </div>
                 <div class="border rounded p-2 mb-1">
                     <label class="font-weight-bold d-inline-block" for="cantPaladioRango" style="color: #757575;">PALADIO: </label>
-                    <p id="cantPaladio" class="font-weight-bold d-inline-block mb-0">1000T</p>
-                    <input type="range" class="custom-range" id="cantPaladioRango" value="1000" min="0" max="8000" onchange="updateCantPaladio(this.value);">
+                    <p id="cantPaladio" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
+                    <input type="range" class="custom-range" id="cantPaladioRango" value="1000" min="0" max="8000">
                 </div>
                 <div class="border rounded p-2">
                     <label class="titulo font-weight-bold d-inline-block" for="cantEZeroRango">ELEMENTO ZERO: </label>
-                    <p id="cantEZero" class="font-weight-bold d-inline-block mb-0">1000T</p>
-                    <input type="range" class="custom-range" id="cantEZeroRango" value="1000" min="0" max="8000" onchange="updateCantEZero(this.value);">
+                    <p id="cantEZero" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
+                    <input type="range" class="custom-range" id="cantEZeroRango" value="1000" min="0" max="8000">
                 </div>
             </div>
             <div class="row d-flex justify-content-center m-3">
