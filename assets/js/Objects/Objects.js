@@ -4,6 +4,7 @@ class Galaxia {
         this.nombre = nombre;
         this.Nebulosas = [];
         this.lineas=[];
+        this.matrizAdy=[];
     }
 }
 
@@ -18,7 +19,7 @@ class Nebulosa {
         this.ubicacionY = ubicacionY;
         this.sistemasPlanetarios = [];
         this.lineas=[];
-        this.matrizAdy=[[]];
+        this.matrizAdy=[];
     }
 
 }

@@ -15,6 +15,7 @@ $(document).ready(function () {
 
     var activarCosto=false;
     var posicionesLineas=[];
+    var elementoSeleccionado=[];
 
     var ancho = $(window).width();
     var alto = $(window).height();
@@ -53,7 +54,7 @@ $(document).ready(function () {
         imagePrueba.width=30;
         imagePrueba.height=30;
         imagePrueba.inputEnabled=true;
-        imagePrueba.events.onInputUp.add(clickSprite,{param:"HolaMundo"},this);
+        imagePrueba.events.onInputUp.add(clickSprite,{idNeb:idNeb},this);
         imagePrueba.input.enableDrag();
         galaxia.Nebulosas.push(nebulosa);
         addColumnMatrizAdy(galaxia.matrizAdy);
@@ -64,12 +65,16 @@ $(document).ready(function () {
         if(activarCosto){
             posicionesLineas.push(pointer.position.x);
             posicionesLineas.push(pointer.position.y);
+            elementoSeleccionado.push(this.idNeb);
             if(posicionesLineas.length===4){
                 var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
                 galaxia.lineas.push(line);
                 printLines(galaxia.lineas);
+                galaxia.matrizAdy[elementoSeleccionado[0]][elementoSeleccionado[1]]=1;//en vez de 1 va el costo
+                galaxia.matrizAdy[elementoSeleccionado[1]][elementoSeleccionado[0]]=1;//en vez de 1 va el costo
+                elementoSeleccionado=[];
                 posicionesLineas=[];
-
+                console.log(galaxia.matrizAdy);
             }
         }else{
             console.log(galaxia.Nebulosas);
@@ -90,6 +95,13 @@ $(document).ready(function () {
     }
     function updateLineGalaxia(arrayLineas,arrayNebulosas){
 
+    }
+
+    function addColumnMatrizAdy(matriz) {
+        matriz.push(new Array(matriz.length).fill(0));
+        for (var i = 0; i < matriz.length; i++) {
+            matriz[i].push(0);
+        }
     }
 
 });
