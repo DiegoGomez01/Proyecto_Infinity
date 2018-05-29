@@ -35,7 +35,7 @@ $(document).ready(function () {
     }
 
     function update() {
-        updateLineGalaxia(galaxia.lineas,galaxia.Nebulosas);
+        updateLineGalaxia();
         //line1.fromSprite(handle1, handle2, false);
     }
 
@@ -70,8 +70,14 @@ $(document).ready(function () {
                 var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
                 galaxia.lineas.push(line);
                 printLines(galaxia.lineas);
-                galaxia.matrizAdy[elementoSeleccionado[0]][elementoSeleccionado[1]]=1;//en vez de 1 va el costo
-                galaxia.matrizAdy[elementoSeleccionado[1]][elementoSeleccionado[0]]=1;//en vez de 1 va el costo
+                idElementoSeleccionado1=elementoSeleccionado[0];
+                idElementoSeleccionado2=elementoSeleccionado[1];
+                alertify.prompt("Por favor ingrese el costo.", "",
+                    function(evt, value ){
+                        galaxia.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2]=parseInt(value);
+                        galaxia.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1]=parseInt(value);
+                    });
+                //updateLineGalaxia(line,galaxia.Nebulosas[idElementoSeleccionado1],galaxia.Nebulosas[idElementoSeleccionado2]);
                 elementoSeleccionado=[];
                 posicionesLineas=[];
                 console.log(galaxia.matrizAdy);
@@ -93,8 +99,9 @@ $(document).ready(function () {
             game.debug.geom(line);
         });
     }
-    function updateLineGalaxia(arrayLineas,arrayNebulosas){
 
+    function updateLineGalaxia(linea,elemento1,elemento2){
+        //linea.fromSprite(elemento1, elemento2, false);
     }
 
     function addColumnMatrizAdy(matriz) {
