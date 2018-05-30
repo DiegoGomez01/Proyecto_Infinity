@@ -11,6 +11,10 @@
     right: 0px;
 }
 
+#btnConfig.cerrado {
+    right: 1010px;
+}
+
 #sideBarConfig {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     width: 1000px;
@@ -159,7 +163,8 @@ div.ajs-footer {
     font-weight: 400;
 }
 
-.btn-primario:hover, .btn-secundario:hover {
+.btn-primario:hover,
+.btn-secundario:hover {
     border: 1px solid #424242;
 }
 
