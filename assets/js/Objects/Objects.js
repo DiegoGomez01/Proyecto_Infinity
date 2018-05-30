@@ -3,9 +3,6 @@ class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
         this.Nebulosas = [];
-        this.lineas=[];
-        this.matrizAdy=[];
-        this.lineasXmatriz=[];
     }
 }
 
@@ -21,6 +18,7 @@ class Nebulosa {
         this.sistemasPlanetarios = [];
         this.lineas=[];
         this.matrizAdy=[];
+        this.lineasXmatriz=[];
     }
 
 }
@@ -34,20 +32,20 @@ class SistemasPlanetarios {
         this.planetas = [];
         this.lineas=[];
         this.matrizAdy=[];
+        this.lineasXmatriz=[];
     }
 }
 
 class Planetas {
-    constructor(id,nombre, iridio,platino,paladio, elementoCero,tipo,ubicacionX,ubicacionY) {
+    constructor(id,nombre, iridio,platino,paladio, elementoCero,tipo,sprite) {
         this.id = id;
         this.nombre = nombre;
         this.tipo=tipo;
-        this.ubicacionX = ubicacionX;
-        this.ubicacionY = ubicacionY;
         this.iridio = iridio;
         this.platino = platino;
         this.paladio = paladio;
         this.elementoCero = elementoCero;
+        this.sprite=sprite;
     }
 
 }
