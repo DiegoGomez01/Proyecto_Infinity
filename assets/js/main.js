@@ -6,7 +6,18 @@ $(document).ready(function () {
         $('#overlay').fadeIn();
     });
 
-    $("#nebulosa").on("click", function () {
+
+    $("#btnUbicar").on("click", function () {
+        if(nebulosaVisitada===-1){
+            newNebulosa();
+        }else if(sisPlanetarioVisitada===-1){
+            newSisPlanetario();
+        }else if(planetaVisitada===-1){
+            newPlanet();
+        }
+    });
+
+    /*$("#nebulosa").on("click", function () {
         newNebulosa();
     });
 
@@ -16,7 +27,7 @@ $(document).ready(function () {
 
     $("#sisPlanetario").on("click", function () {
         newSisPlanetario();
-    });
+    });*/
 
 <<<<<<< HEAD
     $("#costo").on("click", function () {
@@ -69,6 +80,7 @@ $(document).ready(function () {
         render: render
     });
 
+
     function preload() {
         game.load.image('image', 'assets/images/favicon.png');
         game.load.image('sistemasolar1', 'assets/images/sistemasolar1.png');
@@ -99,11 +111,12 @@ $(document).ready(function () {
     }
 
     function render() {
-        if(nebulosaVisitada!==-1) {
+        if(nebulosaVisitada!==-1 && sisPlanetarioVisitada===-1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].lineas);
-        }
-        if(sisPlanetarioVisitada!==-1) {
+        }if(sisPlanetarioVisitada!==-1 && sisPlanetarioVisitada!==-1 && planetaVisitada===-1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].lineas);
+        }else{
+            printLines([]);
         }
     }
 
@@ -130,6 +143,13 @@ $(document).ready(function () {
     }
 
     function newNebulosa() {
+        //necesito saber la nebulosa seleccionada
+        $.each($(".estiloNebulosa"),function (index, value) {
+           if($(value).hasClass("activo")){
+               alert($(value).attr("data-idImg"));
+           }
+        });
+        console.log("TE AMO TATI");
         var idNeb = galaxia.Nebulosas.length;
 <<<<<<< HEAD
         var nebulosa = new Nebulosa(idNeb, "NOMBRE" + idNeb, 100, 100, false, false);
@@ -325,6 +345,10 @@ $(document).ready(function () {
     }
 
     function printLines(arrayLineas) {
+        if(arrayLineas.length===0){
+            var line = new Phaser.Line(0,0,0,0);
+            arrayLineas=[line];
+        }
         arrayLineas.forEach(function (line) {
             game.debug.geom(line);
         });
