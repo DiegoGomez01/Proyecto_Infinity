@@ -69,11 +69,12 @@ $(document).ready(function () {
     }
 
     function render() {
-        if(nebulosaVisitada!==-1) {
+        if(nebulosaVisitada!==-1 && sisPlanetarioVisitada===-1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].lineas);
-        }
-        if(sisPlanetarioVisitada!==-1) {
+        }if(sisPlanetarioVisitada!==-1 && sisPlanetarioVisitada!==-1 && planetaVisitada===-1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].lineas);
+        }else{
+            printLines([]);
         }
     }
 
@@ -226,6 +227,10 @@ $(document).ready(function () {
     }
 
     function printLines(arrayLineas) {
+        if(arrayLineas.length===0){
+            var line = new Phaser.Line(0,0,0,0);
+            arrayLineas=[line];
+        }
         arrayLineas.forEach(function (line) {
             game.debug.geom(line);
         });
