@@ -37,15 +37,16 @@ $(document).ready(function () {
     var nivelCreacion = 1; //Niveles 0-Galaxia, 1-Nebulosa, 2-Sistema Solar y 3-Planeta
 
     $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#cerrarConfig').addClass('active');
-        $('#overlay').fadeIn();
-    });
-
-    $("#cerrarConfig").on("click", function () {
-        $('#sideBarConfig').removeClass('active');
-        $('#cerrarConfig').removeClass('active');
-        $('#overlay').fadeOut();
+        $('#sideBarConfig').toggleClass('active');
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active fa-arrow-circle-right");
+            $(this).addClass("fa-cog");
+            $('#overlay').fadeOut();
+        } else {
+            $('#overlay').fadeIn();
+            $(this).addClass("active fa-arrow-circle-right");
+            $(this).removeClass("fa-cog");
+        }
     });
 
     $("#btnCrearNebu").on("click", function () {

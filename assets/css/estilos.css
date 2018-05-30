@@ -6,12 +6,14 @@
 }
 
 #btnConfig {
-    position: absolute;
+    position: fixed;
     top: 0px;
     right: 0px;
+    transition: all 0.4s;
+    z-index: 11;
 }
 
-#btnConfig.cerrado {
+#btnConfig.active {
     right: 1010px;
 }
 
@@ -48,18 +50,6 @@
     height: 100vh;
     background: #FFFFFF21;
     z-index: 10;
-}
-
-#cerrarConfig {
-    top: 5px;
-    right: -35px;
-    transition: all 0.4s;
-    position: fixed;
-    z-index: 11;
-}
-
-#cerrarConfig.active {
-    right: 1010px;
 }
 
 .titulo {
