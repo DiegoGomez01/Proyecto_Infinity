@@ -10,7 +10,7 @@ class Nebulosa {
     constructor(id,nombre,teletrasportador,peligroso,sprite) {
         this.id = id;
         this.depCombustibleGastado=false;
-        this.teletrasportador=false;
+        this.teletrasportador=teletrasportador;
         this.nombre = nombre;
         this.peligroso=peligroso;
         this.sprite = sprite;
