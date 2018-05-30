@@ -6,7 +6,18 @@ $(document).ready(function () {
         $('#overlay').fadeIn();
     });
 
-    $("#nebulosa").on("click", function () {
+
+    $("#btnUbicar").on("click", function () {
+        if(nebulosaVisitada===-1){
+            newNebulosa();
+        }else if(sisPlanetarioVisitada===-1){
+            newSisPlanetario();
+        }else if(planetaVisitada===-1){
+            newPlanet();
+        }
+    });
+
+    /*$("#nebulosa").on("click", function () {
         newNebulosa();
     });
 
@@ -16,7 +27,7 @@ $(document).ready(function () {
 
     $("#sisPlanetario").on("click", function () {
         newSisPlanetario();
-    });
+    });*/
 
 
     $("#atras").on("click", function () {
@@ -47,6 +58,7 @@ $(document).ready(function () {
     var galaxia = new Galaxia("Galaxia");
 
     var game = new Phaser.Game(ancho,alto,Phaser.AUTO,'gameContainer',{preload:preload,create:create,update:update,render:render});
+
 
     function preload() {
         game.load.image('image', 'assets/images/favicon.png');
@@ -101,6 +113,13 @@ $(document).ready(function () {
     }
 
     function newNebulosa() {
+        //necesito saber la nebulosa seleccionada
+        $.each($(".estiloNebulosa"),function (index, value) {
+           if($(value).hasClass("activo")){
+               alert($(value).attr("data-idImg"));
+           }
+        });
+        console.log("TE AMO TATI");
         var idNeb = galaxia.Nebulosas.length;
         var nebulaSprite = game.add.sprite(100, 100, 'image');
         nebulaSprite.width=30;
