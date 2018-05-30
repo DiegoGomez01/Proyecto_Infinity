@@ -6,10 +6,10 @@ class Galaxia {
 }
 
 class Nebulosa {
-    constructor(id,nombre,teletrasportador,peligroso,sprite) {
+    constructor(id,nombre,peligroso,sprite) {
         this.id = id;
-        this.depCombustibleGastado = false;
-        this.teletrasportador = teletrasportador;
+        this.depCombustibleGastado=false;
+        this.teletrasportadorGastado=false;
         this.nombre = nombre;
         this.peligroso=peligroso;
         this.sprite = sprite;
