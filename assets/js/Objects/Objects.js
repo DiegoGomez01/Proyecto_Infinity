@@ -5,18 +5,19 @@ class Galaxia {
         this.Nebulosas = [];
         this.lineas=[];
         this.matrizAdy=[];
+        this.lineasXmatriz=[];
     }
 }
 
 class Nebulosa {
-    constructor(id,nombre, ubicacionX, ubicacionY,teletrasportador,peligroso) {
+    constructor(id,nombre,teletrasportador,peligroso,sprite) {
         this.id = id;
         this.depCombustibleGastado=false;
         this.teletrasportador=teletrasportador;
         this.nombre = nombre;
         this.peligroso=peligroso;
-        this.ubicacionX = ubicacionX;
-        this.ubicacionY = ubicacionY;
+        this.sprite = sprite;
+
         this.sistemasPlanetarios = [];
         this.lineas=[];
         this.matrizAdy=[];
@@ -25,13 +26,14 @@ class Nebulosa {
 }
 
 class SistemasPlanetarios {
-    constructor(id,nombre, ubicacionX, ubicacionY) {
+    constructor(id,nombre, sprite) {
         this.id = id;
         this.nombre = nombre;
-        this.ubicacionX = ubicacionX;
-        this.ubicacionY = ubicacionY;
-        this.Planetas = [];
+        this.sprite = sprite;
+
+        this.planetas = [];
         this.lineas=[];
+        this.matrizAdy=[];
     }
 }
 
