@@ -3,9 +3,6 @@ class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
         this.Nebulosas = [];
-        this.lineas=[];
-        this.matrizAdy=[];
-        this.lineasXmatriz=[];
     }
 }
 
@@ -21,6 +18,7 @@ class Nebulosa {
         this.sistemasPlanetarios = [];
         this.lineas=[];
         this.matrizAdy=[];
+        this.lineasXmatriz=[];
     }
 
 }
