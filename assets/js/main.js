@@ -18,7 +18,22 @@ $(document).ready(function () {
         newSisPlanetario();
     });
 
+<<<<<<< HEAD
+    $("#costo").on("click", function () {
+<<<<<<< HEAD
+        !activarCosto ? activarCosto = true : activarCosto = false;
+        console.log(activarCosto);
+    });
 
+    var activarCosto = false;
+    var posicionesLineas = [];
+    var elementoSeleccionado = [];
+=======
+        !activarCosto?activarCosto=true:activarCosto=false;
+    });
+=======
+
+>>>>>>> 87a44f29109de89ee67025757b467cfa34256215
     $("#atras").on("click", function () {
         if(planetaVisitada!==-1){
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
@@ -40,13 +55,19 @@ $(document).ready(function () {
     var sisPlanetarioVisitada=-1;
     var planetaVisitada=-1;
     var fondo;
+>>>>>>> 8bcee317ad939ef10506e49b62105d9f22dfb5e6
 
     var ancho = $(window).width();
     var alto = $(window).height();
 
     var galaxia = new Galaxia("Galaxia");
 
-    var game = new Phaser.Game(ancho,alto,Phaser.AUTO,'gameContainer',{preload:preload,create:create,update:update,render:render});
+    var game = new Phaser.Game(ancho, alto, Phaser.AUTO, 'gameContainer', {
+        preload: preload,
+        create: create,
+        update: update,
+        render: render
+    });
 
     function preload() {
         game.load.image('image', 'assets/images/favicon.png');
@@ -65,7 +86,16 @@ $(document).ready(function () {
     }
 
     function update() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        updateLineGalaxia(galaxia.lineas, galaxia.Nebulosas);
+        //line1.fromSprite(handle1, handle2, false);
+=======
+        updateLineGalaxia();
+>>>>>>> 8bcee317ad939ef10506e49b62105d9f22dfb5e6
+=======
         updateLines();
+>>>>>>> 87a44f29109de89ee67025757b467cfa34256215
     }
 
     function render() {
@@ -77,8 +107,8 @@ $(document).ready(function () {
         }
     }
 
-    function startGame(){
-        game.input.mouse.capture=true;
+    function startGame() {
+        game.input.mouse.capture = true;
     }
 
     function pintarFondo(){
@@ -101,6 +131,17 @@ $(document).ready(function () {
 
     function newNebulosa() {
         var idNeb = galaxia.Nebulosas.length;
+<<<<<<< HEAD
+        var nebulosa = new Nebulosa(idNeb, "NOMBRE" + idNeb, 100, 100, false, false);
+        var imagePrueba = game.add.sprite(100, 100, 'image');
+        imagePrueba.width = 30;
+        imagePrueba.height = 30;
+        imagePrueba.inputEnabled = true;
+        imagePrueba.events.onInputUp.add(clickSprite, {
+            idNeb: idNeb
+        }, this);
+        imagePrueba.input.enableDrag();
+=======
         var nebulaSprite = game.add.sprite(100, 100, 'image');
         nebulaSprite.width=30;
         nebulaSprite.height=30;
@@ -108,6 +149,7 @@ $(document).ready(function () {
         nebulaSprite.events.onInputUp.add(clickNebula,{idNeb:idNeb},this);
         nebulaSprite.input.enableDrag();
         var nebulosa = new Nebulosa(idNeb,"NOMBRE"+idNeb,false,false,nebulaSprite);
+>>>>>>> 8bcee317ad939ef10506e49b62105d9f22dfb5e6
         galaxia.Nebulosas.push(nebulosa);
     }
     function newSisPlanetario() {
@@ -155,6 +197,41 @@ $(document).ready(function () {
         ObjectsToCreateMatriz(pointer,"Planeta",galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada],this.id);
     }
 
+<<<<<<< HEAD
+    function clickSprite(sprite, pointer) {
+        if (activarCosto) {
+            posicionesLineas.push(pointer.position.x);
+            posicionesLineas.push(pointer.position.y);
+            elementoSeleccionado.push(this.idNeb);
+<<<<<<< HEAD
+            if (posicionesLineas.length === 4) {
+                var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
+                galaxia.lineas.push(line);
+                printLines(galaxia.lineas);
+                galaxia.matrizAdy[elementoSeleccionado[0]][elementoSeleccionado[1]] = 1; //en vez de 1 va el costo
+                galaxia.matrizAdy[elementoSeleccionado[1]][elementoSeleccionado[0]] = 1; //en vez de 1 va el costo
+                elementoSeleccionado = [];
+                posicionesLineas = [];
+                console.log(galaxia.matrizAdy);
+            }
+        } else {
+            console.log(galaxia.Nebulosas);
+=======
+            if(posicionesLineas.length===4){
+                if(elementoSeleccionado[0]!==elementoSeleccionado[1]) {
+                    var line = new Phaser.Line(0, 0, 0, 0);
+                    //var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
+                    galaxia.lineas.push(line);
+                    printLines(galaxia.lineas);
+                    idElementoSeleccionado1 = elementoSeleccionado[0];
+                    idElementoSeleccionado2 = elementoSeleccionado[1];
+                    alertify.prompt("Por favor ingrese el costo.", "",
+                        function (evt, value) {
+                            galaxia.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2] = parseInt(value);
+                            galaxia.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1] = parseInt(value);
+                        });
+                    galaxia.lineasXmatriz.push([line, idElementoSeleccionado1, idElementoSeleccionado2]);
+=======
     function ObjectsToCreateMatriz(pointer,tipo,Object,id){
         if(!isDrag()) {
             if (pointer.rightButton.isUp) {
@@ -186,8 +263,15 @@ $(document).ready(function () {
                     }
                     elementoSeleccionado=[];
                     posicionesLineas=[];
+>>>>>>> 87a44f29109de89ee67025757b467cfa34256215
                 }
             }
+<<<<<<< HEAD
+        }else{
+            nebulosaVisitada=this.idNeb;
+>>>>>>> 8bcee317ad939ef10506e49b62105d9f22dfb5e6
+=======
+>>>>>>> 87a44f29109de89ee67025757b467cfa34256215
         }
     }
 
@@ -212,6 +296,21 @@ $(document).ready(function () {
 
     }
 
+<<<<<<< HEAD
+    function printLines(arrayLineas) {
+        arrayLineas.forEach(function (line) {
+            game.debug.geom(line);
+        });
+    }
+
+    function renderLines(arrayLineas) {
+        arrayLineas.forEach(function (line) {
+            game.debug.geom(line);
+        });
+    }
+
+    function updateLineGalaxia(arrayLineas, arrayNebulosas) {
+=======
     function killSprite(Object) {
         Object.forEach(function(obj) {
             obj.sprite.kill();
@@ -230,6 +329,7 @@ $(document).ready(function () {
             game.debug.geom(line);
         });
     }
+>>>>>>> 8bcee317ad939ef10506e49b62105d9f22dfb5e6
 
 
     function updateLines(){
