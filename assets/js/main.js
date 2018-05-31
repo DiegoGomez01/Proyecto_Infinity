@@ -1,18 +1,14 @@
 $(document).ready(function () {
-    $('body').on('contextmenu', 'canvas', function(e){ return false; });
-
-    $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#overlay').fadeIn();
+    $('body').on('contextmenu', 'canvas', function (e) {
+        return false;
     });
 
-
     $("#btnUbicar").on("click", function () {
-        if(nebulosaVisitada===-1){
+        if (nebulosaVisitada === -1) {
             newNebulosa();
-        }else if(sisPlanetarioVisitada===-1){
+        } else if (sisPlanetarioVisitada === -1) {
             newSisPlanetario();
-        }else if(planetaVisitada===-1){
+        } else if (planetaVisitada === -1) {
             newPlanet();
         }
     });
@@ -29,17 +25,17 @@ $(document).ready(function () {
         }else{
             cargarFormularioNebulosa();
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
-            nebulosaVisitada=-1;
+            nebulosaVisitada = -1;
         }
 
         pintarFondo();
     });
 
-    var posicionesLineas=[];
-    var elementoSeleccionado=[];
-    var nebulosaVisitada=-1;
-    var sisPlanetarioVisitada=-1;
-    var planetaVisitada=-1;
+    var posicionesLineas = [];
+    var elementoSeleccionado = [];
+    var nebulosaVisitada = -1;
+    var sisPlanetarioVisitada = -1;
+    var planetaVisitada = -1;
     var fondo;
 
     var ancho = $(window).width();
@@ -47,7 +43,12 @@ $(document).ready(function () {
 
     var galaxia = new Galaxia("Galaxia");
 
-    var game = new Phaser.Game(ancho,alto,Phaser.AUTO,'gameContainer',{preload:preload,create:create,update:update,render:render});
+    var game = new Phaser.Game(ancho, alto, Phaser.AUTO, 'gameContainer', {
+        preload: preload,
+        create: create,
+        update: update,
+        render: render
+    });
 
 
     function preload() {
@@ -80,8 +81,8 @@ $(document).ready(function () {
 
     function create() {
         fondo = game.add.sprite(0, 0, 'fondoGalaxia');
-        fondo.height=alto;
-        fondo.width=ancho;
+        fondo.height = alto;
+        fondo.width = ancho;
         startGame();
     }
 
@@ -90,44 +91,47 @@ $(document).ready(function () {
     }
 
     function render() {
-        if(nebulosaVisitada!==-1 && sisPlanetarioVisitada===-1) {
+        if (nebulosaVisitada !== -1 && sisPlanetarioVisitada === -1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].lineas);
-        }if(sisPlanetarioVisitada!==-1 && sisPlanetarioVisitada!==-1 && planetaVisitada===-1) {
+        }
+        if (sisPlanetarioVisitada !== -1 && sisPlanetarioVisitada !== -1 && planetaVisitada === -1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].lineas);
-        }else{
+        } else {
             printLines([]);
         }
     }
 
-    function startGame(){
-        game.input.mouse.capture=true;
+    function startGame() {
+        game.input.mouse.capture = true;
     }
 
-    function pintarFondo(){
-        if(nebulosaVisitada===-1){
-            fondo.loadTexture('fondoGalaxia',0);
+    function startGame() {
+        game.input.mouse.capture = true;
+    }
+
+    function pintarFondo() {
+        if (nebulosaVisitada === -1) {
+            fondo.loadTexture('fondoGalaxia', 0);
             resetScript(galaxia.Nebulosas);
-        }else if (sisPlanetarioVisitada===-1){
-            fondo.loadTexture('fondoNebula',0);
+        } else if (sisPlanetarioVisitada === -1) {
+            fondo.loadTexture('fondoNebula', 0);
             resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
-        }else if (planetaVisitada===-1){
-            fondo.loadTexture('sistemasolar1',0);
+        } else if (planetaVisitada === -1) {
+            fondo.loadTexture('sistemasolar1', 0);
             resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
-        }else{
+        } else {
             //LA VISTA CONCRETA DENTRO DE UN PLANETA
 
         }
-        fondo.height=alto;
-        fondo.width=ancho;
     }
 
-    function objectSelected(ObjectSearch,peligro) {
-        var selected="";
-        $.each($(ObjectSearch),function (index, value) {
-            if($(value).hasClass("activo")){
+    function objectSelected(ObjectSearch, peligro) {
+        var selected = "";
+        $.each($(ObjectSearch), function (index, value) {
+            if ($(value).hasClass("activo")) {
                 selected = value.getAttribute("data-idImg");
-                if(peligro){
-                    selected+="Peligrosa";
+                if (peligro) {
+                    selected += "Peligrosa";
                 }
                 return false;
             }
@@ -137,37 +141,43 @@ $(document).ready(function () {
 
     function newNebulosa() {
         var idNeb = galaxia.Nebulosas.length;
-        var peligrosa=false;
-        document.getElementById("checkNebulosaEsPeligrosa").checked?peligrosa=true:false;
-        var selected = objectSelected(".estiloNebulosa",peligrosa);
+        var peligrosa = false;
+        document.getElementById("checkNebulosaEsPeligrosa").checked ? peligrosa = true : false;
+        var selected = objectSelected(".estiloNebulosa", peligrosa);
         var nebulaSprite = game.add.sprite(100, 100, selected);
-        nebulaSprite.width=180;
-        nebulaSprite.height=180;
-        nebulaSprite.inputEnabled=true;
-        nebulaSprite.events.onInputUp.add(clickNebula,{idNeb:idNeb},this);
+        nebulaSprite.width = 180;
+        nebulaSprite.height = 180;
+        nebulaSprite.inputEnabled = true;
+        nebulaSprite.events.onInputUp.add(clickNebula, {
+            idNeb: idNeb
+        }, this);
         nebulaSprite.input.enableDrag();
         var nombre = document.getElementById("inputNombre").value;
-        var nebulosa = new Nebulosa(idNeb,nombre+idNeb,peligrosa,nebulaSprite);
+        var nebulosa = new Nebulosa(idNeb, nombre + idNeb, peligrosa, nebulaSprite);
         galaxia.Nebulosas.push(nebulosa);
     }
+
     function newSisPlanetario() {
-        if(nebulosaVisitada!==-1) {
+        if (nebulosaVisitada !== -1) {
             var idSisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios.length;
             var selected = objectSelected(".estiloSistemaSolar",false);
             var sisPlanSprite = game.add.sprite(100, 100, selected);
             sisPlanSprite.width = 100;
             sisPlanSprite.height = 100;
             sisPlanSprite.inputEnabled = true;
-            sisPlanSprite.events.onInputDown.add(clickSisPlanetario, {id: idSisPlanetario}, this);
+            sisPlanSprite.events.onInputDown.add(clickSisPlanetario, {
+                id: idSisPlanetario
+            }, this);
             sisPlanSprite.input.enableDrag();
             var nombre = document.getElementById("inputNombre").value;
-            var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario,nombre,sisPlanSprite);
+            var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
             galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios.push(sistemaPlanetario);
             addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].matrizAdy);
-        }else{
+        } else {
             console.log("No hay seleccionada ninguna nebulosa");
         }
     }
+
     function newPlanet() {
         var idPlaneta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.length;
         var tipoPlaneta = document.getElementById("selectTipoPlaneta").value;
@@ -214,29 +224,30 @@ $(document).ready(function () {
             pintarFondo();
         }
     }
+
     function clickSisPlanetario(sprite, pointer) {
-        ObjectsToCreateMatriz(pointer,"sisPlanetario",galaxia.Nebulosas[nebulosaVisitada],this.id);
+        ObjectsToCreateMatriz(pointer, "sisPlanetario", galaxia.Nebulosas[nebulosaVisitada], this.id);
     }
 
     function clickPlaneta(sprite, pointer) {
-        ObjectsToCreateMatriz(pointer,"Planeta",galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada],this.id);
+        ObjectsToCreateMatriz(pointer, "Planeta", galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada], this.id);
     }
 
-    function ObjectsToCreateMatriz(pointer,tipo,Object,id){
-        if(!isDrag()) {
+    function ObjectsToCreateMatriz(pointer, tipo, Object, id) {
+        if (!isDrag()) {
             if (pointer.rightButton.isUp) {
                 //Click IZQUIERDO
-                tipo==="sisPlanetario"?gotoSistemaPlanetario(id):gotoPlanet(id);
+                tipo === "sisPlanetario" ? gotoSistemaPlanetario(id) : gotoPlanet(id);
             } else {
                 //Click DERECHO
                 posicionesLineas.push(pointer.position.x);
                 posicionesLineas.push(pointer.position.y);
                 elementoSeleccionado.push(id);
-                if(posicionesLineas.length===4){
-                    if(elementoSeleccionado[0]!==elementoSeleccionado[1]) {
+                if (posicionesLineas.length === 4) {
+                    if (elementoSeleccionado[0] !== elementoSeleccionado[1]) {
                         idElementoSeleccionado1 = elementoSeleccionado[0];
                         idElementoSeleccionado2 = elementoSeleccionado[1];
-                        if(tipo==="sisPlanetario") {
+                        if (tipo === "sisPlanetario") {
                             var origen = Object.sistemasPlanetarios[idElementoSeleccionado1].nombre;
                             var destino = Object.sistemasPlanetarios[idElementoSeleccionado2].nombre;
                             alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>', '<div class="input-group mb-3">' +
@@ -278,7 +289,7 @@ $(document).ready(function () {
                                 },
                                 reverseButtons: false
                             });
-                        }else{
+                        } else {
                             Object.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2] = 1;
                             Object.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1] = 1;
                             var line = new Phaser.Line(posicionesLineas[0], posicionesLineas[1], posicionesLineas[2], posicionesLineas[3]);
@@ -287,8 +298,8 @@ $(document).ready(function () {
                             Object.lineasXmatriz.push([line, idElementoSeleccionado1, idElementoSeleccionado2]);
                         }
                     }
-                    elementoSeleccionado=[];
-                    posicionesLineas=[];
+                    elementoSeleccionado = [];
+                    posicionesLineas = [];
                 }
             }
         }
@@ -297,41 +308,40 @@ $(document).ready(function () {
     function gotoSistemaPlanetario(id) {
         cargarFormularioPlaneta();
         setTimeout(function () {
-            if(!isDrag()){
-                sisPlanetarioVisitada=id;
+            if (!isDrag()) {
+                sisPlanetarioVisitada = id;
                 resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
                 killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
                 pintarFondo();
             }
-        },200);
+        }, 200);
     }
 
     function gotoPlanet(id) {
         setTimeout(function () {
-            if(!isDrag()){
+            if (!isDrag()) {
                 console.log("ABRIRA EL PLANETA");
             }
-        },200);
-
+        }, 200);
     }
 
     function killSprite(Object) {
-        Object.forEach(function(obj) {
+        Object.forEach(function (obj) {
             obj.sprite.kill();
 
         });
     }
 
     function resetScript(Object) {
-        Object.forEach(function(obj) {
-            obj.sprite.reset(obj.sprite.position.x,obj.sprite.position.y);
+        Object.forEach(function (obj) {
+            obj.sprite.reset(obj.sprite.position.x, obj.sprite.position.y);
         });
     }
 
     function printLines(arrayLineas) {
-        if(arrayLineas.length===0){
-            var line = new Phaser.Line(0,0,0,0);
-            arrayLineas=[line];
+        if (arrayLineas.length === 0) {
+            var line = new Phaser.Line(0, 0, 0, 0);
+            arrayLineas = [line];
         }
         arrayLineas.forEach(function (line) {
             game.debug.geom(line,"#ffffff");
@@ -339,18 +349,18 @@ $(document).ready(function () {
     }
 
 
-    function updateLines(){
-        if(sisPlanetarioVisitada!==-1){
-            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada],galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
-        }else if(nebulosaVisitada!==-1) {
-            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada],galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
+    function updateLines() {
+        if (sisPlanetarioVisitada !== -1) {
+            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada], galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
+        } else if (nebulosaVisitada !== -1) {
+            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada], galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
         }
     }
 
-    function lineasObjectToDraw(Object,elemento) {
+    function lineasObjectToDraw(Object, elemento) {
         Object.lineasXmatriz.forEach(function (element) {
-            var sprite1= elemento[element[1]].sprite;
-            var sprite2= elemento[element[2]].sprite;
+            var sprite1 = elemento[element[1]].sprite;
+            var sprite2 = elemento[element[2]].sprite;
             element[0].fromSprite(sprite1, sprite2, true);
         });
     }
