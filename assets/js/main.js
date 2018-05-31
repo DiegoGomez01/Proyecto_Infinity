@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#atras").on("click", function () {
+    $("#btnAtras").on("click", function () {
         if(planetaVisitada!==-1){
             cargarFormularioPlaneta();
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
@@ -52,6 +52,7 @@ $(document).ready(function () {
 
 
     function preload() {
+        game.load.spritesheet('teletransportador1', 'assets/images/teletransportador1.png', 50, 60, 49);
         game.load.image('nebulosa1', 'assets/images/nebulosa1.png');
         game.load.image('nebulosa2', 'assets/images/nebulosa2.png');
         game.load.image('nebulosa3', 'assets/images/nebulosa3.png');
@@ -72,7 +73,7 @@ $(document).ready(function () {
         game.load.image('planeta5', 'assets/images/planeta5.png');
         game.load.image('estacionEspacial1', 'assets/images/estacionEspacial1.png');
         game.load.image('estacionEspacial2', 'assets/images/estacionEspacial2.png');
-        game.load.image('teletransportador1', 'assets/images/teletransportador1.png');
+        //game.load.image('teletransportador1', 'assets/images/teletransportador1.png');
         game.load.image('teletransportador2', 'assets/images/teletransportador2.png');
         game.load.image('fondoGalaxia', 'assets/images/galaxia.jpg');
         game.load.image('fondoNebula', 'assets/images/nebulosas.jpg');
@@ -83,6 +84,13 @@ $(document).ready(function () {
         fondo = game.add.sprite(0, 0, 'fondoGalaxia');
         fondo.height = alto;
         fondo.width = ancho;
+        // var mummy = game.add.sprite(300, 200, 'teletransportador1');
+        // mummy.height=100;
+        // mummy.width=100;
+        // var giro = mummy.animations.add('walk');
+        // mummy.animations.play('walk', 30, true);
+        // mummy.inputEnabled = true;
+        // mummy.input.enableDrag();
         startGame();
     }
 
@@ -99,10 +107,6 @@ $(document).ready(function () {
         } else {
             printLines([]);
         }
-    }
-
-    function startGame() {
-        game.input.mouse.capture = true;
     }
 
     function startGame() {
@@ -208,6 +212,9 @@ $(document).ready(function () {
             iridio = document.getElementById("cantIridioRango").value;
             platino = document.getElementById("cantPlatinoRango").value;
             paladio = document.getElementById("cantPaladioRango").value;
+        }else if(tipoPlaneta==="teletrasportador"){
+            var giro = Sprite.animations.add('giro');
+            Sprite.animations.play('giro', 30, true);
         }
         var nombre = document.getElementById("inputNombre").value;
         var planeta = new Planetas(idPlaneta,nombre+idPlaneta,iridio,platino,paladio,elemento0,tipoPlaneta,Sprite);
@@ -306,9 +313,9 @@ $(document).ready(function () {
     }
 
     function gotoSistemaPlanetario(id) {
-        cargarFormularioPlaneta();
         setTimeout(function () {
             if (!isDrag()) {
+                cargarFormularioPlaneta();
                 sisPlanetarioVisitada = id;
                 resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
                 killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
