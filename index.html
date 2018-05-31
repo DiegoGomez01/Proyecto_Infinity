@@ -21,7 +21,6 @@
 </head>
 
 <body>
-    <button id="costo" class="btn btn-light">Costo</button>
     <button id="prueba" class="btn btn-light">Nebulosa</button>
     <button id="nebulosa" class="btn btn-light">Nebulosa</button>
     <button id="sisPlanetario" class="btn btn-light">SistemaPlanetario</button>
@@ -29,7 +28,6 @@
     <button id="atras" class="btn btn-light">Atras</button>
 
     <div id="overlay"></div>
-    <!-- <div id="cerrarConfig" class="btnICON fa fa-arrow-circle-right fa-2x active"></div> -->
     <div id="sideBarConfig" class="active">
         <div class="row">
             <h1 class="titulo display-3 m-auto">Proyecto Infinity</h1>
@@ -42,7 +40,7 @@
             <div class="form-group row">
                 <label for="inputNombre" class="col-sm-2 col-form-label">Nombre:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNombre" value="Nebulosa 1">
+                    <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese el nombre de la nebulosa">
                 </div>
             </div>
             <div id="nebulosaEsPeligrosa" class="form-check mt-3 mb-3">
@@ -63,28 +61,28 @@
                     </div>
                 </div>
                 <div id="estilosElementos" class="d-flex flex-wrap justify-content-center">
-                    <div class="estiloNebulosa imgEstilo activo">
+                    <div class="estiloNebulosa imgEstilo activo" data-idImg="nebulosa1">
                         <img class="mt-3" src="assets/images/nebulosa1.png" width="100" height="75">
                     </div>
-                    <div class="estiloNebulosa imgEstilo">
+                    <div class="estiloNebulosa imgEstilo" data-idImg="nebulosa2">
                         <img class="mt-1" src="assets/images/nebulosa2.png" width="100" height="95">
                     </div>
-                    <div class="estiloNebulosa imgEstilo">
+                    <div class="estiloNebulosa imgEstilo" data-idImg="nebulosa3">
                         <img class="mt-1" src="assets/images/nebulosa3.png" width="100" height="100">
                     </div>
-                    <div class="estiloNebulosa imgEstilo">
+                    <div class="estiloNebulosa imgEstilo" data-idImg="nebulosa4">
                         <img class="mt-1" src="assets/images/nebulosa4.png" width="100" height="100">
                     </div>
-                    <div class="estiloNebulosa imgEstilo p-1">
+                    <div class="estiloNebulosa imgEstilo p-1" data-idImg="nebulosa5">
                         <img class="mt-4" src="assets/images/nebulosa5.png" width="100" height="58">
                     </div>
-                    <div class="estiloSistemaSolar imgEstilo activo d-none">
+                    <div class="estiloSistemaSolar imgEstilo activo d-none" data-idImg="sistemasolar1">
                         <img class="mt-1" src="assets/images/sistemasolar1.png" width="100" height="100">
                     </div>
-                    <div class="estiloSistemaSolar imgEstilo d-none">
+                    <div class="estiloSistemaSolar imgEstilo d-none" data-idImg="sistemasolar2">
                         <img class="mt-1" src="assets/images/sistemasolar2.png" width="100" height="100">
                     </div>
-                    <div class="estiloSistemaSolar imgEstilo d-none p-1">
+                    <div class="estiloSistemaSolar imgEstilo d-none p-1" data-idImg="sistemasolar3">
                         <img class="ml-2" src="assets/images/sistemasolar3.png" width="66" height="100">
                     </div>
                     <div class="estiloPlaneta imgEstilo activo d-none p-1" data-tipoPlaneta="1">

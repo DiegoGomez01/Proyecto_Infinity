@@ -124,8 +124,8 @@ $(document).ready(function () {
         }
     });
     // $("#btnGuardar").parent().addClass("d-none");
-    $("#btnCrearElemento").click();
-    $("#btnCrearElemento").click();
+    //$("#btnCrearElemento").click();
+    //$("#btnCrearElemento").click();
 
     function cargarFormularioNebulosa() {
         $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
