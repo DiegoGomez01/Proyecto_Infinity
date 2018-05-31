@@ -50,7 +50,7 @@ $(document).ready(function () {
         $('#overlay').fadeIn();
     }
 
-    $('#btnCrear, #btnEditar, #btnEliminar').popover({
+    $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras').popover({
         trigger: 'hover'
     })
 
@@ -87,54 +87,6 @@ $(document).ready(function () {
                 break;
         }
     });
-    // $("#btnGuardar").parent().addClass("d-none");
-    //$("#btnCrearElemento").click();
-    //$("#btnCrearElemento").click();
-
-    /*function cargarFormularioNebulosa() {
-        $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
-
-        $("#crearTituloInfo").text("Creación de Nebulosa"); // cambiar titulo
-        $("#inputNombre").val("Nebulosa 1"); // cambiar nombre
-        $('#nebulosaEsPeligrosa').removeClass("d-none"); //mostrar check es peligrosa
-        $('.estiloNebulosa').removeClass("d-none"); // mostrar estilos nebulosa
-        $("#listaElementosTituloInfo").text("Lista de Sistemas Solares"); // cambiar texto listas
-        $("#btnCrearElemento").text("Crear Sistema Solar"); // cambiar texto botón crear
-    }
-
-    function cargarFormularioSistemaSolar(desdeNebulosa) {
-        if (desdeNebulosa) {
-            //De nebulosa a sistema solar
-            $('#nebulosaEsPeligrosa').addClass("d-none"); //ocultar check es peligrosa
-            $('.estiloNebulosa').addClass("d-none"); // ocultar estilos nebulosa
-        } else {
-            //De planeta a sistema Solar
-            $("#tipoPlanetaSelect").addClass("d-none"); // ocultar selección de tipo
-            $('.estiloPlaneta').addClass("d-none"); // ocultar estilos planetas 
-            $("#materialesPlaneta").addClass("d-none"); // ocultar materiales
-            $("#listaContainer").removeClass("d-none"); // mostrar lista de elementos
-            $("#btnCrearElemento").removeClass("d-none"); // mostrar boton crear elemento
-        }
-
-        $("#crearTituloInfo").text("Creación de Sistema Solar"); // cambiar titulo
-        $("#inputNombre").val("Sistema Solar 1"); // cambiar nombre
-        $('.estiloSistemaSolar').removeClass("d-none"); // mostrar estilos sistema solar
-        $("#listaElementosTituloInfo").text("Lista de Planetas"); // cambiar texto listas
-        $("#btnCrearElemento").text("Crear Planeta"); // cambiar texto botón crear
-    }
-
-    function cargarFormularioPlaneta() {
-        //De Sistema solar a Planeta
-        $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
-        $("#listaContainer").addClass("d-none"); // ocultar lista de elementos
-        $("#btnCrearElemento").addClass("d-none"); // ocultar boton crear elemento
-
-        $("#crearTituloInfo").text("Creación de Planeta"); // cambiar titulo
-        $("#inputNombre").val("Planeta 1"); // cambiar nombre
-        $("#tipoPlanetaSelect").removeClass("d-none"); // mostrar selección de tipo
-        $('.estiloPlaneta').removeClass("d-none"); // mostrar estilos planetas 
-        $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
-    }*/
 
     //Activacion de estilo
     $('.estiloNebulosa').on("click", function () {
@@ -186,10 +138,10 @@ $(document).ready(function () {
                 $("#cantEZeroRango").val(1000);
                 break;
         }
-        $("#cantIridioRango").change();
-        $("#cantPlatinoRango").change();
-        $("#cantPaladioRango").change();
-        $("#cantEZeroRango").change();
+        $("#cantIridioRango").trigger("input");
+        $("#cantPlatinoRango").trigger("input");
+        $("#cantPaladioRango").trigger("input");
+        $("#cantEZeroRango").trigger("input");
     });
     $('.estiloEEspacial').on("click", function () {
         if (!$(this).hasClass("activo")) {
@@ -226,17 +178,16 @@ $(document).ready(function () {
                 break;
         }
     });
-
-    $("#cantIridioRango").change(function () {
+    $("#cantIridioRango").on("input", function () {
         $("#cantIridio").text(this.value + "T");
     });
-    $("#cantPlatinoRango").change(function () {
+    $("#cantPlatinoRango").on("input", function () {
         $("#cantPlatino").text(this.value + "T");
     });
-    $("#cantPaladioRango").change(function () {
+    $("#cantPaladioRango").on("input", function () {
         $("#cantPaladio").text(this.value + "T");
     });
-    $("#cantEZeroRango").change(function () {
+    $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
 });
