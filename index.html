@@ -9,6 +9,7 @@
     <link rel="icon" href="assets/images/favicon.png">
     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/alertify.min.js"></script>
+    <script type="text/javascript" src="assets/js/popper.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/phaser.min.js"></script>
     <script type="text/javascript" src="assets/js/creacion.js"></script>
@@ -27,6 +28,7 @@
     <button id="planeta" class="btn btn-light">Planeta</button>
     <button id="atras" class="btn btn-light">Atras</button> -->
     <div id="overlay"></div>
+    <div id="btnCerrarSideBar" class="fa fa-arrow-circle-right fa-2x btnICON"></div>
     <div id="sideBarConfig" class="">
         <!-- <div class="row">
             <h1 class="titulo display-3 m-auto">Proyecto Infinity</h1>
@@ -141,20 +143,24 @@
         </div>
     </div>
     <div id="gameContainer" class="container-fluid">
-        <div>
-            <ul id="navToolsCreate" class="nav flex-column">
-                <li class="nav-item">
-                    <div id="btnCrear" class="fa fa-plus-circle fa-2x btnICON p-3"></div>
-                </li>
-                <li class="nav-item">
-                    <div id="btnEditar" class="fa fa-edit fa-2x btnICON p-3"></div>
-                </li>
-                <li class="nav-item">
-                    <div id="btnEliminar" class="fa fa-trash-alt fa-2x btnICON p-3" style="color: #D64541;"></div>
-                </li>
-            </ul>
-        </div>
-        <!-- <div id="infoUbicacion" class="fa fa-trash-alt fa-2x btnICON p-3"></div> -->
+        <ul id="navToolsCreate" class="nav flex-column">
+            <li class="nav-item">
+                <div id="btnCrear" class="fa fa-plus-circle fa-2x btnICON p-3" data-toggle="popover" data-placement="left" data-content="Crear Nuevo Elemento"></div>
+            </li>
+            <li class="nav-item">
+                <div id="btnEditar" class="fa fa-edit fa-2x btnICON p-3" data-toggle="popover" data-placement="left" data-content="Editar Elemento"></div>
+            </li>
+            <li class="nav-item">
+                <div id="btnEliminar" class="fa fa-trash-alt fa-2x btnICON p-3" style="color: #D64541;" data-toggle="popover" data-placement="left"
+                    data-content="Eliminar Elemento"></div>
+            </li>
+        </ul>
+        <!-- <div id="containerUbicacion" class="container">
+            <div id="infoUbicacion" class="alert alert-primary" role="alert">
+                Nebulosa 1 / Sistema Solar 1 / Planeta XXX
+            </div>
+            <div id="btnAtras" class="fa fa-backward fa-2x btnICON p-3"></div>
+        </div> -->
         <!-- #btnConfig -->
     </div>
 </body>
