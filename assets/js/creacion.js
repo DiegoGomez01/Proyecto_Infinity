@@ -36,7 +36,12 @@ $(document).ready(function () {
 
     var nivelCreacion = 1; //Niveles 0-Galaxia, 1-Nebulosa, 2-Sistema Solar y 3-Planeta
 
-    $("#btnConfig").on("click", function () {
+    $("#btnCrear").hover(function () {
+        alertify.notify('sample', 'success', 5, function () {
+            console.log('dismissed');
+        });
+    });
+    $("#btnCrear").on("click", function () {
         $('#sideBarConfig').toggleClass('active');
         if ($(this).hasClass("active")) {
             $(this).removeClass("active fa-arrow-circle-right");
@@ -52,52 +57,11 @@ $(document).ready(function () {
     $("#btnCrearNebu").on("click", function () {
         nivelCreacion = 1;
     });
-    //PRUEBA ALERTIFY
-    $("#btnpruebaAle").on("click", function () {
-        var origen = "nebulosa 1";
-        var destino = "nebulosa 2";
-        alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>', '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Origen:&nbsp;&nbsp;</span>' +
-            '</div>' +
-            '<input id="inputOrigenCamino" type="text" class="form-control" placeholder="Elemento de Origen" value="' + origen + '" disabled>' +
-            '</div>' +
-            '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Destino:</span>' +
-            '</div>' +
-            '<input id="inputDestinoCamino" type="text" class="form-control" placeholder="Elemento de Destino" value="' + destino + '" disabled>' +
-            '</div>' +
-            '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Costo:</span>' +
-            '</div>' +
-            '<input id="inputCostoCamino" type="text" class="form-control" placeholder="Costo del camino">' +
-            '</div>',
-            function () {
-                var costo = document.getElementById("inputCostoCamino").value;
-                if ($.isNumeric(costo)) {
-                    alert("si");
-                    alert(costo);
-                    alertify.confirm().destroy();
-                }
-            },
-            function () {
-                alert("no");
-            }).set({
-            labels: {
-                cancel: 'Cancelar',
-                ok: 'Guardar'
-            },
-            reverseButtons: false
-        });
-    });
 
     $("#btnCrearElemento").on("click", function () {
         switch (nivelCreacion) {
             case 1:
                 cargarFormularioSistemaSolar(true);
-                // $("#btnGuardar").parent().addClass("d-none");// ocultar botón guardar
                 nivelCreacion = 2;
                 break;
             case 2:

@@ -3,12 +3,6 @@ $(document).ready(function () {
         return false;
     });
 
-    $("#btnConfig").on("click", function () {
-        $('#sideBarConfig').addClass('active');
-        $('#overlay').fadeIn();
-    });
-
-
     $("#btnUbicar").on("click", function () {
         if (nebulosaVisitada === -1) {
             newNebulosa();
