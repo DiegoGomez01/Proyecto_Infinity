@@ -17,27 +17,17 @@ $(document).ready(function () {
         }
     });
 
-    /*$("#nebulosa").on("click", function () {
-        newNebulosa();
-    });
-
-    $("#planeta").on("click", function () {
-        newPlanet();
-    });
-
-    $("#sisPlanetario").on("click", function () {
-        newSisPlanetario();
-    });*/
-
-
     $("#atras").on("click", function () {
         if(planetaVisitada!==-1){
+            cargarFormularioPlaneta();
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
             planetaVisitada=-1;
         }else if(sisPlanetarioVisitada!==-1){
+            cargarFormularioSistemaSolar();
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
             sisPlanetarioVisitada=-1;
         }else{
+            cargarFormularioNebulosa();
             killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
             nebulosaVisitada=-1;
         }
@@ -74,9 +64,17 @@ $(document).ready(function () {
         game.load.image('sistemasolar1', 'assets/images/sistemasolar1.png');
         game.load.image('sistemasolar2', 'assets/images/sistemasolar2.png');
         game.load.image('sistemasolar3', 'assets/images/sistemasolar3.png');
+        game.load.image('planeta1', 'assets/images/planeta1.png');
+        game.load.image('planeta2', 'assets/images/planeta2.png');
+        game.load.image('planeta3', 'assets/images/planeta3.png');
+        game.load.image('planeta4', 'assets/images/planeta4.png');
+        game.load.image('planeta5', 'assets/images/planeta5.png');
+        game.load.image('estacionEspacial1', 'assets/images/estacionEspacial1.png');
+        game.load.image('estacionEspacial2', 'assets/images/estacionEspacial2.png');
+        game.load.image('teletransportador1', 'assets/images/teletransportador1.png');
+        game.load.image('teletransportador2', 'assets/images/teletransportador2.png');
         game.load.image('fondoGalaxia', 'assets/images/galaxia.jpg');
         game.load.image('fondoNebula', 'assets/images/nebulosas.jpg');
-        game.load.image('planeta1','assets/images/planeta1.png');
     }
 
 
@@ -156,7 +154,6 @@ $(document).ready(function () {
         if(nebulosaVisitada!==-1) {
             var idSisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios.length;
             var selected = objectSelected(".estiloSistemaSolar",false);
-            console.log(selected);
             var sisPlanSprite = game.add.sprite(100, 100, selected);
             sisPlanSprite.width = 100;
             sisPlanSprite.height = 100;
@@ -173,20 +170,44 @@ $(document).ready(function () {
     }
     function newPlanet() {
         var idPlaneta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.length;
-        var planetaSprite = game.add.sprite(100, 100, 'planeta1');
-        planetaSprite.width=30;
-        planetaSprite.height=30;
-        planetaSprite.inputEnabled=true;
-        planetaSprite.events.onInputDown.add(clickPlaneta,{id:idPlaneta},this);
-        planetaSprite.input.enableDrag();
-        var planeta = new Planetas(idPlaneta,"Planeta"+idPlaneta,1000,1000,1000,1000,"planeta",planetaSprite);
+        var tipoPlaneta = document.getElementById("selectTipoPlaneta").value;
+        var selected="";
+        switch (tipoPlaneta){
+            case "planeta":
+                selected = objectSelected(".estiloPlaneta",false);
+                break;
+            case "ecombustible":
+                selected = objectSelected(".estiloEEspacial",false);
+                break;
+            case "teletrasportador":
+                selected = objectSelected(".estiloTTransportador",false);
+                break;
+        }
+        var Sprite = game.add.sprite(100, 100, selected);
+        Sprite.width=100;
+        Sprite.height=100;
+        Sprite.inputEnabled=true;
+        Sprite.events.onInputDown.add(clickPlaneta,{id:idPlaneta},this);
+        Sprite.input.enableDrag();
+        var elemento0=0;
+        var iridio=0;
+        var platino=0;
+        var paladio=0;
+        if(tipoPlaneta==="planeta"){
+            elemento0 = document.getElementById("cantEZeroRango").value;
+            iridio = document.getElementById("cantIridioRango").value;
+            platino = document.getElementById("cantPlatinoRango").value;
+            paladio = document.getElementById("cantPaladioRango").value;
+        }
+        var nombre = document.getElementById("inputNombre").value;
+        var planeta = new Planetas(idPlaneta,nombre+idPlaneta,iridio,platino,paladio,elemento0,tipoPlaneta,Sprite);
         galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.push(planeta);
         addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].matrizAdy);
     }
 
     function clickNebula(sprite, pointer){
         if(!isDrag()){
-            cargarFormularioSistemaSolar(true);
+            cargarFormularioSistemaSolar();
             nebulosaVisitada=this.idNeb;
             resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
             killSprite(galaxia.Nebulosas);
@@ -218,10 +239,6 @@ $(document).ready(function () {
                         if(tipo==="sisPlanetario") {
                             var origen = Object.sistemasPlanetarios[idElementoSeleccionado1].nombre;
                             var destino = Object.sistemasPlanetarios[idElementoSeleccionado2].nombre;
-                            /*var value = alertifyCosto(origen,destino);
-                            Object.matrizAdy[idElementoSeleccionado1][idElementoSeleccionado2] = parseInt(value);
-                            Object.matrizAdy[idElementoSeleccionado2][idElementoSeleccionado1] = parseInt(value);
-                            console.log(Object.matrizAdy);*/
                             alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>', '<div class="input-group mb-3">' +
                                 '<div class="input-group-prepend">' +
                                 '<span class="input-group-text">Origen:&nbsp;&nbsp;</span>' +
@@ -269,8 +286,6 @@ $(document).ready(function () {
                             printLines(Object.lineas);
                             Object.lineasXmatriz.push([line, idElementoSeleccionado1, idElementoSeleccionado2]);
                         }
-
-
                     }
                     elementoSeleccionado=[];
                     posicionesLineas=[];
@@ -279,48 +294,8 @@ $(document).ready(function () {
         }
     }
 
-    function alertifyCosto(orige,destin) {
-        var origen = orige;
-        var destino = destin;
-        var costo=0;
-        alertify.confirm('<h3 class="alertify-titulo-info">Definir Camino</h3>', '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Origen:&nbsp;&nbsp;</span>' +
-            '</div>' +
-            '<input id="inputOrigenCamino" type="text" class="form-control" placeholder="Elemento de Origen" value="' + origen + '" disabled>' +
-            '</div>' +
-            '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Destino:</span>' +
-            '</div>' +
-            '<input id="inputDestinoCamino" type="text" class="form-control" placeholder="Elemento de Destino" value="' + destino + '" disabled>' +
-            '</div>' +
-            '<div class="input-group mb-3">' +
-            '<div class="input-group-prepend">' +
-            '<span class="input-group-text">Costo:</span>' +
-            '</div>' +
-            '<input id="inputCostoCamino" type="text" class="form-control" placeholder="Costo del camino">' +
-            '</div>',
-            function () {
-                costo = document.getElementById("inputCostoCamino").value;
-                if ($.isNumeric(costo)) {
-                    alertify.confirm().destroy();
-                }
-            },
-            function () {
-                alert("no");
-            }).set({
-            labels: {
-                cancel: 'Cancelar',
-                ok: 'Guardar'
-            },
-            reverseButtons: false
-        });
-        return costo;
-    }
-
-
     function gotoSistemaPlanetario(id) {
+        cargarFormularioPlaneta();
         setTimeout(function () {
             if(!isDrag()){
                 sisPlanetarioVisitada=id;
@@ -359,7 +334,7 @@ $(document).ready(function () {
             arrayLineas=[line];
         }
         arrayLineas.forEach(function (line) {
-            game.debug.geom(line);
+            game.debug.geom(line,"#ffffff");
         });
     }
 
@@ -394,28 +369,6 @@ $(document).ready(function () {
         } else {
             return false;
         }
-    }
-
-
-    function cargarFormularioSistemaSolar(desdeNebulosa) {
-        if (desdeNebulosa) {
-            //De nebulosa a sistema solar
-            $('#nebulosaEsPeligrosa').addClass("d-none"); //ocultar check es peligrosa
-            $('.estiloNebulosa').addClass("d-none"); // ocultar estilos nebulosa
-        } else {
-            //De planeta a sistema Solar
-            $("#tipoPlanetaSelect").addClass("d-none"); // ocultar selección de tipo
-            $('.estiloPlaneta').addClass("d-none"); // ocultar estilos planetas
-            $("#materialesPlaneta").addClass("d-none"); // ocultar materiales
-            $("#listaContainer").removeClass("d-none"); // mostrar lista de elementos
-            $("#btnCrearElemento").removeClass("d-none"); // mostrar boton crear elemento
-        }
-
-        $("#crearTituloInfo").text("Creación de Sistema Solar"); // cambiar titulo
-        $("#inputNombre").val("Sistema Solar 1"); // cambiar nombre
-        $('.estiloSistemaSolar').removeClass("d-none"); // mostrar estilos sistema solar
-        $("#listaElementosTituloInfo").text("Lista de Planetas"); // cambiar texto listas
-        $("#btnCrearElemento").text("Crear Planeta"); // cambiar texto botón crear
     }
 
 });
