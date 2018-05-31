@@ -21,9 +21,6 @@
 </head>
 
 <body>
-<button id="nebulosa" class="btn btn-light">Nebulosa</button>
-<button id="sisPlanetario" class="btn btn-light">SistemaPlanetario</button>
-<button id="planeta" class="btn btn-light">Planeta</button>
 <button id="atras" class="btn btn-light">Atras</button>
     <div id="overlay"></div>
     <div id="cerrarConfig" class="btnICON fa fa-arrow-circle-right fa-2x active"></div>
@@ -53,9 +50,9 @@
                 <div id="tipoPlanetaSelect" class="form-group row justify-content-center d-none">
                     <div class="col-sm-8">
                         <select id="selectTipoPlaneta" class="custom-select custom-select-lg" value="1">
-                            <option value="1" selected>Planeta</option>
-                            <option value="2">Estación de Combustible</option>
-                            <option value="3">Teletransportador</option>
+                            <option value="planeta" selected>Planeta</option>
+                            <option value="ecombustible">Estación de Combustible</option>
+                            <option value="teletrasportador">Teletransportador</option>
                         </select>
                     </div>
                 </div>
@@ -84,31 +81,31 @@
                     <div class="estiloSistemaSolar imgEstilo d-none p-1" data-idImg="sistemasolar3">
                         <img class="ml-2" src="assets/images/sistemasolar3.png" width="66" height="100">
                     </div>
-                    <div class="estiloPlaneta imgEstilo activo d-none p-1" data-tipoPlaneta="1">
+                    <div class="estiloPlaneta imgEstilo activo d-none p-1" data-idImg="planeta1">
                         <img src="assets/images/planeta1.png" width="100" height="100">
                     </div>
-                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="2">
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-idImg="planeta2">
                         <img src="assets/images/planeta2.png" width="100" height="100">
                     </div>
-                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="3">
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-idImg="planeta3">
                         <img src="assets/images/planeta3.png" width="100" height="100">
                     </div>
-                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="4">
+                    <div class="estiloPlaneta imgEstilo d-none p-1" data-idImg="planeta4">
                         <img src="assets/images/planeta4.png" width="100" height="100">
                     </div>
-                    <div class="estiloPlaneta imgEstilo d-none p-1" data-tipoPlaneta="5">
+                        <div class="estiloPlaneta imgEstilo d-none p-1" data-idImg="planeta5">
                         <img src="assets/images/planeta5.png" width="100" height="100">
                     </div>
-                    <div class="estiloTTransportador imgEstilo activo d-none" >
+                    <div class="estiloTTransportador imgEstilo activo d-none" data-idImg="teletransportador1">
                         <img src="assets/images/teletransportador1.gif" width="100" height="100">
                     </div>
-                    <div class="estiloTTransportador imgEstilo d-none p-1">
+                    <div class="estiloTTransportador imgEstilo d-none p-1" data-idImg="teletransportador2">
                         <img src="assets/images/teletransportador2.gif" width="95" height="100">
                     </div>
-                    <div class="estiloEEspacial imgEstilo activo d-none">
+                    <div class="estiloEEspacial imgEstilo activo d-none" data-idImg="estacionEspacial1">
                         <img src="assets/images/estacionEspacial1.png" width="100" height="100">
                     </div>
-                    <div class="estiloEEspacial imgEstilo d-none p-1">
+                    <div class="estiloEEspacial imgEstilo d-none p-1" data-idImg="estacionEspacial2">
                         <img src="assets/images/estacionEspacial2.png" width="100" height="100">
                     </div>
                 </div>
