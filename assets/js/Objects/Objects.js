@@ -1,4 +1,3 @@
-
 class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
