@@ -65,11 +65,11 @@ $(document).ready(function () {
         game.load.image('sistemasolar1', 'assets/images/sistemasolar1.png');
         game.load.image('sistemasolar2', 'assets/images/sistemasolar2.png');
         game.load.image('sistemasolar3', 'assets/images/sistemasolar3.png');
-        game.load.image('planeta1', 'assets/images/planeta1.png');
-        game.load.image('planeta2', 'assets/images/planeta2.png');
-        game.load.image('planeta3', 'assets/images/planeta3.png');
-        game.load.image('planeta4', 'assets/images/planeta4.png');
-        game.load.image('planeta5', 'assets/images/planeta5.png');
+        game.load.image('planeta1', 'assets/images/planeta1.gif');
+        game.load.image('planeta2', 'assets/images/planeta2.gif');
+        game.load.image('planeta3', 'assets/images/planeta3.gif');
+        game.load.image('planeta4', 'assets/images/planeta4.gif');
+        game.load.image('planeta5', 'assets/images/planeta5.gif');
         game.load.image('estacionEspacial1', 'assets/images/estacionEspacial1.png');
         game.load.image('estacionEspacial2', 'assets/images/estacionEspacial2.png');
         game.load.image('teletransportador1', 'assets/images/teletransportador1.png');
