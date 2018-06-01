@@ -190,6 +190,15 @@ $(document).ready(function () {
     $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
+
+    $("#btnInfoFooter").on("click", function () {
+        $('#overlay').fadeIn();
+        $('#footerGame,#closeFooter').addClass("active");
+    });
+    $("#closeFooter").on("click", function () {
+        $('#overlay').fadeOut();
+        $('#footerGame,#closeFooter').removeClass("active");
+    });
 });
 
 function cargarFormularioNebulosa() {
