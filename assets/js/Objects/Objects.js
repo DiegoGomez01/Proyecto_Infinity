@@ -8,8 +8,6 @@ class Galaxia {
 class Nebulosa {
     constructor(id,nombre,peligroso,sprite) {
         this.id = id;
-        this.depCombustibleGastado=false;
-        this.teletrasportadorGastado=false;
         this.nombre = nombre;
         this.peligroso=peligroso;
         this.sprite = sprite;
@@ -26,6 +24,8 @@ class SistemasPlanetarios {
     constructor(id,nombre, sprite) {
         this.id = id;
         this.nombre = nombre;
+        this.depCombustibleGastado=false;
+        this.teletrasportadorGastado=false;
         this.sprite = sprite;
 
         this.planetas = [];
