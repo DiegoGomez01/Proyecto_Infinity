@@ -6,24 +6,24 @@ $(document).ready(function () {
     $("#btnUbicar").on("click", function () {
         if (nebulosaVisitada === -1) {
             newNebulosa();
-        } else if (sisPlanetarioVisitada === -1) {
+        } else if (sisPlanetarioVisitado === -1) {
             newSisPlanetario();
-        } else if (planetaVisitada === -1) {
+        } else if (planetaVisitado === -1) {
             newPlanet();
         }
     });
 
     $("#btnAtras").on("click", function () {
         if(nebulosaVisitada!==-1) {
-            if (planetaVisitada !== -1) {
+            if (planetaVisitado !== -1) {
                 cargarFormularioPlaneta();
                 actualizarUbicacionVista("sisPlanetario");
-                killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
-                planetaVisitada = -1;
-            } else if (sisPlanetarioVisitada !== -1) {
+                killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas);
+                planetaVisitado = -1;
+            } else if (sisPlanetarioVisitado !== -1) {
                 cargarFormularioSistemaSolar();
-                killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
-                sisPlanetarioVisitada = -1;
+                killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas);
+                sisPlanetarioVisitado = -1;
                 actualizarUbicacionVista("nebulosa");
             } else {
                 cargarFormularioNebulosa();
@@ -38,8 +38,8 @@ $(document).ready(function () {
     var posicionesLineas = [];
     var elementoSeleccionado = [];
     var nebulosaVisitada = -1;
-    var sisPlanetarioVisitada = -1;
-    var planetaVisitada = -1;
+    var sisPlanetarioVisitado = -1;
+    var planetaVisitado = -1;
     var fondo;
 
     var ancho = $(window).width();
@@ -118,11 +118,11 @@ $(document).ready(function () {
     }
 
     function render() {
-        if (nebulosaVisitada !== -1 && sisPlanetarioVisitada === -1) {
+        if (nebulosaVisitada !== -1 && sisPlanetarioVisitado === -1) {
             printLines(galaxia.Nebulosas[nebulosaVisitada].lineas);
         }
-        if (sisPlanetarioVisitada !== -1 && sisPlanetarioVisitada !== -1 && planetaVisitada === -1) {
-            printLines(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].lineas);
+        if (sisPlanetarioVisitado !== -1 && sisPlanetarioVisitado !== -1 && planetaVisitado === -1) {
+            printLines(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].lineas);
         } else {
             printLines([]);
         }
@@ -136,16 +136,18 @@ $(document).ready(function () {
         if (nebulosaVisitada === -1) {
             fondo.loadTexture('fondoGalaxia', 0);
             resetScript(galaxia.Nebulosas);
-        } else if (sisPlanetarioVisitada === -1) {
+        } else if (sisPlanetarioVisitado === -1) {
             var numeroNebulosa = returnIdBackground("sisPlanetarios");
             fondo.loadTexture('fondoNebulosa'+numeroNebulosa, 0);
             resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
-        } else if (planetaVisitada === -1) {
+        } else if (planetaVisitado === -1) {
             var numeroSisP = returnIdBackground("planetas");
             fondo.loadTexture('fondoSistemaSolar'+numeroSisP, 0);
-            resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
+            resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas);
         } else {
-            //LA VISTA CONCRETA DENTRO DE UN PLANETA
+            var numeroPlaneta = returnIdBackground("dentroDePlaneta");
+            fondo.loadTexture('fondoPlaneta'+numeroPlaneta, 0);
+
         }
         fondo.height = alto;
         fondo.width = ancho;
@@ -160,8 +162,11 @@ $(document).ready(function () {
             if(numero==="a"){//ultima letra de peligrosa => a
                 numero = object.substr(object.length-10,object.length-10);//elimino la subsecuencia Peligrosa
             }
+        }else if(Ubicacion==="planetas"){
+            object = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].sprite.key;
+            numero = object.substr(object.length-1,object.length-1);
         }else{
-            object = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].sprite.key;
+            object = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas[planetaVisitado].sprite.key;
             numero = object.substr(object.length-1,object.length-1);
         }
         return parseInt(numero);
@@ -225,7 +230,7 @@ $(document).ready(function () {
     }
 
     function newPlanet() {
-        var idPlaneta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.length;
+        var idPlaneta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas.length;
         var tipoPlaneta = document.getElementById("selectTipoPlaneta").value;
         var selected = "";
         switch (tipoPlaneta) {
@@ -264,8 +269,8 @@ $(document).ready(function () {
         var nombre = document.getElementById("inputNombre").value;
         if((nombre.trim()).length===0) {nombre="Planeta "+(idPlaneta+1)}
         var planeta = new Planetas(idPlaneta, nombre, iridio, platino, paladio, elemento0, tipoPlaneta, Sprite);
-        galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.push(planeta);
-        addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].matrizAdy);
+        galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas.push(planeta);
+        addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].matrizAdy);
         document.getElementById("inputNombre").value="";
     }
 
@@ -274,7 +279,7 @@ $(document).ready(function () {
             cargarFormularioSistemaSolar();
             nebulosaVisitada = this.idNeb;
             actualizarUbicacionVista("nebulosa");
-            resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
+            //resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
             killSprite(galaxia.Nebulosas);
             pintarFondo();
         }
@@ -285,7 +290,7 @@ $(document).ready(function () {
     }
 
     function clickPlaneta(sprite, pointer) {
-        ObjectsToCreateMatriz(pointer, "Planeta", galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada], this.id);
+        ObjectsToCreateMatriz(pointer, "Planeta", galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado], this.id);
     }
 
     function ObjectsToCreateMatriz(pointer, tipo, Object, id) {
@@ -367,9 +372,8 @@ $(document).ready(function () {
         setTimeout(function () {
             if (!isDrag()) {
                 cargarFormularioPlaneta();
-                sisPlanetarioVisitada = id;
+                sisPlanetarioVisitado = id;
                 actualizarUbicacionVista("sisPlanetario");
-                resetScript(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
                 killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
                 pintarFondo();
             }
@@ -379,8 +383,11 @@ $(document).ready(function () {
     function gotoPlanet(id) {
         setTimeout(function () {
             if (!isDrag()) {
-                actualizarUbicacionVista("planeta");
-                console.log("ABRIRA EL PLANETA");
+                
+                planetaVisitado=id;
+                actualizarUbicacionVista("Planeta");
+                killSprite(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas)
+                pintarFondo();
             }
         }, 200);
     }
@@ -410,8 +417,8 @@ $(document).ready(function () {
 
 
     function updateLines() {
-        if (sisPlanetarioVisitada !== -1) {
-            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada], galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas);
+        if (sisPlanetarioVisitado !== -1) {
+            lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado], galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas);
         } else if (nebulosaVisitada !== -1) {
             lineasObjectToDraw(galaxia.Nebulosas[nebulosaVisitada], galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios);
         }
@@ -452,13 +459,13 @@ $(document).ready(function () {
                 break;
             case "sisPlanetario":
                 nebulosa= galaxia.Nebulosas[nebulosaVisitada].nombre;
-                sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].nombre;
+                sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].nombre;
                 document.getElementById("infoUbic").innerHTML = galaxia.nombre+" / "+nebulosa +" / "+sisPlanetario;
                 break;
             case "Planeta":
                 nebulosa= galaxia.Nebulosas[nebulosaVisitada].nombre;
-                sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].nombre;
-                planeta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas[planetaVisitada].nombre;
+                sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].nombre;
+                planeta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitado].planetas[planetaVisitado].nombre;
                 document.getElementById("infoUbic").innerHTML = galaxia.nombre+" / "+nebulosa +" / "+sisPlanetario + " / "+planeta;
                 break;
             default:
