@@ -130,20 +130,20 @@ $(document).ready(function () {
             case "planeta":
                 $('.estiloPlaneta').removeClass("d-none"); // mostrar estilos planetas 
                 $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
-                $('.estiloEEspacial').addClass("d-none"); // ocultar estilos planetas 
-                $('.estiloTTransportador').addClass("d-none"); // ocultar estilos planetas 
+                $('.estiloEEspacial').addClass("d-none"); // ocultar estilos estacion espacial 
+                $('.estiloTTransportador').addClass("d-none"); // ocultar estilos teletransportador 
                 break;
             case "ecombustible":
-                $('.estiloEEspacial').removeClass("d-none"); // mostrar estilos planetas 
-                $('.estiloPlaneta').addClass("d-none"); // mostrar estilos planetas 
-                $('.estiloTTransportador').addClass("d-none"); // mostrar estilos teletransportador 
+                $('.estiloEEspacial').removeClass("d-none"); // mostrar estilos estacion espacial  
+                $('.estiloPlaneta').addClass("d-none"); // ocultar estilos planetas 
                 $("#materialesPlaneta").addClass("d-none"); // ocultar materiales
+                $('.estiloTTransportador').addClass("d-none"); // ocultar estilos teletransportador 
                 break;
             case "teletrasportador":
                 $('.estiloTTransportador').removeClass("d-none"); // mostrar estilos planetas 
-                $('.estiloPlaneta').addClass("d-none"); // mostrar estilos planetas 
-                $('.estiloEEspacial').addClass("d-none"); // mostrar estilos estacion espacial 
+                $('.estiloPlaneta').addClass("d-none"); // ocultar estilos planetas 
                 $("#materialesPlaneta").addClass("d-none"); // ocultar materiales
+                $('.estiloEEspacial').addClass("d-none"); // ocultar estilos estacion espacial 
                 break;
         }
     });
@@ -192,7 +192,7 @@ function cargarFormularioSistemaSolar() {
     $("#btnCrearElemento").removeClass("d-none"); // mostrar boton crear elemento
 
     $("#crearTituloInfo").text("Creación de Sistema Solar"); // cambiar titulo
-    $("#inputNombre").attr("placeholder","Ingrese el nombre del Sistema Solar"); //cambiar Placeholder
+    $("#inputNombre").attr("placeholder", "Ingrese el nombre del Sistema Solar"); //cambiar Placeholder
     $('.estiloSistemaSolar').removeClass("d-none"); // mostrar estilos sistema solar
     $("#listaElementosTituloInfo").text("Lista de Planetas"); // cambiar texto listas
     $("#btnCrearElemento").text("Crear Planeta"); // cambiar texto botón crear
@@ -203,7 +203,7 @@ function cargarFormularioPlaneta() {
     $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
     $("#listaContainer").addClass("d-none"); // ocultar lista de elementos
     $("#btnCrearElemento").addClass("d-none"); // ocultar boton crear elemento
-    $("#inputNombre").attr("placeholder","Ingrese el nombre del Planeta");
+    $("#inputNombre").attr("placeholder", "Ingrese el nombre del Planeta");
     $("#crearTituloInfo").text("Creación de Planeta"); // cambiar titulo
     $("#tipoPlanetaSelect").removeClass("d-none"); // mostrar selección de tipo
     $('.estiloPlaneta').removeClass("d-none"); // mostrar estilos planetas
