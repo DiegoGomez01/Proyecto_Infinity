@@ -69,23 +69,79 @@
     line-height: 35px;
     text-align: center;
     top: 15px;
-    left: 50px;
+    left: 55px;
     border: 1px solid rgba(218, 223, 225, 0.9);
     z-index: 11;
 }
 
 #btnAtras {
     position: fixed;
-    top: 19px;
+    top: 15px;
     left: 10px;
     z-index: 9;
 }
 
-#containerUbicacion {
+#btnAtacar {
+    position: fixed;
+    bottom: 20px;
+    right: 200px;
+    border: 1px solid #FFF;
+}
+
+#btnEstado.active {
+    bottom: 105px;
+}
+
+#btnEstado {
     position: fixed;
     transition: all 0.4s;
-    top: 15px;
-    left: 5px;
+    left: 20px;
+    bottom: -21px;
+}
+
+#containerEstado.active {
+    bottom: 10px;
+}
+
+#containerEstado {
+    position: fixed;
+    transition: all 0.4s;
+    left: 10px;
+    bottom: -110px;
+    width: 650px;
+    border: 1px solid rgba(218, 223, 225, 0.9);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#vidaNave {
+    background-color: #26A65B;
+}
+
+#escudoNave {
+    background-color: #424242;
+}
+
+#cantMateriales .progress-bar {
+    color: #000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+}
+
+#cantIridioNave {
+    background-color: #FFFF96;
+}
+
+#cantPlatinoNave {
+    background-color: #DADFE1;
+}
+
+#cantPaladioNave {
+    background-color: #757575;
+}
+
+#cantEZeroNave {
+    background-color: #00B0FF;
 }
 
 .titulo {
@@ -93,8 +149,71 @@
 }
 
 .btnICON {
-    color: #00B0FF;
+    display: block;
+    color: #FFF;
     cursor: pointer;
+    position: relative;
+    border: 4px solid white;
+    box-shadow: 0 4px 6px -3px rgba(0, 0, 0, .3), inset 0 3px 4px -2px rgba(0, 0, 0, .25);
+    position: relative;
+    width: 55px;
+    height: 55px;
+    background: grey;
+    background-image: linear-gradient(120deg, #00B0FF 50%, rgb(0, 115, 168) 51%);
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.465, 1.55) 0.2s, border-width 0.4s cubic-bezier(0.68, -0.55, 0.465, 1.55);
+}
+
+.btnICON::before {
+    display: block;
+    position: absolute;
+    /* bottom: 15%; */
+    left: 15%;
+    transform: translate(-0px, 25%);
+}
+
+.btnICON:hover {
+    border: 2px solid white;
+}
+
+.btnICON:hover::before {
+    animation: playJump 0.5s linear normal;
+}
+
+@keyframes playJump {
+    0% {
+        transform: translate(-0px, 30%) scale(1.1, 0.7);
+    }
+    10% {
+        transform: translate(0px, 15%) scale(0.9, 1.2);
+    }
+    20% {
+        transform: translate(0px, 7%);
+    }
+    40% {
+        transform: translate(0px, 5%);
+    }
+    50% {
+        transform: translate(0px, 5%);
+    }
+    55% {
+        transform: translate(0px, 6%);
+    }
+    60% {
+        transform: translate(0px, 10%);
+    }
+    65% {
+        transform: translate(0px, 12%);
+    }
+    70% {
+        transform: translate(0px, 15%);
+    }
+    90% {
+        transform: translate(0px, 30%) scale(1.2, 0.7);
+    }
+    100% {
+        transform: translate(0px, 30%) scale(1.4, 0.7);
+    }
 }
 
 .btnGEN {
@@ -105,6 +224,42 @@
 
 .btnGEN:hover {
     animation: bounce .3s 1 forwards;
+}
+
+.btnMetal {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    padding: 7px 10px 10px 10px;
+    background-color: #434343;
+    background-image: linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    border: 2px solid #212121;
+    -webkit-border-radius: 360px;
+    -moz-border-radius: 360px;
+    border-radius: 360px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+    color: #242424;
+    background-image: -webkit-radial-gradient( 50% 0%, 8% 50%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient( 50% 100%, 12% 50%, hsla(0, 0%, 100%, .6) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient( 0% 50%, 50% 7%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient( 100% 50%, 50% 5%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 3%, hsla(0, 0%, 0%, .1) 3.5%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 6%, hsla(0, 0%, 100%, .1) 7.5%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 1.2%, hsla(0, 0%, 100%, .2) 2.2%), -webkit-radial-gradient( 50% 50%, 200% 50%, hsla(0, 0%, 90%, 1) 5%, hsla(0, 0%, 85%, 1) 30%, hsla(0, 0%, 60%, 1) 100%);
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.btnMetal:active {
+    box-shadow: inset 0px 0px 5px #00aeff, 0px 0px 50px #00aeff, 0px 0px 50px #93d9fa;
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+    transform: translateY(1px);
+}
+
+.btnMetal:hover {
+    color: #00aeff;
+    text-shadow: -1px -2px 1px #000;
 }
 
 @keyframes bounce {
@@ -165,7 +320,7 @@
 #closeFooter {
     position: fixed;
     transition: all 0.4s;
-    bottom: -35px;
+    bottom: -55px;
     right: 20px;
     z-index: 12;
 }
