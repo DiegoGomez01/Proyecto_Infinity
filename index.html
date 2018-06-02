@@ -107,12 +107,12 @@
             <div id="materialesPlaneta" class="container d-none">
                 <h4 class="titulo border-bottom">Materiales</h4>
                 <div class="border rounded p-2 mb-1">
-                    <label class="font-weight-bold d-inline-block" for="cantIridioRango" style="color: #FFF8E1;">IRIDIO: </label>
+                    <label class="font-weight-bold d-inline-block" for="cantIridioRango" style="color: #FFFF96;">IRIDIO: </label>
                     <p id="cantIridio" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
                     <input type="range" class="custom-range" id="cantIridioRango" value="1000" min="0" max="8000">
                 </div>
                 <div class="border rounded p-2 mb-1">
-                    <label class="font-weight-bold d-inline-block" for="cantPlatinoRango" style="color:#F2F1EF;">PLATINO: </label>
+                    <label class="font-weight-bold d-inline-block" for="cantPlatinoRango" style="color:#DADFE1;">PLATINO: </label>
                     <p id="cantPlatino" class="font-weight-bold d-inline-block border rounded p-1 mb-0" style="background-color: #212121;">1000T</p>
                     <input type="range" class="custom-range" id="cantPlatinoRango" value="1000" min="0" max="8000">
                 </div>
@@ -137,21 +137,44 @@
     <div id="gameContainer" class="container-fluid">
         <ul id="navToolsCreate" class="nav flex-column">
             <li class="nav-item">
-                <div id="btnCrear" class="fa fa-plus-circle fa-2x btnICON p-3" data-toggle="popover" data-placement="left" data-content="Crear Nuevo Elemento"></div>
+                <div id="btnCrear" class="fa fa-plus btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Crear Nuevo Elemento"></div>
             </li>
             <li class="nav-item">
-                <div id="btnEditar" class="fa fa-edit fa-2x btnICON p-3" data-toggle="popover" data-placement="left" data-content="Editar Elemento"></div>
+                <div id="btnEditar" class="fa fa-pencil-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Editar Elemento"></div>
             </li>
             <li class="nav-item">
-                <div id="btnEliminar" class="fa fa-trash-alt fa-2x btnICON p-3" style="color: #D64541;" data-toggle="popover" data-placement="left"
-                    data-content="Eliminar Elemento"></div>
+                <div id="btnEliminar" class="fa fa-trash-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Eliminar Elemento"></div>
             </li>
         </ul>
         <div id="infoUbicacion" class="pl-2 pr-2">
             <p id="infoUbic">Vía Láctea</p>
         </div>
-        <div id="btnAtras" class="fa fa-chevron-circle-left fa-2x btnICON align-middle" data-toggle="popover" data-placement="bottom"
-            data-content="Atrás"></div>
+        <div id="btnAtras" class="fa fa-chevron-left btnMetal" data-toggle="popover" data-placement="bottom" data-content="Atrás"></div>
+        <div id="containerEstado">
+            <div id="btnEstado" class="fa fa-chevron-circle-up fa-2x btnICON"></div>
+            <div class="progress">
+                <div id="vidaNave" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+            </div>
+            <div class="progress mt-3">
+                <div id="escudoNave" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100">escudo (Nivel 3)</div>
+            </div>
+            <div id="cantMateriales" class="progress mt-3 active">
+                <div id="cantIridioNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
+                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Iridio</div>
+                <!-- titulo Iridio desde 3% -->
+                <div id="cantPlatinoNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
+                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Platino</div>
+                <!-- titulo Platino desde 5% -->
+                <div id="cantPaladioNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
+                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Paladio</div>
+                <!-- titulo Paladio desde 5% -->
+                <div id="cantEZeroNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
+                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Elemento Zero</div>
+                <!-- titulo Elemento Zero  desde 10% -->
+            </div>
+        </div>
+        <div id="btnAtacar" class="btn btn-danger d-none">Atacar</div>
     </div>
     <div id="btnInfoFooter" class="btnICON fa fa-info-circle fa-2x position-fixed"></div>
     <footer id="footerGame">
