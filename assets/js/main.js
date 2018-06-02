@@ -82,6 +82,7 @@ $(document).ready(function () {
         game.load.image('sistemasolar1', 'assets/images/sistemasolar1.png');
         game.load.image('sistemasolar2', 'assets/images/sistemasolar2.png');
         game.load.image('sistemasolar3', 'assets/images/sistemasolar3.png');
+
         game.load.image('fondoSistemaSolar1', 'assets/images/fondoSistemaSolar1.jpg');
         game.load.image('fondoSistemaSolar2', 'assets/images/fondoSistemaSolar2.jpg');
         game.load.image('fondoSistemaSolar3', 'assets/images/fondoSistemaSolar3.jpg');
