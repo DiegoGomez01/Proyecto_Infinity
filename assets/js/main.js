@@ -4,17 +4,12 @@ $(document).ready(function () {
     });
 
     $("#btnUbicar").on("click", function () {
-        var nombre = document.getElementById("inputNombre").value;
-        if((nombre.trim()).length!==0) {
-            if (nebulosaVisitada === -1) {
-                newNebulosa();
-            } else if (sisPlanetarioVisitada === -1) {
-                newSisPlanetario();
-            } else if (planetaVisitada === -1) {
-                newPlanet();
-            }
-        }else{
-            alertify.alert("Por favor ingrese el nombre.").setHeader("Error!");
+        if (nebulosaVisitada === -1) {
+            newNebulosa();
+        } else if (sisPlanetarioVisitada === -1) {
+            newSisPlanetario();
+        } else if (planetaVisitada === -1) {
+            newPlanet();
         }
     });
 
@@ -110,6 +105,11 @@ $(document).ready(function () {
         fondo = game.add.sprite(0, 0, 'fondoGalaxia');
         fondo.height = alto;
         fondo.width = ancho;
+        /*var Sprite = game.add.sprite(100, 100, "teletransportador2");
+        Sprite.width = 100;
+        Sprite.height = 100;
+        var giro = Sprite.animations.add('giro');
+        Sprite.animations.play('giro', 5, true);*/
         startGame();
     }
 
@@ -159,7 +159,6 @@ $(document).ready(function () {
             numero = object.substr(object.length-1,object.length-1);
             if(numero==="a"){//ultima letra de peligrosa => a
                 numero = object.substr(object.length-10,object.length-10);//elimino la subsecuencia Peligrosa
-                console.log(numero);
             }
         }else{
             object = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].sprite.key;
@@ -196,6 +195,7 @@ $(document).ready(function () {
         }, this);
         nebulaSprite.input.enableDrag();
         var nombre = document.getElementById("inputNombre").value;
+        if((nombre.trim()).length===0) {nombre="Nebulosa "+(idNeb+1)}
         var nebulosa = new Nebulosa(idNeb, nombre, peligrosa, nebulaSprite);
         galaxia.Nebulosas.push(nebulosa);
         document.getElementById("inputNombre").value="";
@@ -214,6 +214,7 @@ $(document).ready(function () {
             }, this);
             sisPlanSprite.input.enableDrag();
             var nombre = document.getElementById("inputNombre").value;
+            if((nombre.trim()).length===0) {nombre="Sistema Solar "+(idSisPlanetario+1)}
             var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
             galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios.push(sistemaPlanetario);
             addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].matrizAdy);
@@ -258,9 +259,10 @@ $(document).ready(function () {
         }
         if(tipoPlaneta==="teletrasportador" || tipoPlaneta==="planeta"){
             var giro = Sprite.animations.add('giro');
-            Sprite.animations.play('giro', 30, true);
+            Sprite.animations.play('giro', 5, true);
         }
         var nombre = document.getElementById("inputNombre").value;
+        if((nombre.trim()).length===0) {nombre="Planeta "+(idPlaneta+1)}
         var planeta = new Planetas(idPlaneta, nombre, iridio, platino, paladio, elemento0, tipoPlaneta, Sprite);
         galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas.push(planeta);
         addColumnMatrizAdy(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].matrizAdy);
