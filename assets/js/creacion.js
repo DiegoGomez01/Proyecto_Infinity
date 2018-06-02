@@ -34,8 +34,6 @@ $(document).ready(function () {
         }
     };
 
-    var nivelCreacion = 1; //Niveles 0-Galaxia, 1-Nebulosa, 2-Sistema Solar y 3-Planeta
-
     $("#btnCrear").on("click", function () {
         mostrarSideBarConfig();
     });
@@ -50,42 +48,13 @@ $(document).ready(function () {
         $('#overlay').fadeIn();
     }
 
-    $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras').popover({
+    $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras,#cantIridioNave,#cantPlatinoNave,#cantPaladioNave,#cantEZeroNave').popover({
         trigger: 'hover'
-    })
-
-    $("#btnCrearNebu").on("click", function () {
-        nivelCreacion = 1;
     });
 
-    $("#btnCrearElemento").on("click", function () {
-        switch (nivelCreacion) {
-            case 1:
-                cargarFormularioSistemaSolar(true);
-                nivelCreacion = 2;
-                break;
-            case 2:
-                cargarFormularioPlaneta();
-                nivelCreacion = 3;
-                break;
-        }
-    });
-
-    $("#btnCancelar").on("click", function () {
-        switch (nivelCreacion) {
-            case 1:
-                alert("yaaa");
-                nivelCreacion = 0;
-                break;
-            case 2:
-                cargarFormularioNebulosa();
-                nivelCreacion = 1;
-                break;
-            case 3:
-                cargarFormularioSistemaSolar(false);
-                nivelCreacion = 2;
-                break;
-        }
+    $("#btnEstado").on("click", function () {
+        $(this).toggleClass("fa-chevron-circle-down fa-chevron-circle-up active");
+        $("#containerEstado").toggleClass("active");
     });
 
     //Activacion de estilo
@@ -242,3 +211,5 @@ function cargarFormularioPlaneta() {
     $('.estiloPlaneta').removeClass("d-none"); // mostrar estilos planetas
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
 }
+
+// $('#theprogressbar').attr('aria-valuenow', newprogress).css('width',newprogress);
