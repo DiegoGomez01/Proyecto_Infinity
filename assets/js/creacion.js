@@ -190,13 +190,21 @@ $(document).ready(function () {
     $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
+
+    $("#btnInfoFooter").on("click", function () {
+        $('#overlay').fadeIn();
+        $('#footerGame,#closeFooter').addClass("active");
+    });
+    $("#closeFooter").on("click", function () {
+        $('#overlay').fadeOut();
+        $('#footerGame,#closeFooter').removeClass("active");
+    });
 });
 
 function cargarFormularioNebulosa() {
     $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
 
     $("#crearTituloInfo").text("Creación de Nebulosa"); // cambiar titulo
-    $("#inputNombre").val("Nebulosa 1"); // cambiar nombre
     $('#nebulosaEsPeligrosa').removeClass("d-none"); //mostrar check es peligrosa
     $('.estiloNebulosa').removeClass("d-none"); // mostrar estilos nebulosa
     $("#listaElementosTituloInfo").text("Lista de Sistemas Solares"); // cambiar texto listas
@@ -215,7 +223,7 @@ function cargarFormularioSistemaSolar() {
     $("#btnCrearElemento").removeClass("d-none"); // mostrar boton crear elemento
 
     $("#crearTituloInfo").text("Creación de Sistema Solar"); // cambiar titulo
-    $("#inputNombre").val("Sistema Solar 1"); // cambiar nombre
+    $("#inputNombre").attr("placeholder","Ingrese el nombre del Sistema Solar"); //cambiar Placeholder
     $('.estiloSistemaSolar').removeClass("d-none"); // mostrar estilos sistema solar
     $("#listaElementosTituloInfo").text("Lista de Planetas"); // cambiar texto listas
     $("#btnCrearElemento").text("Crear Planeta"); // cambiar texto botón crear
@@ -226,9 +234,8 @@ function cargarFormularioPlaneta() {
     $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
     $("#listaContainer").addClass("d-none"); // ocultar lista de elementos
     $("#btnCrearElemento").addClass("d-none"); // ocultar boton crear elemento
-
+    $("#inputNombre").attr("placeholder","Ingrese el nombre del Planeta");
     $("#crearTituloInfo").text("Creación de Planeta"); // cambiar titulo
-    $("#inputNombre").val("Planeta 1"); // cambiar nombre
     $("#tipoPlanetaSelect").removeClass("d-none"); // mostrar selección de tipo
     $('.estiloPlaneta').removeClass("d-none"); // mostrar estilos planetas
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
