@@ -50,7 +50,7 @@ $(document).ready(function () {
     var ancho = $(window).width();
     var alto = $(window).height();
 
-    var galaxia = new Galaxia("Galaxia");
+    var galaxia = new Galaxia("Via Láctea");
 
     var game = new Phaser.Game(ancho, alto, Phaser.AUTO, 'gameContainer', {
         preload: preload,
@@ -87,11 +87,11 @@ $(document).ready(function () {
         game.load.image('fondoSistemaSolar2', 'assets/images/fondoSistemaSolar2.jpg');
         game.load.image('fondoSistemaSolar3', 'assets/images/fondoSistemaSolar3.jpg');
 
-        game.load.image('planeta1', 'assets/images/planeta1.png');
-        game.load.image('planeta2', 'assets/images/planeta2.png');
-        game.load.image('planeta3', 'assets/images/planeta3.png');
-        game.load.image('planeta4', 'assets/images/planeta4.png');
-        game.load.image('planeta5', 'assets/images/planeta5.png');
+        game.load.spritesheet('planeta1', 'assets/images/planeta1.png', 100, 100, 91);
+        game.load.spritesheet('planeta2', 'assets/images/planeta2.png', 100, 100, 43);
+        game.load.spritesheet('planeta3', 'assets/images/planeta3.png', 100, 100, 49);
+        game.load.spritesheet('planeta4', 'assets/images/planeta4.png', 100, 100, 80);
+        game.load.spritesheet('planeta5', 'assets/images/planeta5.png', 100, 100, 14);
         game.load.image('fondoPlaneta1', 'assets/images/fondoPlaneta1.jpg');
         game.load.image('fondoPlaneta2', 'assets/images/fondoPlaneta2.jpg');
         game.load.image('fondoPlaneta3', 'assets/images/fondoPlaneta3.jpg');
@@ -100,9 +100,9 @@ $(document).ready(function () {
 
         game.load.image('estacionEspacial1', 'assets/images/estacionEspacial1.png');
         game.load.image('estacionEspacial2', 'assets/images/estacionEspacial2.png');
-        game.load.spritesheet('teletransportador1', 'assets/images/teletransportador1.png', 50, 60, 49);
-        game.load.image('teletransportador2', 'assets/images/teletransportador2.png');
-        game.load.image('fondoNebula', 'assets/images/nebulosas.jpg');
+
+        game.load.spritesheet('teletransportador1', 'assets/images/teletransportador1.png', 100, 100, 49);
+        game.load.spritesheet('teletransportador2', 'assets/images/teletransportador2.png', 100, 100, 72);
     }
 
 
@@ -110,13 +110,6 @@ $(document).ready(function () {
         fondo = game.add.sprite(0, 0, 'fondoGalaxia');
         fondo.height = alto;
         fondo.width = ancho;
-        // var mummy = game.add.sprite(300, 200, 'teletransportador1');
-        // mummy.height=100;
-        // mummy.width=100;
-        // var giro = mummy.animations.add('walk');
-        // mummy.animations.play('walk', 30, true);
-        // mummy.inputEnabled = true;
-        // mummy.input.enableDrag();
         startGame();
     }
 
@@ -262,7 +255,8 @@ $(document).ready(function () {
             iridio = document.getElementById("cantIridioRango").value;
             platino = document.getElementById("cantPlatinoRango").value;
             paladio = document.getElementById("cantPaladioRango").value;
-        }else if(tipoPlaneta==="teletrasportador"){
+        }
+        if(tipoPlaneta==="teletrasportador" || tipoPlaneta==="planeta"){
             var giro = Sprite.animations.add('giro');
             Sprite.animations.play('giro', 30, true);
         }
@@ -452,21 +446,21 @@ $(document).ready(function () {
         switch (ubicacion){
             case "nebulosa":
                 nebulosa= galaxia.Nebulosas[nebulosaVisitada].nombre;
-                document.getElementById("infoUbic").innerHTML = nebulosa;
+                document.getElementById("infoUbic").innerHTML = galaxia.nombre+" / "+nebulosa;
                 break;
             case "sisPlanetario":
                 nebulosa= galaxia.Nebulosas[nebulosaVisitada].nombre;
                 sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].nombre;
-                document.getElementById("infoUbic").innerHTML = nebulosa +" / "+sisPlanetario;
+                document.getElementById("infoUbic").innerHTML = galaxia.nombre+" / "+nebulosa +" / "+sisPlanetario;
                 break;
             case "Planeta":
                 nebulosa= galaxia.Nebulosas[nebulosaVisitada].nombre;
                 sisPlanetario = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].nombre;
                 planeta = galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[sisPlanetarioVisitada].planetas[planetaVisitada].nombre;
-                document.getElementById("infoUbic").innerHTML = nebulosa +" / "+sisPlanetario + " / "+planeta;
+                document.getElementById("infoUbic").innerHTML = galaxia.nombre+" / "+nebulosa +" / "+sisPlanetario + " / "+planeta;
                 break;
             default:
-                document.getElementById("infoUbic").innerHTML = "";
+                document.getElementById("infoUbic").innerHTML = galaxia.nombre;
                 break;
         }
 
