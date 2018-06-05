@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#pruebaBorrar").on("click", function () {
+    $("#btnIniciar").on("click", function () {
         if (nebulosaVisitada === -1) {
             console.log("no hay matriz de adyasencia.");
         } else if (sisPlanetarioVisitado === -1) {

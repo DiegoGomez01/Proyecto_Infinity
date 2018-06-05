@@ -88,15 +88,31 @@
     border: 1px solid #FFF;
 }
 
+#btnIniciar {
+    position: fixed;
+    bottom: 20px;
+    right: 200px;
+}
+
 #btnEstado.active {
-    bottom: 105px;
+    bottom: 305px;
 }
 
 #btnEstado {
     position: fixed;
     transition: all 0.4s;
     left: 20px;
-    bottom: -21px;
+    bottom: 10px;
+}
+
+#numSondas {
+    border: 1px solid #fff;
+    width: 60px;
+    height: 60px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #434343;
+    color: #FFF;
 }
 
 #containerEstado.active {
@@ -107,18 +123,21 @@
     position: fixed;
     transition: all 0.4s;
     left: 10px;
-    bottom: -110px;
-    width: 650px;
+    bottom: -320px;
+    width: 700px;
     border: 1px solid rgba(218, 223, 225, 0.9);
     border-radius: 20px;
     padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #vidaNave {
+    text-shadow: 0 0 4px #000;
     background-color: #26A65B;
 }
 
 #escudoNave {
+    text-shadow: 0 0 4px #000;
     background-color: #424242;
 }
 
@@ -309,8 +328,9 @@
 
 #btnInfoFooter {
     opacity: 0;
-    bottom: 20px;
-    right: 10px;
+    transition: all 0.4s;
+    right: -20px;
+    bottom: -20px;
 }
 
 #btnInfoFooter:hover {
@@ -321,12 +341,13 @@
     position: fixed;
     transition: all 0.4s;
     bottom: -55px;
-    right: 20px;
+    right: -20px;
     z-index: 12;
 }
 
 #closeFooter.active {
     bottom: 290px;
+    right: 20px;
 }
 
 #footerGame {
