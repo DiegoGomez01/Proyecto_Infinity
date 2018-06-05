@@ -48,3 +48,71 @@ class Planetas {
     }
 
 }
+
+class Dijkstra{
+
+    constructor(totalPesos, verticeOrigen, cantidadNodos){
+        this.verticeOrigen = verticeOrigen;
+        this.cantidadNodos = cantidadNodos;
+        this.totalPesos = totalPesos;
+        this.ultimoVertice = [cantidadNodos];
+        this.costosMinimos = [cantidadNodos];
+        this.revisado = [cantidadNodos];
+    }
+
+    caminosMinimos(ruta) {
+        var salida = "";
+        for (var i = 0; i < this.cantidadNodos; i++) {
+            this.revisado[i] = false;
+            this.costosMinimos[i] = this.totalPesos[this.verticeOrigen][i];
+            this.ultimoVertice[i] = this.verticeOrigen;
+        }
+        this.revisado[this.verticeOrigen] = true;
+        this.costosMinimos[this.verticeOrigen] = 99999999;
+        for (var i = 0; i < this.cantidadNodos; i++) {
+            var v = this.minimo();
+            this.revisado[v] = true;
+            for (var j = 0; j < this.cantidadNodos; j++) {
+                if (this.costosMinimos[v] + this.totalPesos[v][j] < this.costosMinimos[j]) {
+                    this.costosMinimos[j] = this.costosMinimos[v] + this.totalPesos[v][j];
+                    this.ultimoVertice[j] = v;
+                }
+            }
+        }
+        for (var i = 0; i < this.cantidadNodos; i++) {
+            salida += "costo mínimo de " + this.verticeOrigen + " a " + i + ": " + this.costosMinimos[i] + "\n";
+        }
+        salida += this.ruta(ruta);
+        return salida;
+    }
+
+    minimo() {
+        var mx = 1000000000;//el menor vertice del origen//vertice que tiene el camino minimo desde el origen
+        var v = 1;
+        for (var i = 0; i < this.cantidadNodos; i++) {
+            if (!this.revisado[i] && (this.costosMinimos[i] <= mx)){
+                mx = this.costosMinimos[i];
+                v = i;
+            }
+        }
+        return v;
+    }
+
+    ruta(j) {
+        var s = "";
+        var salida="";
+        var valorInicial = j;
+        while(this.ultimoVertice[j]!=this.verticeOrigen){
+            s = this.ultimoVertice[j] + "-";
+            salida=s+salida;
+            j=this.ultimoVertice[j];
+        }
+        salida=this.verticeOrigen+"-"+salida+valorInicial;
+        if (this.costosMinimos[valorInicial] >= 999) {
+            s = "No se puede calcular la ruta más corta con respecto al vértice " + j;
+        } else {
+            s = "La ruta mas corta para el vértice " + valorInicial + " es: " + salida;
+        }
+        return s;
+    }
+}

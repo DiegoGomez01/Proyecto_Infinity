@@ -13,6 +13,49 @@ $(document).ready(function () {
         }
     });
 
+    $("#pruebaBorrar").on("click", function () {
+        if (nebulosaVisitada === -1) {
+            console.log("no hay matriz de adyasencia.");
+        } else if (sisPlanetarioVisitado === -1) {
+            nave = game.add.sprite(galaxia.Nebulosas[0].sprite.position.x, galaxia.Nebulosas[0].sprite.position.y, "nave");
+            nave.width = 100;
+            nave.height = 100;
+            nave.inputEnabled = true;
+            nave.input.enableDrag();
+            var s2=galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[2].sprite;
+            var s1=galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[1].sprite;
+            game.physics.enable([nave,s2,s1], Phaser.Physics.ARCADE);
+            nave.body.setSize(2, 2, nave.position.x, nave.position.y);
+            s2.body.collideWorldBounds = true;
+            s1.body.collideWorldBounds = true;
+            nave.body.collideWorldBounds = true;
+            var camino = new Dijkstra(galaxia.Nebulosas[nebulosaVisitada].matrizAdy, 0, galaxia.Nebulosas[nebulosaVisitada].matrizAdy.length);
+            console.log(camino.caminosMinimos(1));
+            game.physics.arcade.moveToObject(nave, s2, 100);
+        } else if (planetaVisitado === -1) {
+
+        }
+    });
+
+    function checkCollision(){
+        if(nebulosaVisitada!==-1 && sisPlanetarioVisitado===-1){
+            if(galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios.length>=3){
+                if(game.physics.arcade.collide(nave, galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[1].sprite)){
+                    //console.log("colision1");
+                    nave.body.velocity.setTo(0, 0);
+                    galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[1].sprite.body.velocity.setTo(0, 0);
+                    //game.physics.arcade.moveToObject(nave, galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[2].sprite, 100);
+                }
+                if(game.physics.arcade.collide(nave, galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[2].sprite)){
+                    //console.log("colision2");
+                    nave.body.velocity.setTo(0, 0);
+                    galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[2].sprite.body.velocity.setTo(0, 0);
+                    game.physics.arcade.moveToObject(nave, galaxia.Nebulosas[nebulosaVisitada].sistemasPlanetarios[1].sprite, 100);
+                }
+            }
+        }
+    }
+
     $("#btnAtras").on("click", function () {
         if(nebulosaVisitada!==-1) {
             if (planetaVisitado !== -1) {
@@ -41,6 +84,8 @@ $(document).ready(function () {
     var sisPlanetarioVisitado = -1;
     var planetaVisitado = -1;
     var fondo;
+    var nave;
+    var ruta=[2,1];
 
     var ancho = $(window).width();
     var alto = $(window).height();
@@ -98,6 +143,8 @@ $(document).ready(function () {
 
         game.load.spritesheet('teletransportador1', 'assets/images/teletransportador1.png', 100, 100, 49);
         game.load.spritesheet('teletransportador2', 'assets/images/teletransportador2.png', 100, 100, 72);
+
+        game.load.image('nave', 'assets/images/nave (3).png');
     }
 
 
@@ -105,15 +152,11 @@ $(document).ready(function () {
         fondo = game.add.sprite(0, 0, 'fondoGalaxia');
         fondo.height = alto;
         fondo.width = ancho;
-        /*var Sprite = game.add.sprite(100, 100, "teletransportador2");
-        Sprite.width = 100;
-        Sprite.height = 100;
-        var giro = Sprite.animations.add('giro');
-        Sprite.animations.play('giro', 5, true);*/
         startGame();
     }
 
     function update() {
+        checkCollision();
         updateLines();
     }
 
@@ -448,9 +491,9 @@ $(document).ready(function () {
     }
 
     function addColumnMatrizAdy(matriz) {
-        matriz.push(new Array(matriz.length).fill(0));
+        matriz.push(new Array(matriz.length).fill(99999999));
         for (var i = 0; i < matriz.length; i++) {
-            matriz[i].push(0);
+            matriz[i].push(99999999);
         }
     }
 
