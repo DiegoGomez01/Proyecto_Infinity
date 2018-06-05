@@ -1,3 +1,36 @@
+var options = {
+    angle: -0.2,
+    lineWidth: 0.07,
+    radiusScale: 0.75,
+    pointer: {
+        length: 0.6,
+        strokeWidth: 0.02,
+        color: '#22A7F0'
+    },
+    limitMax: true,
+    limitMin: false,
+    colorStart: '#4183D7',
+    colorStop: '#4183D7',
+    strokeColor: '#ECECEC',
+    generateGradient: true,
+    highDpiSupport: true,
+    percentColors: [
+        [0.0, "#F03434"],
+        [0.45, "#F9BF3B"],
+        [1.0, "#26A65B"]
+    ],
+    renderTicks: {
+        divisions: 10,
+        divWidth: 1,
+        divLength: 0.6,
+        divColor: '#22313F',
+        subDivisions: 3,
+        subLength: 0.5,
+        subWidth: 0.6,
+        subColor: '#2C3E50'
+    }
+};
+
 $(document).ready(function () {
     alertify.defaults = {
         autoReset: true,
@@ -56,6 +89,13 @@ $(document).ready(function () {
         $(this).toggleClass("fa-chevron-circle-down fa-chevron-circle-up active");
         $("#containerEstado").toggleClass("active");
     });
+
+    var canvasCombustible = document.getElementById("combustibleNivelNave"); // your canvas element
+    var indicadorCombustible = new Gauge(canvasCombustible).setOptions(options); // create sexy gauge!
+    indicadorCombustible.maxValue = 200000;
+    indicadorCombustible.setMinValue(0);
+    // indicadorCombustible.animationSpeed = 32;
+    indicadorCombustible.set(200000);
 
     //Activacion de estilo
     $('.estiloNebulosa').on("click", function () {
@@ -159,8 +199,11 @@ $(document).ready(function () {
     $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
-
+    var value = 0;
     $("#btnInfoFooter").on("click", function () {
+        // value += 10000;
+        // indicadorCombustible.set(value);
+        // $("#combustibleNivelNave").attr("data-content", value + "L");
         $('#overlay').fadeIn();
         $('#footerGame,#closeFooter').addClass("active");
     });
