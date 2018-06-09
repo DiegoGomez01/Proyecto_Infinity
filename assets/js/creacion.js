@@ -199,9 +199,9 @@ $(document).ready(function () {
     $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
-    var value = 0;
+    // var value = 200000;
     $("#btnInfoFooter").on("click", function () {
-        // value += 10000;
+        // value -= 10000;
         // indicadorCombustible.set(value);
         // $("#combustibleNivelNave").attr("data-content", value + "L");
         $('#overlay').fadeIn();

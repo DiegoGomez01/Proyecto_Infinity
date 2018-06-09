@@ -16,7 +16,7 @@
 
 #navToolsCreate {
     position: fixed;
-    top: 0px;
+    top: 12px;
     right: 0px;
     z-index: 9;
 }
