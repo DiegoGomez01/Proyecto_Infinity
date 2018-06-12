@@ -16,7 +16,7 @@
 
 #navToolsCreate {
     position: fixed;
-    top: 0px;
+    top: 12px;
     right: 0px;
     z-index: 9;
 }
@@ -58,6 +58,26 @@
 
 #btnCerrarSideBar.active {
     right: 510px;
+}
+
+#infoSeleccion.active {
+    top: 10px;
+}
+
+#infoSeleccion {
+    cursor: pointer;
+    position: fixed;
+    top: -70px;
+    left: 50%;
+    margin-left: -125px;
+    width: 250px;
+    border: 1px solid #FFF;
+    border-radius: 20px;
+    background-color: rgba(0, 20, 26, 0.7);
+    color: #FFF;
+    padding-top: 10px;
+    text-align: center;
+    transition: all 0.4s;
 }
 
 #infoUbicacion {
