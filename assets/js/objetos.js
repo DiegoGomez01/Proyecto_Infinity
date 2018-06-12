@@ -1,57 +1,56 @@
 class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
+        this.planetaOrigen = [];
         this.Nebulosas = [];
     }
 }
 
 class Nebulosa {
-    constructor(id,nombre,peligroso,sprite) {
+    constructor(id, nombre, peligroso, sprite) {
         this.id = id;
         this.nombre = nombre;
-        this.peligroso=peligroso;
+        this.peligroso = peligroso;
+        this.tieneEstacionEspacial = false;
+        this.tieneTeletransportador = false;
         this.sprite = sprite;
 
         this.sistemasPlanetarios = [];
-        this.lineas=[];
-        this.matrizAdy=[];
-        this.lineasXmatriz=[];
+        this.lineas = [];
+        this.matrizAdy = [];
+        this.lineasXmatriz = [];
     }
-
 }
 
 class SistemasPlanetarios {
-    constructor(id,nombre, sprite) {
+    constructor(id, nombre, sprite) {
         this.id = id;
         this.nombre = nombre;
-        this.depCombustibleGastado=false;
-        this.teletrasportadorGastado=false;
         this.sprite = sprite;
 
         this.planetas = [];
-        this.lineas=[];
-        this.matrizAdy=[];
-        this.lineasXmatriz=[];
+        this.lineas = [];
+        this.matrizAdy = [];
+        this.lineasXmatriz = [];
     }
 }
 
 class Planetas {
-    constructor(id,nombre, iridio,platino,paladio, elementoCero,tipo,sprite) {
+    constructor(id, nombre, iridio, platino, paladio, elementoCero, tipo, sprite) {
         this.id = id;
         this.nombre = nombre;
-        this.tipo=tipo;
+        this.tipo = tipo;
         this.iridio = iridio;
         this.platino = platino;
         this.paladio = paladio;
         this.elementoCero = elementoCero;
-        this.sprite=sprite;
+        this.sprite = sprite;
     }
-
 }
 
-class Dijkstra{
+class Dijkstra {
 
-    constructor(totalPesos, verticeOrigen, cantidadNodos){
+    constructor(totalPesos, verticeOrigen, cantidadNodos) {
         this.verticeOrigen = verticeOrigen;
         this.cantidadNodos = cantidadNodos;
         this.totalPesos = totalPesos;
@@ -87,10 +86,10 @@ class Dijkstra{
     }
 
     minimo() {
-        var mx = 1000000000;//el menor vertice del origen//vertice que tiene el camino minimo desde el origen
+        var mx = 1000000000; //el menor vertice del origen//vertice que tiene el camino minimo desde el origen
         var v = 1;
         for (var i = 0; i < this.cantidadNodos; i++) {
-            if (!this.revisado[i] && (this.costosMinimos[i] <= mx)){
+            if (!this.revisado[i] && (this.costosMinimos[i] <= mx)) {
                 mx = this.costosMinimos[i];
                 v = i;
             }
@@ -100,14 +99,14 @@ class Dijkstra{
 
     ruta(j) {
         var s = "";
-        var salida="";
+        var salida = "";
         var valorInicial = j;
-        while(this.ultimoVertice[j]!=this.verticeOrigen){
+        while (this.ultimoVertice[j] != this.verticeOrigen) {
             s = this.ultimoVertice[j] + "-";
-            salida=s+salida;
-            j=this.ultimoVertice[j];
+            salida = s + salida;
+            j = this.ultimoVertice[j];
         }
-        salida=this.verticeOrigen+"-"+salida+valorInicial;
+        salida = this.verticeOrigen + "-" + salida + valorInicial;
         if (this.costosMinimos[valorInicial] >= 999) {
             s = "No se puede calcular la ruta más corta con respecto al vértice " + j;
         } else {

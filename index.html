@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -13,9 +13,10 @@
     <script type="text/javascript" src="assets/js/popper.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/phaser.min.js"></script>
+    <script type="text/javascript" src="assets/js/objetos.js"></script>
     <script type="text/javascript" src="assets/js/creacion.js"></script>
+    <script type="text/javascript" src="assets/js/ubicacion.js"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
-    <script type="text/javascript" src="assets/js/Objects/Objects.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/alertify.min.css">
@@ -38,6 +39,12 @@
                 <input id="checkNebulosaEsPeligrosa" class="form-check-input " type="checkbox" value="" id="defaultCheck1">
                 <label class="form-check-label" for="checkNebulosaEsPeligrosa" style="color: #D64541">
                     Es Peligrosa
+                </label>
+            </div>
+            <div id="planetaEsOrigen" class="form-check mt-3 mb-3 d-none">
+                <input id="checkPlanetaEsOrigen" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="checkPlanetaEsOrigen">
+                    Es el planeta Inicial
                 </label>
             </div>
             <div class="container">
@@ -138,15 +145,18 @@
     <div id="gameContainer" class="container-fluid">
         <ul id="navToolsCreate" class="nav flex-column">
             <li class="nav-item">
-                <div id="btnCrear" class="fa fa-plus btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Crear Nuevo Elemento"></div>
+                <div id="btnCrear" class="fa fa-plus btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Crear Nueva Nebulosa"></div>
+            </li>
+            <li class="nav-item d-none">
+                <div id="btnEditar" class="fa fa-pencil-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="...."></div>
             </li>
             <li class="nav-item">
-                <div id="btnEditar" class="fa fa-pencil-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Editar Elemento"></div>
-            </li>
-            <li class="nav-item">
-                <div id="btnEliminar" class="fa fa-trash-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Eliminar Elemento"></div>
+                <div id="btnEliminar" class="fa fa-trash-alt btnMetal m-2 d-none" data-toggle="popover" data-placement="left" data-content="...."></div>
             </li>
         </ul>
+        <div id="infoSeleccion" class="pl-2 pr-2">
+            <p>No Hay Selección</p>
+        </div>
         <div id="infoUbicacion" class="pl-2 pr-2">
             <p id="infoUbic">Vía Láctea</p>
         </div>
