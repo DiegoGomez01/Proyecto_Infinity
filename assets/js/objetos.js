@@ -2,23 +2,21 @@ class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
         this.planetaOrigen = [];
-        this.Nebulosas = [];
+        this.nebulosas = [];
     }
 }
 
 class Nebulosa {
-    constructor(id, nombre, peligroso, sprite) {
+    constructor(id, nombre, esPeligrosa, sprite) {
         this.id = id;
         this.nombre = nombre;
-        this.peligroso = peligroso;
-        this.tieneEstacionEspacial = false;
-        this.tieneTeletransportador = false;
+        this.esPeligrosa = esPeligrosa;
+        this.estacionEspacial = [];
+        this.teletransportador = [];
         this.sprite = sprite;
-
         this.sistemasPlanetarios = [];
         this.lineas = [];
-        this.matrizAdy = [];
-        this.lineasXmatriz = [];
+        this.matrizAdyacencia = [];
     }
 }
 
@@ -27,23 +25,21 @@ class SistemasPlanetarios {
         this.id = id;
         this.nombre = nombre;
         this.sprite = sprite;
-
         this.planetas = [];
         this.lineas = [];
-        this.matrizAdy = [];
-        this.lineasXmatriz = [];
+        this.matrizAdyacencia = [];
     }
 }
 
 class Planetas {
-    constructor(id, nombre, iridio, platino, paladio, elementoCero, tipo, sprite) {
+    constructor(id, nombre, iridio, platino, paladio, elementoZero, tipo, sprite) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.iridio = iridio;
         this.platino = platino;
         this.paladio = paladio;
-        this.elementoCero = elementoCero;
+        this.elementoZero = elementoZero;
         this.sprite = sprite;
     }
 }
