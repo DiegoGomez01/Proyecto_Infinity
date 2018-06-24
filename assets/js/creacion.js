@@ -100,7 +100,7 @@ $(document).ready(function () {
     }
 
     function createSimulacion() {
-        alert("YO MARIO ANDRES, ENSALSO A DIOS MI SEÑOR Y MI PADRE ANTE TODO EL MUNDO... EL ES LA SALVACION");
+        
     }
 
     game.state.add('creacion', creacionState);
