@@ -111,7 +111,8 @@
 #btnIniciar {
     position: fixed;
     bottom: 20px;
-    right: 200px;
+    left: 50%;
+    margin-left: -27.5px;
 }
 
 #btnEstado.active {
@@ -200,23 +201,18 @@
     background: grey;
     background-image: linear-gradient(120deg, #00B0FF 50%, rgb(0, 115, 168) 51%);
     border-radius: 50%;
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.465, 1.55) 0.2s, border-width 0.4s cubic-bezier(0.68, -0.55, 0.465, 1.55);
+    transition: all 0.1s cubic-bezier(0.68, -0.55, 0.465, 1.55) 0.1s, border-width 0.2s cubic-bezier(0.68, -0.55, 0.465, 1.55);
 }
 
 .btnICON::before {
     display: block;
     position: absolute;
-    /* bottom: 15%; */
-    left: 15%;
-    transform: translate(-0px, 25%);
-}
-
-.btnICON:hover {
-    border: 2px solid white;
+    left: 17%;
+    transform: translate(-0px, 21%);
 }
 
 .btnICON:hover::before {
-    animation: playJump 0.5s linear normal;
+    animation: playJump 0.4s linear normal;
 }
 
 @keyframes playJump {
@@ -251,7 +247,7 @@
         transform: translate(0px, 30%) scale(1.2, 0.7);
     }
     100% {
-        transform: translate(0px, 30%) scale(1.4, 0.7);
+        transform: translate(0px, 25%) scale(1.4, 0.7);
     }
 }
 

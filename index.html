@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Proyecto Infinity</title>
+    <title>Proyecto Infinity - Creación</title>
     <link rel="icon" href="assets/images/favicon.png">
     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/gauge.min.js"></script>
@@ -17,7 +17,9 @@
     <script type="text/javascript" src="assets/js/creacion.js"></script>
     <script type="text/javascript" src="assets/js/ubicacion.js"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/interfaz.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrapAlertify.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/alertify.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
@@ -47,7 +49,7 @@
                     Es el planeta Inicial
                 </label>
             </div>
-            <div class="container">
+            <div id="containerEstilos" class="container">
                 <h4 class="titulo border-bottom">Estilos</h4>
                 <div id="tipoPlanetaSelect" class="form-group row justify-content-center d-none">
                     <div class="col-sm-8">
@@ -139,6 +141,9 @@
                 <button id="btnUbicar" class="btn btnGEN btn-lg mr-2">Crear y Ubicar&nbsp;
                     <i class="fa fa-map-marker-alt"></i>
                 </button>
+                <button id="btnGuardar" class="btn btnGEN btn-lg mr-2  d-none">Guardar&nbsp;
+                    <i class="fa fa-save"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -147,8 +152,8 @@
             <li class="nav-item">
                 <div id="btnCrear" class="fa fa-plus btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Crear Nueva Nebulosa"></div>
             </li>
-            <li class="nav-item d-none">
-                <div id="btnEditar" class="fa fa-pencil-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="...."></div>
+            <li class="nav-item">
+                <div id="btnEditar" class="fa fa-pencil-alt btnMetal m-2" data-toggle="popover" data-placement="left" data-content="Editar la galaxia"></div>
             </li>
             <li class="nav-item">
                 <div id="btnEliminar" class="fa fa-trash-alt btnMetal m-2 d-none" data-toggle="popover" data-placement="left" data-content="...."></div>
@@ -162,7 +167,7 @@
         </div>
         <div id="btnAtras" class="fa fa-chevron-left btnMetal" data-toggle="popover" data-placement="bottom" data-content="Atrás"></div>
         <div id="containerEstado">
-            <div id="btnEstado" class="fa fa-chevron-circle-up fa-2x btnICON"></div>
+            <div id="btnEstado" class="fa fa-chevron-circle-up fa-2x btnICON d-none"></div>
             <div class="row">
                 <div class="col-4">
                     <canvas id="combustibleNivelNave" width="210px" height="200px"> </canvas>
