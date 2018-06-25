@@ -4,6 +4,7 @@ $(document).ready(function () {
             galaxia.planetaOrigen=json.planetaOrigen;
             cargarNebulosas(json.nebulosas);
         });
+        console.log(galaxia);
     });
 });
 
@@ -31,7 +32,7 @@ function cargarNebulosas(nebulosas){
         var nebulosa = new Nebulosa(idNeb, nombre, peligrosa, nebulaSprite);
         galaxia.nebulosas.push(nebulosa);
         cargarSistemasPlanetarios(nebulosa,neb.sistemasPlanetarios);
-        cargarLineasJson(nebulosa,neb.lineas,"Nebulosa");
+        cargarLineasJson(nebulosa,neb.lineas,neb.matrizAdy,"Nebulosa");
     });
     actualizarVista();
 }
@@ -56,8 +57,7 @@ function cargarSistemasPlanetarios(nebulosaActual,sistemasPlanetarios){
         nebulosaActual.sistemasPlanetarios.push(sistemaPlanetario);
         addColumnMatrizAdyacencia(nebulosaActual.matrizAdyacencia);
         cargarPlanetas(sistemaPlanetario,sisPlan.planetas);
-        console.log(sistemasPlanetarios);
-        cargarLineasJson(sistemaPlanetario,sisPlan.lineas,"SisPlanetarios");
+        cargarLineasJson(sistemaPlanetario,sisPlan.lineas,sisPlan.matrizAdy,"SisPlanetarios");
         actualizarVista();
     });
 }
@@ -101,7 +101,7 @@ function cargarPlanetas(sistemaSolarActual,PlanetasJson){
     actualizarVista();
 }
 
-function cargarLineasJson(padreSeleccionado,Lineas,ubicacion){
+function cargarLineasJson(padreSeleccionado,Lineas,MatrizAdy,ubicacion){
     Lineas.forEach(function(lineaJson){
         if(ubicacion!=="Nebulosa"){
             var s1x=padreSeleccionado.planetas[lineaJson[0]].sprite.position.x;
@@ -122,5 +122,6 @@ function cargarLineasJson(padreSeleccionado,Lineas,ubicacion){
         padreSeleccionado.lineas.push([line, s1, s2]);
         printLine(line);
         deseleccionar();
+        padreSeleccionado.matrizAdyacencia=MatrizAdy;
     });
 }
