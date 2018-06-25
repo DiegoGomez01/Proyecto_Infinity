@@ -1,0 +1,150 @@
+{
+    "planetaOrigen": [
+      1,
+      1,
+      1
+    ],
+    "nebulosas": [
+      {
+        "nombre": "neb1",
+        "peligrosa": false,
+        "estacionEspacial": [
+          1,
+          1,
+          1
+        ],
+        "teletransportador": [
+          1,
+          1,
+          1
+        ],
+        "sprite": {
+          "posx": 100,
+          "posy": 100,
+          "selected": "nebulosa1"
+        },
+        "sistemasPlanetarios": [
+          {
+            "nombre": "sis1",
+            "sprite": {
+              "posx": 100,
+              "posy": 100,
+              "selected": "sistemasolar1"
+            },
+            "planetas": [
+              {
+                "nombre": "planeta1",
+                "tipo":"planeta",
+                "iridio":1000,
+                "platino":1000,
+                "paladio":1000,
+                "elementoZero":1000,
+                "sprite":{
+                    "posx":100,
+                    "posy":100,
+                    "selected":"planeta1"
+                }
+              },
+              {
+                "nombre": "planeta2",
+                "tipo":"planeta",
+                "iridio":1000,
+                "platino":1000,
+                "paladio":1000,
+                "elementoZero":1000,
+                "sprite":{
+                    "posx":200,
+                    "posy":200,
+                    "selected":"planeta2"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                10
+              ],
+              [
+                10,
+                99999999
+              ]
+            ]
+          },
+          {
+            "nombre": "sis2",
+            "sprite": {
+              "posx": 300,
+              "posy": 300,
+              "selected": "sistemasolar2"
+            },
+            "planetas": [
+              {
+                "nombre": "planeta3",
+                "tipo":"planeta",
+                "iridio":1000,
+                "platino":1000,
+                "paladio":1000,
+                "elementoZero":1000,
+                "sprite":{
+                    "posx":100,
+                    "posy":100,
+                    "selected":"planeta3"
+                }
+              },
+              {
+                "nombre": "planeta4",
+                "tipo":"planeta",
+                "iridio":1000,
+                "platino":1000,
+                "paladio":1000,
+                "elementoZero":1000,
+                "sprite":{
+                    "posx":200,
+                    "posy":200,
+                    "selected":"planeta4"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                10
+              ],
+              [
+                10,
+                99999999
+              ]
+            ]
+          }
+        ],
+        "lineas": [
+          [
+            0,
+            1
+          ]
+        ],
+        "matrizAdy": [
+          [
+            99999999,
+            10
+          ],
+          [
+            10,
+            99999999
+          ]
+        ]
+      }
+    ]
+  }
