@@ -241,6 +241,7 @@ function newNebulosa() {
         }
     }
     var nebulosa = new Nebulosa(idNeb, nombre, peligrosa, nebulaSprite);
+    console.log(nebulosa);
     galaxia.nebulosas.push(nebulosa);
 }
 
@@ -261,6 +262,7 @@ function newSisPlanetario() {
         nombre = "Sistema Solar " + (idSisPlanetario + 1)
     }
     var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
+    console.log(sistemaPlanetario);
     nebulosaActual.sistemasPlanetarios.push(sistemaPlanetario);
     addColumnMatrizAdyacencia(nebulosaActual.matrizAdyacencia);
 }
@@ -344,6 +346,7 @@ function newPlanet() {
     var planeta = new Planetas(idPlaneta, nombre, iridio, platino, paladio, elemento0, tipoPlaneta, Sprite);
     sistemaSolarActual.planetas.push(planeta);
     addColumnMatrizAdyacencia(sistemaSolarActual.matrizAdyacencia);
+    console.log(planeta);
 }
 
 function addColumnMatrizAdyacencia(matriz) {
