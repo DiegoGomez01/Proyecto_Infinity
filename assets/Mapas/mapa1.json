@@ -268,15 +268,11 @@
               },
               {
                 "nombre": "TrES-2b",
-                "tipo":"planeta",
-                "iridio":758,
-                "platino":487,
-                "paladio":888,
-                "elementoZero":1000,
+                "tipo":"teletrasportador",
                 "sprite":{
                     "posx":1072,
                     "posy":70,
-                    "selected":"planeta5"
+                    "selected":"teletransportador1"
                 }
               },
               {
@@ -359,15 +355,11 @@
               },
               {
                 "nombre": "TrES-4",
-                "tipo":"planeta",
-                "iridio":456,
-                "platino":975,
-                "paladio":705,
-                "elementoZero":1000,
+                "tipo":"ecombustible",
                 "sprite":{
                     "posx":617,
                     "posy":44,
-                    "selected":"planeta3"
+                    "selected":"estacionEspacial1"
                 }
               },
               {

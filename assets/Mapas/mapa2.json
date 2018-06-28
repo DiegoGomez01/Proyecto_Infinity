@@ -1,0 +1,275 @@
+{
+    "planetaOrigen": [
+      0,
+      0,
+      0
+    ],
+    "nebulosas": [
+      {
+        "nombre": "Nebulosa 1",
+        "peligrosa": false,
+        "estacionEspacial": [
+          0,
+          0,
+          1
+        ],
+        "teletransportador": [
+          0,
+          1,
+          0
+        ],
+        "sprite": {
+          "posx": 100,
+          "posy": 100,
+          "selected": "nebulosa1"
+        },
+        "sistemasPlanetarios": [
+          {
+            "nombre": "Sistema Solar 1",
+            "sprite": {
+              "posx": 100,
+              "posy": 100,
+              "selected": "sistemasolar1"
+            },
+            "planetas": [
+              {
+                "nombre": "Planeta 1",
+                "tipo": "planeta",
+                "iridio": 1000,
+                "platino": 1000,
+                "paladio": 1000,
+                "elementoZero": 1000,
+                "sprite": {
+                  "posx": 100,
+                  "posy": 100,
+                  "selected": "planeta1"
+                }
+              },
+              {
+                "nombre": "Planeta 2",
+                "tipo": "ecombustible",
+                "sprite": {
+                  "posx": 426,
+                  "posy": 256,
+                  "selected": "estacionEspacial1"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                1
+              ],
+              [
+                1,
+                99999999
+              ]
+            ]
+          },
+          {
+            "nombre": "Sistema Solar 2",
+            "sprite": {
+              "posx": 382,
+              "posy": 48,
+              "selected": "sistemasolar2"
+            },
+            "planetas": [
+              {
+                "nombre": "Planeta 1",
+                "tipo": "teletrasportador",
+                "sprite": {
+                  "posx": 100,
+                  "posy": 100,
+                  "selected": "teletransportador1"
+                }
+              },
+              {
+                "nombre": "Planeta 2",
+                "tipo": "planeta",
+                "iridio": 1000,
+                "platino": 1000,
+                "paladio": 1000,
+                "elementoZero": 1000,
+                "sprite": {
+                  "posx": 431,
+                  "posy": 54,
+                  "selected": "planeta1"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                1
+              ],
+              [
+                1,
+                99999999
+              ]
+            ]
+          }
+        ],
+        "lineas": [
+          [
+            0,
+            1
+          ]
+        ],
+        "matrizAdy": [
+          [
+            99999999,
+            23
+          ],
+          [
+            23,
+            99999999
+          ]
+        ]
+      },
+      {
+        "nombre": "Nebulosa 2",
+        "peligrosa": false,
+        "estacionEspacial": [
+          1,
+          1,
+          1
+        ],
+        "teletransportador": [
+          1,
+          0,
+          1
+        ],
+        "sprite": {
+          "posx": 437,
+          "posy": 63,
+          "selected": "nebulosa2"
+        },
+        "sistemasPlanetarios": [
+          {
+            "nombre": "Sistema Solar 1",
+            "sprite": {
+              "posx": 100,
+              "posy": 100,
+              "selected": "sistemasolar3"
+            },
+            "planetas": [
+              {
+                "nombre": "Planeta 1",
+                "tipo": "planeta",
+                "iridio": 5000,
+                "platino": 3000,
+                "paladio": 1500,
+                "elementoZero": 100,
+                "sprite": {
+                  "posx": 100,
+                  "posy": 100,
+                  "selected": "planeta2"
+                }
+              },
+              {
+                "nombre": "Planeta 2",
+                "tipo": "teletrasportador",
+                "sprite": {
+                  "posx": 523,
+                  "posy": 90,
+                  "selected": "teletransportador2"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                1
+              ],
+              [
+                1,
+                99999999
+              ]
+            ]
+          },
+          {
+            "nombre": "Sistema Solar 2",
+            "sprite": {
+              "posx": 533,
+              "posy": 69,
+              "selected": "sistemasolar2"
+            },
+            "planetas": [
+              {
+                "nombre": "Planeta 1",
+                "tipo": "planeta",
+                "iridio": 5000,
+                "platino": 3000,
+                "paladio": 1500,
+                "elementoZero": 100,
+                "sprite": {
+                  "posx": 100,
+                  "posy": 100,
+                  "selected": "planeta2"
+                }
+              },
+              {
+                "nombre": "Planeta 2",
+                "tipo": "ecombustible",
+                "sprite": {
+                  "posx": 499,
+                  "posy": 97,
+                  "selected": "estacionEspacial1"
+                }
+              }
+            ],
+            "lineas": [
+              [
+                0,
+                1
+              ]
+            ],
+            "matrizAdy": [
+              [
+                99999999,
+                1
+              ],
+              [
+                1,
+                99999999
+              ]
+            ]
+          }
+        ],
+        "lineas": [
+          [
+            0,
+            1
+          ]
+        ],
+        "matrizAdy": [
+          [
+            99999999,
+            23
+          ],
+          [
+            23,
+            99999999
+          ]
+        ]
+      }
+    ]
+  }

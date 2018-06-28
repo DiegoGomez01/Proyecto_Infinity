@@ -1,10 +1,13 @@
 $(document).ready(function () {
     $("#cargarJson").on("click", function () {
-        $.getJSON("assets/Mapas/mapa1.json", function(json) {
+        $.getJSON("assets/Mapas/mapa2.json", function(json) {
             galaxia.planetaOrigen=json.planetaOrigen;
             cargarNebulosas(json.nebulosas);
         });
-        console.log(galaxia);
+        //console.log(galaxia);
+    });
+    $("#generarJSON").on("click", function () {
+        console.log(generarJson());
     });
 });
 
@@ -102,8 +105,11 @@ function cargarPlanetas(sistemaSolarActual,PlanetasJson){
 }
 
 function cargarLineasJson(padreSeleccionado,Lineas,MatrizAdy,ubicacion){
+    //console.log(Lineas);
     Lineas.forEach(function(lineaJson){
         if(ubicacion!=="Nebulosa"){
+            console.log(padreSeleccionado);
+            console.log(lineaJson);
             var s1x=padreSeleccionado.planetas[lineaJson[0]].sprite.position.x;
             var s1y=padreSeleccionado.planetas[lineaJson[0]].sprite.position.y;
             var s2x=padreSeleccionado.planetas[lineaJson[1]].sprite.position.x;
@@ -124,4 +130,77 @@ function cargarLineasJson(padreSeleccionado,Lineas,MatrizAdy,ubicacion){
         deseleccionar();
         padreSeleccionado.matrizAdyacencia=MatrizAdy;
     });
+}
+
+function generarJson(){
+    var salida="{";
+    salida+='"planetaOrigen":['+(galaxia.planetaOrigen).join()+'],';
+    salida+='"nebulosas":[';
+    galaxia.nebulosas.forEach(function(neb){
+        salida+='{';
+        salida+='"nombre":"'+neb.nombre+'",';
+        if(neb.peligrosa){
+            salida+='"peligrosa":true,';
+        }else{
+            salida+='"peligrosa":false,';
+        }
+        salida+='"estacionEspacial":['+(neb.estacionEspacial).join()+'],';
+        salida+='"teletransportador":['+(neb.teletransportador).join()+'],';
+        salida+='"sprite":{';
+        salida+='"posx":'+neb.sprite.position.x+',';
+        salida+='"posy":'+neb.sprite.position.y+',';
+        salida+='"selected":"'+neb.sprite.key+'"},';
+        salida+='"sistemasPlanetarios":[';
+        neb.sistemasPlanetarios.forEach(function(sis){
+            salida+='{';
+            salida+='"nombre":"'+sis.nombre+'",';
+            salida+='"sprite":{';
+            salida+='"posx":'+sis.sprite.position.x+',';
+            salida+='"posy":'+sis.sprite.position.y+',';
+            salida+='"selected":"'+sis.sprite.key+'"},';
+            salida+='"planetas":[';
+            sis.planetas.forEach(function(plan){
+                salida+='{';
+                salida+='"nombre":"'+plan.nombre+'",';
+                salida+='"tipo":"'+plan.tipo+'",';
+                if(plan.tipo=="planeta"){
+                    salida+='"iridio":'+plan.iridio+',';
+                    salida+='"platino":'+plan.platino+',';
+                    salida+='"paladio":'+plan.paladio+',';
+                    salida+='"elementoZero":'+plan.elementoZero+',';
+                }
+                salida+='"sprite":{';
+                salida+='"posx":'+plan.sprite.position.x+',';
+                salida+='"posy":'+plan.sprite.position.y+',';
+                salida+='"selected":"'+plan.sprite.key+'"}';
+                salida+='},';
+            });
+            salida = salida.substring(0,salida.length-1);
+            salida+='],"lineas":[';
+            sis.lineas.forEach(function(linea){
+                salida+='['+linea[1].id+','+linea[2].id+'],';
+            });
+            salida = salida.substring(0,salida.length-1);
+            salida+='],"matrizAdy":[';
+            sis.matrizAdyacencia.forEach(function(linea){
+                salida+='['+linea.join()+'],';
+            });
+            salida = salida.substring(0,salida.length-1);
+            salida+=']},';
+        });
+        salida = salida.substring(0,salida.length-1);
+        salida+='],"lineas":[';
+        neb.lineas.forEach(function(linea){
+            salida+='['+linea[1].id+','+linea[2].id+'],';
+        });
+        salida = salida.substring(0,salida.length-1);
+        salida+='],"matrizAdy":[';
+        neb.matrizAdyacencia.forEach(function(linea){
+            salida+='['+linea.join()+'],';
+        });
+        salida = salida.substring(0,salida.length-1);
+        salida+=']},';
+    });
+    salida = salida.substring(0,salida.length-1)+']}';
+    return salida;
 }

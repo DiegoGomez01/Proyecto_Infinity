@@ -182,7 +182,7 @@ function createLine(arraySelected) {
                 function (closeEvent, costo) {
                     if ($.isNumeric(costo)) {
                         padreSeleccionado.matrizAdyacencia[seleccionAux[2]][arraySelected[2]] = parseInt(costo);
-                        padreSeleccionado.matrizAdyacencia[seleccionAux[2]][arraySelected[2]] = parseInt(costo);
+                        padreSeleccionado.matrizAdyacencia[arraySelected[2]][seleccionAux[2]] = parseInt(costo);
                         var line = new Phaser.Line(seleccionAux[0], seleccionAux[1], arraySelected[0], arraySelected[1]);
                         padreSeleccionado.lineas.push([line, seleccionado0, seleccionado]);
                         printLine(line);
