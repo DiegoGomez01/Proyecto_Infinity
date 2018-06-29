@@ -1,16 +1,15 @@
 $(document).ready(function () {
-    $("#cargarJson").on("click", function () {
-        $.getJSON("assets/Mapas/mapa3.json", function(json) {
-            galaxia.planetaOrigen=json.planetaOrigen;
-            cargarNebulosas(json.nebulosas);
-        });
-        //console.log(galaxia);
-    });
     $("#generarJSON").on("click", function () {
         console.log(generarJson());
     });
 });
-
+function cargarJson(mapa){
+    $.getJSON("assets/Mapas/"+mapa+".json", function(json) {
+        galaxia.planetaOrigen=json.planetaOrigen;
+        cargarNebulosas(json.nebulosas);
+    });
+    $("#portadaContainer").fadeOut("slow");
+}
 function cargarNebulosas(nebulosas){
     nebulosas.forEach(function(neb){
         var idNeb = galaxia.nebulosas.length;

@@ -28,8 +28,7 @@
 
 <body>
     <div id="overlay"></div>
-    <button id="cargarJson">CargarJson</button>
-    <button id="generarJSON">GenerarJSON</button>
+    <!-- <button id="generarJSON">GenerarJSON</button> -->
     <div id="btnCerrarSideBar" class="fa fa-arrow-circle-right fa-2x btnICON"></div>
     <div id="sideBarConfig" class="p-3">
         <h2 id="crearTituloInfo" class="titulo border-bottom text-center">Creación de nebulosa</h2>
@@ -187,10 +186,10 @@
                 <div id="btnVolverPortada" class="menuItem mt-2">Volver</div>
             </div>
             <div id="submenuContainer" >
-                <div class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 1</div>
-                <div class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 2</div>
-                <div class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 3</div>
-                <div class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 4</div>
+                <div onclick="cargarJson('mapa1');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 1</div>
+                <div onclick="cargarJson('mapa2');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 2</div>
+                <div onclick="cargarJson('mapa3');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 3</div>
+                <div onclick="cargarJson('mapa4');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 4</div>
             </div>
         </div>
         <div id="creditos" style="display: none;">
