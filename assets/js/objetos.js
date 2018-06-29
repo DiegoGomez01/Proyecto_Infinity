@@ -1,3 +1,10 @@
+class NaveInfinity {
+    constructor(indicadorCombustible, sprite) {
+        this.combustible = indicadorCombustible;
+        this.sprite = sprite;
+    }
+}
+
 class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
