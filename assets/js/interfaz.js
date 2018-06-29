@@ -1,7 +1,55 @@
 $(document).ready(function () {
+    $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
+        return false;
+    });
+
+    $("#portadaPrincipal").on("click", function () {
+        $("#portadaPrincipal").fadeOut("slow", function () {
+            $("#menuPrincipal").fadeIn("slow");
+        });
+    });
+
+    $("#btnVolverPortada").on("click", function () {
+        $("#menuPrincipal").fadeOut("slow", function () {
+            $("#portadaPrincipal").fadeIn("slow");
+        });
+    });
+
+    $("#btnAbrirCreditos").on("click", function () {
+        $("#menuPrincipal").fadeOut("slow", function () {
+            $("#creditos").fadeIn("slow");
+        });
+    });
+
+    $("#btnCerrarCreditos").on("click", function () {
+        $("#creditos").fadeOut("slow", function () {
+            $("#menuPrincipal").fadeIn("slow");
+        });
+    });
+
+    $("#btnSeguirCreando").on("click", function () {
+        $("#portadaContainer").fadeOut("slow");
+    });
+
+    $("#btnSeleccionarMapa").on("click", function () {
+        $(this).toggleClass("active");
+        $("#submenuContainer").toggleClass("active");
+    });
+
+
+    $("#submenuContainer .menuItem").on("click", function () {
+        alert($(this).text());
+        $("#btnSeleccionarMapa").click();
+    });
+
     //Botones de interfaz
-    $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras,#cantIridioNave,#cantPlatinoNave,#cantPaladioNave,#cantEZeroNave').popover({
+    $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras, #btnCargar, #cantIridioNave,#cantPlatinoNave,#cantPaladioNave,#cantEZeroNave,#submenuContainer .menuItem').popover({
         trigger: 'hover'
+    });
+
+    $("#btnEstado").on("click", function () {
+        $(this).toggleClass("fa-chevron-circle-down fa-chevron-circle-up active");
+        $("#containerEstado").toggleClass("active");
     });
 
     $("#btnCrear").on("click", function () {
@@ -22,7 +70,7 @@ $(document).ready(function () {
         mostrarSideBarConfig();
     });
 
-    $("#btnCerrarSideBar,#overlay").on("click", function () {
+    $("#btnCerrarSideBar").on("click", function () {
         $('#sideBarConfig, #btnCerrarSideBar').removeClass('active');
         $('#overlay').fadeOut();
     });
@@ -34,7 +82,6 @@ $(document).ready(function () {
 
     $("#btnGuardar").on("click", function () {
         guardarEdicion();
-        // mostrarSideBarConfig();
     });
 
     function mostrarSideBarConfig() {
@@ -60,7 +107,38 @@ $(document).ready(function () {
         eliminarElementoActual();
     });
 
+    $("#btnAtras").on("click", function () {
+        irAtras();
+    });
+
+    $("#btnUbicar").on("click", function () {
+        if (nebulosaActual === undefined) {
+            newNebulosa();
+        } else if (sistemaSolarActual === undefined) {
+            newSisPlanetario();
+        } else if (planetaActual === undefined) {
+            newPlanet();
+        }
+        document.getElementById("inputNombre").value = "";
+    });
+
+    $("#btnIniciarNave").on("click", function () {
+        if ($.isNumeric($("#inputSondas").val())) {
+            $('#sideBarConfig').removeClass('active');
+            $('#overlay').fadeOut();
+            alertify.success('La Simulación Empezó!!');
+        } else {
+            alertify.error("Se debe ingresar un número de sondas");
+        }
+    });
+
     //Activacion de estilo
+    $('.estiloNabe').on("click", function () {
+        if (!$(this).hasClass("activo")) {
+            $(".estiloNabe.activo").removeClass("activo");
+            $(this).addClass("activo");
+        }
+    });
     $('.estiloNebulosa').on("click", function () {
         if (!$(this).hasClass("activo")) {
             $(".estiloNebulosa.activo").removeClass("activo");
@@ -159,23 +237,9 @@ $(document).ready(function () {
     $("#cantEZeroRango").on("input", function () {
         $("#cantEZero").text(this.value + "T");
     });
-
-    $("#btnAtras").on("click", function () {
-        irAtras();
-        deseleccionar();
+    $("#cantCombustibleInicial").on("input", function () {
+        $("#cantCombustibleLabel").text(this.value + "L");
     });
-
-    $("#btnUbicar").on("click", function () {
-        if (nebulosaActual === undefined) {
-            newNebulosa();
-        } else if (sistemaSolarActual === undefined) {
-            newSisPlanetario();
-        } else if (planetaActual === undefined) {
-            newPlanet();
-        }
-        document.getElementById("inputNombre").value = "";
-    });
-
 });
 
 function cargarFormularioNebulosa() {
@@ -224,6 +288,39 @@ function cargarFormularioPlaneta() {
     $('.estiloTTransportador').addClass("d-none"); // mostrar estilos planetas
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
 }
+
+function cargarFormularioNave() {
+    $("#nombreContainer").addClass("d-none");
+    $('#nebulosaEsPeligrosa').addClass("d-none"); //ocultar check es peligrosa
+    $("#planetaEsOrigen").addClass("d-none"); // ocultar opción de planeta origen
+    $("#tipoPlanetaSelect").addClass("d-none"); // ocultar selección de tipo
+    $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
+    $('.estiloNebulosa').addClass("d-none"); // ocultar estilos nebulosa
+    $('.estiloPlaneta, .estiloTTransportador, .estiloEEspacial').addClass("d-none"); // ocultar estilos planetas
+    $("#btnUbicar").addClass("d-none");
+    //Formulario Nave
+    $("#crearTituloInfo").text("Nave Infinity"); // cambiar titulo
+    $('.estiloNabe').removeClass("d-none"); // ocultar estilos nebulosa
+    $("#combustibleNaveContainer").removeClass("d-none");
+    $("#inputSondasContainer").removeClass("d-none");
+    $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
+    $("#cantIridioRango").val(0);
+    $("#cantPlatinoRango").val(0);
+    $("#cantPaladioRango").val(0);
+    $("#cantEZeroRango").val(0);
+    $("#cantIridioRango,#cantPlatinoRango,#cantPaladioRango,#cantEZeroRango").trigger("input");
+    $("#btnIniciarNave").removeClass("d-none");
+    $('#sideBarConfig').addClass('active');
+    $('#overlay').fadeIn();
+    alertify.success('¡Seleccione la configuración inicial de la nave Infinity!');
+}
+
+function ocultarEdicion() {
+    $("#btnAtras").addClass("d-none");
+    $("#navToolsCreate").addClass("d-none");
+    $("#infoUbicacion").addClass("leftInfo");
+}
+
 
 function cargarEdicion() {
     $("#btnGuardar").removeClass("d-none");

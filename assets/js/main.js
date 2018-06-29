@@ -2,45 +2,50 @@ var spritesActuales = [];
 
 $(document).ready(function () {
 
-    $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
-        return false;
-    });
 
-    $("#btnEstado").on("click", function () {
-        $(this).toggleClass("fa-chevron-circle-down fa-chevron-circle-up active");
-        $("#containerEstado").toggleClass("active");
-    });
-
-    $("#btnIniciar").on("click", function () {
-        $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
-        game.state.start('simulacion', false);
-        nebulosaActual = undefined;
-        sistemaSolarActual = undefined;
-        planetaActual = undefined;
-        actualizarVista();
-        // if (nebulosaActual === undefined) {
-        //     console.log("no hay matriz de adyasencia.");
-        // } else if (sistemaSolarActual === undefined) {
-        //     nave = game.add.sprite(galaxia.nebulosas[0].sprite.position.x, galaxia.nebulosas[0].sprite.position.y, "nave");
-        //     nave.width = 100;
-        //     nave.height = 100;
-        //     nave.inputEnabled = true;
-        //     nave.input.enableDrag();
-        //     var s2 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite;
-        //     var s1 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite;
-        //     game.physics.enable([nave, s2, s1], Phaser.Physics.ARCADE);
-        //     nave.body.setSize(2, 2, nave.position.x, nave.position.y);
-        //     s2.body.collideWorldBounds = true;
-        //     s1.body.collideWorldBounds = true;
-        //     nave.body.collideWorldBounds = true;
-        //     var camino = new Dijkstra(galaxia.nebulosas[nebulosaActual].matrizAdyacencia, 0, galaxia.nebulosas[nebulosaActual].matrizAdyacencia.length);
-        //     console.log(camino.caminosMinimos(1));
-        //     game.physics.arcade.moveToObject(nave, s2, 100);
-        // } else if (planetaActual === undefined) {
-
-        // }
-    });
 });
+
+function iniciarSimulacion() {
+    if (galaxia.planetaOrigen.length === 3) {
+        nebulosaActual = galaxia.nebulosas[galaxia.planetaOrigen[0]];
+        sistemaSolarActual = nebulosaActual.sistemasPlanetarios[galaxia.planetaOrigen[1]];
+        planetaActual = sistemaSolarActual.planetas[galaxia.planetaOrigen[2]];
+        deseleccionar();
+        ocultarEdicion();
+        actualizarVista();
+        game.state.start('simulacion', false);
+        $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
+        $("#btnIniciar").attr("onclick", "pausarSimulacion()");
+        cargarFormularioNave();
+    } else {
+        alertify.error('Para iniciar la simulación es necesario tener un planeta de inicio');
+    }
+
+    //     nave = game.add.sprite(galaxia.nebulosas[0].sprite.position.x, galaxia.nebulosas[0].sprite.position.y, "nave");
+    //     nave.width = 100;
+    //     nave.height = 100;
+    //     nave.inputEnabled = true;
+    //     nave.input.enableDrag();
+    //     var s2 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite;
+    //     var s1 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite;
+    //     game.physics.enable([nave, s2, s1], Phaser.Physics.ARCADE);
+    //     nave.body.setSize(2, 2, nave.position.x, nave.position.y);
+    //     s2.body.collideWorldBounds = true;
+    //     s1.body.collideWorldBounds = true;
+    //     nave.body.collideWorldBounds = true;
+    //     var camino = new Dijkstra(galaxia.nebulosas[nebulosaActual].matrizAdyacencia, 0, galaxia.nebulosas[nebulosaActual].matrizAdyacencia.length);
+    //     console.log(camino.caminosMinimos(1));
+    //     game.physics.arcade.moveToObject(nave, s2, 100);
+
+}
+
+function pausarSimulacion() {
+    alertify.dismissAll();
+    $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
+    if (game.paused = !game.paused) {
+        alertify.message('Simulación Pausada', 0);
+    }
+}
 
 //Metodos Phaser
 

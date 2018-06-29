@@ -9,34 +9,20 @@ function actualizarVista() {
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre + " / " + sistemaSolarActual.nombre + " / " + planetaActual.nombre;
         var numeroPlaneta = returnIdBackground(planetaActual);
         fondo.loadTexture('fondoPlaneta' + numeroPlaneta, 0);
-        $("#btnCrear").addClass("d-none");
-        $("#btnEditar").attr("data-content", "Editar este planeta");
-        $("#btnEliminar").attr("data-content", "Eliminar este planeta");
     } else if (sistemaSolarActual !== undefined) {
         resetSprites(sistemaSolarActual.planetas);
         var numeroSisP = returnIdBackground(sistemaSolarActual);
         fondo.loadTexture('fondoSistemaSolar' + numeroSisP, 0);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre + " / " + sistemaSolarActual.nombre;
-        $("#btnCrear").attr("data-content", "Crear Nuevo Planeta");
-        $("#btnEditar").attr("data-content", "Editar este sistema solar");
-        $("#btnEliminar").attr("data-content", "Eliminar este sistema solar");
-        $("#btnCrear").removeClass("d-none");
     } else if (nebulosaActual !== undefined) {
         resetSprites(nebulosaActual.sistemasPlanetarios);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre;
         var numeroNebulosa = returnIdBackground(nebulosaActual);
         fondo.loadTexture('fondoNebulosa' + numeroNebulosa, 0);
-        $("#btnCrear").attr("data-content", "Crear Nuevo Sistema Solar");
-        $("#btnEditar").attr("data-content", "Editar esta nebulosa");
-        $("#btnEliminar").attr("data-content", "Eliminar esta nebulosa");
-        $("#btnEliminar").removeClass("d-none");
     } else {
         resetSprites(galaxia.nebulosas);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre;
         fondo.loadTexture('fondoGalaxia', 0);
-        $("#btnCrear").attr("data-content", "Crear Nueva Nebulosa");
-        $("#btnEditar").attr("data-content", "Editar la galaxia");
-        $("#btnEliminar").addClass("d-none");
     }
     fondo.height = alto;
     fondo.width = ancho;
@@ -45,36 +31,26 @@ function actualizarVista() {
 function irAtras() {
     if (nebulosaActual !== undefined) {
         if (planetaActual !== undefined) {
-            cargarFormularioPlaneta();
+            cargarVistaEdicion("S");
             planetaActual = undefined;
         } else if (sistemaSolarActual !== undefined) {
-            cargarFormularioSistemaSolar();
+            cargarVistaEdicion("N");
             sistemaSolarActual = undefined;
         } else {
-            cargarFormularioNebulosa();
+            cargarVistaEdicion("G");
             nebulosaActual = undefined;
         }
         actualizarVista();
+        deseleccionar();
     } else {
-        alertify.error('Imposible salir de la vía láctea');
+        $("#portadaContainer").fadeIn("slow");
     }
-}
-
-function returnIdBackground(objecto) {
-    var objectKey = "";
-    var numero = -1;
-    objectKey = objecto.sprite.key;
-    numero = objectKey.substr(objectKey.length - 1, objectKey.length - 1);
-    if (numero === "a") { //ultima letra de peligrosa => a
-        numero = objectKey.substr(objectKey.length - 10, objectKey.length - 10); //elimino la subsecuencia Peligrosa
-    }
-    return parseInt(numero);
 }
 
 function clickNebula(sprite, pointer) {
     if (!isDrag()) {
         deseleccionar();
-        cargarFormularioSistemaSolar();
+        cargarVistaEdicion("N");
         nebulosaActual = galaxia.nebulosas[this.idNeb];
         actualizarVista();
     }
@@ -87,7 +63,7 @@ function clickSisPlanetario(sprite, pointer) {
             setTimeout(function () {
                 if (!isDrag()) {
                     deseleccionar();
-                    cargarFormularioPlaneta();
+                    cargarVistaEdicion("S");
                     sistemaSolarActual = nebulosaActual.sistemasPlanetarios[idaux];
                     actualizarVista();
                 }
@@ -107,6 +83,7 @@ function clickPlaneta(sprite, pointer) {
                 if (!isDrag() && tipoaux === "planeta") {
                     deseleccionar();
                     planetaActual = sistemaSolarActual.planetas[idaux];
+                    cargarVistaEdicion("P");
                     actualizarVista();
                 }
             }, 200);
@@ -114,6 +91,47 @@ function clickPlaneta(sprite, pointer) {
             createLine([pointer.position.x, pointer.position.y, this.id]); //Click DERECHO
         }
     }
+}
+
+function cargarVistaEdicion(nivel) {
+    switch (nivel) {
+        case "P":
+            $("#btnCrear").addClass("d-none");
+            $("#btnEditar").attr("data-content", "Editar este planeta");
+            $("#btnEliminar").attr("data-content", "Eliminar este planeta");
+            break;
+        case "S":
+            cargarFormularioPlaneta();
+            $("#btnCrear").attr("data-content", "Crear Nuevo Planeta");
+            $("#btnEditar").attr("data-content", "Editar este sistema solar");
+            $("#btnEliminar").attr("data-content", "Eliminar este sistema solar");
+            $("#btnCrear").removeClass("d-none");
+            break;
+        case "N":
+            cargarFormularioSistemaSolar();
+            $("#btnCrear").attr("data-content", "Crear Nuevo Sistema Solar");
+            $("#btnEditar").attr("data-content", "Editar esta nebulosa");
+            $("#btnEliminar").attr("data-content", "Eliminar esta nebulosa");
+            $("#btnEliminar").removeClass("d-none");
+            break;
+        case "G":
+            cargarFormularioNebulosa();
+            $("#btnCrear").attr("data-content", "Crear Nueva Nebulosa");
+            $("#btnEditar").attr("data-content", "Editar la galaxia");
+            $("#btnEliminar").addClass("d-none");
+            break;
+    }
+}
+
+function returnIdBackground(objecto) {
+    var objectKey = "";
+    var numero = -1;
+    objectKey = objecto.sprite.key;
+    numero = objectKey.substr(objectKey.length - 1, objectKey.length - 1);
+    if (numero === "a") { //ultima letra de peligrosa => a
+        numero = objectKey.substr(objectKey.length - 10, objectKey.length - 10); //elimino la subsecuencia Peligrosa
+    }
+    return parseInt(numero);
 }
 
 function resetSprites(Object) {
