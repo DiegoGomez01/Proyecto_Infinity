@@ -1,3 +1,130 @@
+#portadaContainer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background-color: #000;
+}
+
+#portadaPrincipal,
+#menuPrincipal,
+#creditos {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#portadaPrincipal p {
+    margin-top: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    text-align: center;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 20px;
+    animation: animationClick 2s linear infinite;
+}
+
+@keyframes animationClick {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+#menuPrincipal {
+    background-color: #424242;
+}
+
+#menuContainer {
+    margin-top: 200px;
+    margin-left: 50px;
+    display: inline-block;
+}
+
+#submenuContainer {
+    margin-left: 30px;
+    display: none;
+}
+
+#submenuContainer.active {
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.menuItem {
+    color: #FFFFFF;
+    font-size: 20px;
+    width: 300px;
+    border-radius: 20px;
+    padding: 3px 10px 5px 10px;
+    height: 41px;
+}
+
+.menuItem:hover {
+    border: 1px solid #FFFFFF;
+    background-color: #00B0FF;
+    cursor: pointer;
+}
+
+.menuItem.active {
+    border: 1px solid #FFFFFF;
+    background-color: #00B0FF;
+}
+
+.creditosContainer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    font: 300 30px/1 "Open Sans Condensed", sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    animation: 60s credits linear infinite;
+}
+
+.tituloProyecto {
+    margin-bottom: 50px;
+    font-size: 50px;
+}
+
+.credRol {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.credNombre {
+    margin-bottom: 50px;
+    font-size: 35px;
+}
+
+@keyframes credits {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: -500%;
+    }
+}
+
+#btnCerrarCreditos:hover {
+    cursor: pointer;
+}
+
 #gameContainer {
     padding: 0px;
     width: 100vw;
@@ -94,6 +221,10 @@
     z-index: 11;
 }
 
+#infoUbicacion.leftInfo {
+    left: 10px;
+}
+
 #btnAtras {
     position: fixed;
     top: 15px;
@@ -113,6 +244,12 @@
     bottom: 20px;
     left: 50%;
     margin-left: -27.5px;
+}
+
+#btnCargar {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
 }
 
 #btnEstado.active {
@@ -193,7 +330,7 @@
     color: #FFF;
     cursor: pointer;
     position: relative;
-    border: 4px solid white;
+    border: 3px solid white;
     box-shadow: 0 4px 6px -3px rgba(0, 0, 0, .3), inset 0 3px 4px -2px rgba(0, 0, 0, .25);
     position: relative;
     width: 55px;
@@ -340,45 +477,6 @@
 
 #materialesPlaneta label {
     text-shadow: -1px 0 #212121, 0 1px #212121, 1px 0 #212121, 0 -1px #212121;
-}
-
-#btnInfoFooter {
-    opacity: 0;
-    transition: all 0.4s;
-    right: -20px;
-    bottom: -20px;
-}
-
-#btnInfoFooter:hover {
-    opacity: 1;
-}
-
-#closeFooter {
-    position: fixed;
-    transition: all 0.4s;
-    bottom: -55px;
-    right: -20px;
-    z-index: 12;
-}
-
-#closeFooter.active {
-    bottom: 290px;
-    right: 20px;
-}
-
-#footerGame {
-    position: fixed;
-    transition: all 0.4s;
-    width: 100vw;
-    height: 300px;
-    bottom: -300px;
-    background: #424242;
-    color: #FFFFFF;
-    z-index: 11;
-}
-
-#footerGame.active {
-    bottom: 0px;
 }
 
 /* 
