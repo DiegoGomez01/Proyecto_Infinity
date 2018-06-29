@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#cargarJson").on("click", function () {
-        $.getJSON("assets/Mapas/mapa2.json", function(json) {
+        $.getJSON("assets/Mapas/mapa3.json", function(json) {
             galaxia.planetaOrigen=json.planetaOrigen;
             cargarNebulosas(json.nebulosas);
         });
