@@ -136,8 +136,10 @@ function returnIdBackground(objecto) {
 
 function resetSprites(Object) {
     Object.forEach(function (obj) {
-        obj.sprite.reset(obj.sprite.position.x, obj.sprite.position.y);
-        spritesActuales.push(obj.sprite);
+        if(obj!=undefined){
+            obj.sprite.reset(obj.sprite.position.x, obj.sprite.position.y);
+            spritesActuales.push(obj.sprite);
+        }
     });
 }
 
