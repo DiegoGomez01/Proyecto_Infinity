@@ -61,7 +61,7 @@ function cargarSistemasPlanetarios(nebulosaActual,sistemasPlanetarios){
             if ((nombre.trim()).length === 0) {
                 nombre = "Sistema Solar " + (idSisPlanetario + 1)
             }
-            var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
+            var sistemaPlanetario = new SistemasPlanetario(idSisPlanetario, nombre, sisPlanSprite);
             nebulosaActual.sistemasPlanetarios.push(sistemaPlanetario);
             addColumnMatrizAdyacencia(nebulosaActual.matrizAdyacencia);
             cargarPlanetas(sistemaPlanetario,sisPlan.planetas);
