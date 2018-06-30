@@ -11,6 +11,9 @@ class Galaxia {
         this.planetaOrigen = [];
         this.nebulosas = [];
     }
+    get arrayElementos() {
+        return this.nebulosas;
+    }
 }
 
 class Nebulosa {
@@ -25,9 +28,12 @@ class Nebulosa {
         this.lineas = [];
         this.matrizAdyacencia = [];
     }
+    get arrayElementos() {
+        return this.sistemasPlanetarios;
+    }
 }
 
-class SistemasPlanetarios {
+class SistemasPlanetario {
     constructor(id, nombre, sprite) {
         this.id = id;
         this.nombre = nombre;
@@ -35,6 +41,9 @@ class SistemasPlanetarios {
         this.planetas = [];
         this.lineas = [];
         this.matrizAdyacencia = [];
+    }
+    get arrayElementos() {
+        return this.planetas;
     }
 }
 

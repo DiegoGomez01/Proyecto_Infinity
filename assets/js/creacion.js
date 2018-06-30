@@ -191,7 +191,7 @@ function newSisPlanetario() {
     if ((nombre.trim()).length === 0) {
         nombre = "Sistema Solar " + (idSisPlanetario + 1)
     }
-    var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
+    var sistemaPlanetario = new SistemasPlanetario(idSisPlanetario, nombre, sisPlanSprite);
     nebulosaActual.sistemasPlanetarios.push(sistemaPlanetario);
     addColumnMatrizAdyacencia(nebulosaActual.matrizAdyacencia);
 }
@@ -505,7 +505,7 @@ function eliminarElementoActual() {
                     return linea[1] != elemento && linea[2] != elemento;
                 });
             }
-            eliminarObjetoFromGalaxia(elemento,tipo,nebulosaActual,sistemaSolarActual);
+            delete padreElemento.arrayElementos[elemento.id];
             if (esOrigen) {
                 galaxia.planetaOrigen = [];
                 alertify.message('Se elimino el planeta origen');
@@ -518,6 +518,7 @@ function eliminarElementoActual() {
                 nebulosaActual.estacionEspacial = [];
                 alertify.message('Se elimino la estación espacial de la nebulosa actual');
             }
+            elemento.sprite.destroy();
             alertify.confirm().destroy();
         },
         function () {
@@ -565,22 +566,3 @@ alertify.defaults = {
         cancel: "btn btn-secundario"
     }
 };
-
-function eliminarObjetoFromGalaxia(elemento,tipoAEliminar,nebulosa,sisSolar){
-    if(tipoAEliminar=='Nebulosa'){
-        if(galaxia.nebulosas!==undefined){
-            galaxia.nebulosas[elemento.id].sprite.destroy();
-            galaxia.nebulosas[elemento.id]=undefined;
-        }
-    }else if(tipoAEliminar=='Sistema Solar'){
-        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios!==undefined){
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id].sprite.destroy();
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id]=undefined;
-        }
-    }else{
-        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas!==undefined){
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id].sprite.destroy();
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id]=undefined;
-        }
-    }
-}
