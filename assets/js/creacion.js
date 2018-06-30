@@ -19,11 +19,27 @@ $(document).ready(function () {
         render: renderCreacion
     };
 
+    var attackState = {
+        preload: preloadAttack,
+        create: createAttack,
+        update: updateAttack
+        //render: renderAttack
+    };
+
     var simulacionState = {
         create: createSimulacion
         // update: updateSimu,
         // render: render
     };
+
+    function preloadAttack(){
+        //Naves Enemigas
+        game.load.image('naveNodriza', 'assets/images/naveNodriza.png');
+        game.load.image('naveAvanzada', 'assets/images/naveAvanzada.png');
+        game.load.image('naveExploradora', 'assets/images/naveExploradora.png');
+        game.load.image('navePlayer', 'assets/images/nave1.png');
+        game.load.image('bala1', 'assets/images/bala.png');
+    }
 
     function preloadCreacion() {
         //Sprite galaxia
@@ -81,6 +97,8 @@ $(document).ready(function () {
         fondo.width = ancho;
         game.input.mouse.capture = true;
     }
+
+    
 
     function updateCreacion() {
         updateLines();
@@ -143,6 +161,7 @@ $(document).ready(function () {
 
     game.state.add('creacion', creacionState);
     game.state.add('simulacion', simulacionState);
+    game.state.add('attack',attackState);
     game.state.start('creacion');
 });
 
