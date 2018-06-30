@@ -147,7 +147,6 @@ $(document).ready(function () {
 });
 
 //CREACIÓN DE OBJETOS
-
 function newNebulosa() {
     var idNeb = galaxia.nebulosas.length;
     var peligrosa = document.getElementById("checkNebulosaEsPeligrosa").checked;
@@ -506,7 +505,7 @@ function eliminarElementoActual() {
                     return linea[1] != elemento && linea[2] != elemento;
                 });
             }
-            delete elemento;
+            eliminarObjetoFromGalaxia(elemento,tipo,nebulosaActual,sistemaSolarActual);
             if (esOrigen) {
                 galaxia.planetaOrigen = [];
                 alertify.message('Se elimino el planeta origen');
@@ -519,7 +518,6 @@ function eliminarElementoActual() {
                 nebulosaActual.estacionEspacial = [];
                 alertify.message('Se elimino la estación espacial de la nebulosa actual');
             }
-            elemento.sprite.destroy();
             alertify.confirm().destroy();
         },
         function () {
@@ -567,3 +565,22 @@ alertify.defaults = {
         cancel: "btn btn-secundario"
     }
 };
+
+function eliminarObjetoFromGalaxia(elemento,tipoAEliminar,nebulosa,sisSolar){
+    if(tipoAEliminar=='Nebulosa'){
+        if(galaxia.nebulosas!==undefined){
+            galaxia.nebulosas[elemento.id].sprite.destroy();
+            galaxia.nebulosas[elemento.id]=undefined;
+        }
+    }else if(tipoAEliminar=='Sistema Solar'){
+        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios!==undefined){
+            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id].sprite.destroy();
+            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id]=undefined;
+        }
+    }else{
+        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas!==undefined){
+            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id].sprite.destroy();
+            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id]=undefined;
+        }
+    }
+}

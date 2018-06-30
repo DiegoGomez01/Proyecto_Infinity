@@ -38,7 +38,7 @@ $(document).ready(function () {
 
 
     $("#submenuContainer .menuItem").on("click", function () {
-        alert($(this).text());
+        //alert($(this).text());
         $("#btnSeleccionarMapa").click();
     });
 
