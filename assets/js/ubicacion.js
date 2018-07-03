@@ -9,42 +9,38 @@ function actualizarVista() {
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre + " / " + sistemaSolarActual.nombre + " / " + planetaActual.nombre;
         var numeroPlaneta = returnIdBackground(planetaActual);
         fondo.loadTexture('fondoPlaneta' + numeroPlaneta, 0);
+        printLines([]);
     } else if (sistemaSolarActual !== undefined) {
         resetSprites(sistemaSolarActual.planetas);
         var numeroSisP = returnIdBackground(sistemaSolarActual);
         fondo.loadTexture('fondoSistemaSolar' + numeroSisP, 0);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre + " / " + sistemaSolarActual.nombre;
+        printLines(sistemaSolarActual.lineas);
     } else if (nebulosaActual !== undefined) {
         resetSprites(nebulosaActual.sistemasPlanetarios);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre + " / " + nebulosaActual.nombre;
         var numeroNebulosa = returnIdBackground(nebulosaActual);
         fondo.loadTexture('fondoNebulosa' + numeroNebulosa, 0);
+        printLines(nebulosaActual.lineas);
     } else {
         resetSprites(galaxia.nebulosas);
         document.getElementById("infoUbic").innerHTML = galaxia.nombre;
         fondo.loadTexture('fondoGalaxia', 0);
+        printLines([]);
     }
     fondo.height = alto;
     fondo.width = ancho;
 }
 
-function irAtras() {
-    if (nebulosaActual !== undefined) {
-        if (planetaActual !== undefined) {
-            cargarVistaEdicion("S");
-            planetaActual = undefined;
-        } else if (sistemaSolarActual !== undefined) {
-            cargarVistaEdicion("N");
-            sistemaSolarActual = undefined;
-        } else {
-            cargarVistaEdicion("G");
-            nebulosaActual = undefined;
-        }
-        actualizarVista();
-        deseleccionar();
+function salir() {
+    if (planetaActual !== undefined) {
+        planetaActual = undefined;
+    } else if (sistemaSolarActual !== undefined) {
+        sistemaSolarActual = undefined;
     } else {
-        $("#portadaContainer").fadeIn("slow");
+        nebulosaActual = undefined;
     }
+    actualizarVista();
 }
 
 function clickNebula(sprite, pointer) {
@@ -93,36 +89,6 @@ function clickPlaneta(sprite, pointer) {
     }
 }
 
-function cargarVistaEdicion(nivel) {
-    switch (nivel) {
-        case "P":
-            $("#btnCrear").addClass("d-none");
-            $("#btnEditar").attr("data-content", "Editar este planeta");
-            $("#btnEliminar").attr("data-content", "Eliminar este planeta");
-            break;
-        case "S":
-            cargarFormularioPlaneta();
-            $("#btnCrear").attr("data-content", "Crear Nuevo Planeta");
-            $("#btnEditar").attr("data-content", "Editar este sistema solar");
-            $("#btnEliminar").attr("data-content", "Eliminar este sistema solar");
-            $("#btnCrear").removeClass("d-none");
-            break;
-        case "N":
-            cargarFormularioSistemaSolar();
-            $("#btnCrear").attr("data-content", "Crear Nuevo Sistema Solar");
-            $("#btnEditar").attr("data-content", "Editar esta nebulosa");
-            $("#btnEliminar").attr("data-content", "Eliminar esta nebulosa");
-            $("#btnEliminar").removeClass("d-none");
-            break;
-        case "G":
-            cargarFormularioNebulosa();
-            $("#btnCrear").attr("data-content", "Crear Nueva Nebulosa");
-            $("#btnEditar").attr("data-content", "Editar la galaxia");
-            $("#btnEliminar").addClass("d-none");
-            break;
-    }
-}
-
 function returnIdBackground(objecto) {
     var objectKey = "";
     var numero = -1;
@@ -136,7 +102,7 @@ function returnIdBackground(objecto) {
 
 function resetSprites(Object) {
     Object.forEach(function (obj) {
-        if(obj!=undefined){
+        if (obj != undefined) {
             obj.sprite.reset(obj.sprite.position.x, obj.sprite.position.y);
             spritesActuales.push(obj.sprite);
         }
@@ -149,7 +115,3 @@ function killSpritesActuales() {
     });
     spritesActuales = [];
 }
-
-// printLines(galaxia.nebulosas[nebulosaActual].lineas);
-// printLines(galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[sistemaSolarActual].lineas);
-// printLines([]);

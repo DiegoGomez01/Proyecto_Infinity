@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Proyecto Infinity - Creación</title>
+    <title>Creación - Proyecto Infinity</title>
     <link rel="icon" href="assets/images/favicon.png">
     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/gauge.min.js"></script>
@@ -62,13 +62,13 @@
                 </div>
             </div>
             <div id="estilosElementos" class="d-flex flex-wrap justify-content-center">
-                <div class="estiloNabe imgEstilo activo m-2 d-none" data-idImg="nave1">
+                <div class="estiloNave imgEstilo activo m-2 d-none" data-idImg="nave1">
                     <img src="assets/images/nave1.png" width="100" height="100">
                 </div>
-                <div class="estiloNabe imgEstilo m-2 d-none" data-idImg="nave1">
+                <div class="estiloNave imgEstilo m-2 d-none" data-idImg="nave2">
                     <img src="assets/images/nave2.png" width="100" height="100">
                 </div>
-                <div class="estiloNabe imgEstilo m-2 d-none" data-idImg="nave1">
+                <div class="estiloNave imgEstilo m-2 d-none" data-idImg="nave3">
                     <img src="assets/images/nave3.png" width="100" height="100">
                 </div>
                 <div class="estiloNebulosa imgEstilo activo m-2" data-idImg="nebulosa1">
@@ -172,12 +172,12 @@
             </button>
         </div>
     </div>
-    <div id="portadaContainer">
+    <div id="portadaContainer" class="">
         <div id="portadaPrincipal" style="display: none;">
             <p>Haz click en la pantalla</p>
         </div>
         <div id="menuPrincipal">
-            <div id="menuContainer" >
+            <div id="menuContainer">
                 <h4 class="titulo">Menú Principal</h4>
                 <div id="btnSeguirCreando" class="menuItem mt-2">Continuar con la creación</div>
                 <div id="btnSeleccionarMapa" class="menuItem mt-2">Seleccionar un mapa</div>
@@ -185,11 +185,15 @@
                 <div id="btnAbrirCreditos" class="menuItem mt-2">Créditos</div>
                 <div id="btnVolverPortada" class="menuItem mt-2">Volver</div>
             </div>
-            <div id="submenuContainer" >
-                <div onclick="cargarJson('mapa1');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 1</div>
-                <div onclick="cargarJson('mapa2');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 2</div>
-                <div onclick="cargarJson('mapa3');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 3</div>
-                <div onclick="cargarJson('mapa4');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción" data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 4</div>
+            <div id="submenuContainer">
+                <div onclick="cargarJson('mapa1');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                    data-html="true" data-content="6 Nebulosas <br/> 30 sistemas solares <br/> 160 planetas">Mapa 1</div>
+                <div onclick="cargarJson('mapa2');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                    data-html="true" data-content="6 Nebulosas <br/> 33 sistemas solares <br/> 166 planetas">Mapa 2</div>
+                <div onclick="cargarJson('mapa3');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                    data-html="true" data-content="6 Nebulosas <br/> 30 sistemas solares <br/> 142 planetas">Mapa 3</div>
+                <div onclick="cargarJson('mapa4');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                    data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 4</div>
             </div>
         </div>
         <div id="creditos" style="display: none;">
@@ -213,49 +217,38 @@
                 <div id="btnEliminar" class="fa fa-trash-alt btnMetal m-2 d-none" data-toggle="popover" data-placement="left" data-content="...."></div>
             </li>
         </ul>
-        <div id="infoSeleccion" class="pl-2 pr-2">
-            <p>No Hay Selección</p>
-        </div>
         <div id="infoUbicacion" class="pl-2 pr-2">
             <p id="infoUbic">Vía Láctea</p>
         </div>
         <div id="btnAtras" class="fa fa-chevron-left btnMetal" data-toggle="popover" data-placement="bottom" data-content="Atrás"></div>
-        <div id="containerEstado">
-            <div id="btnEstado" class="fa fa-chevron-circle-up fa-2x btnICON d-none"></div>
-            <div class="row">
-                <div class="col-4">
-                    <canvas id="combustibleNivelNave" width="210px" height="200px"> </canvas>
-                    <div class="titulo text-center">Nivel de Combustible (100%)</div>
-                </div>
-                <div class="col-8 mt-2">
-                    <div class="progress" style="width: 100%; height: 25px;">
-                        <div id="vidaNave" class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Vida al 100%</div>
-                    </div>
-                    <div class="progress mt-3 mb-2" style="width: 100%; height: 25px;">
-                        <div id="escudoNave" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100"
-                            aria-valuemin="0" aria-valuemax="100">Escudo (Nivel 3)</div>
-                    </div>
-                    <div class="mt-5">
-                        <h4 class="d-inline-block" style="color: #ffffff;">Numero de Sondas:
-                        </h4>
-                        <div id="numSondas" class="rounded-circle d-inline-block align-middle h4 ml-1 p-1">15</div>
-                    </div>
-                </div>
+        <!-- <div id="btnEstado" class="fa fa-chevron-circle-up fa-2x btnICON "></div> -->
+        <div id="containerEstadoVida" style="display: none;">
+            <div class="progress" style="width: 100%; height: 25px;">
+                <div id="vidaNave" class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Vida al 100%</div>
             </div>
-            <div class="titulo text-center mt-3">Materiales</div>
-            <div id="cantMateriales" class="progress mt-1 active" style="height: 25px;">
-                <div id="cantIridioNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
-                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Iridio</div>
-                <!-- titulo Iridio desde 3% -->
-                <div id="cantPlatinoNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
-                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Platino</div>
-                <!-- titulo Platino desde 5% -->
-                <div id="cantPaladioNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
-                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Paladio</div>
-                <!-- titulo Paladio desde 5% -->
-                <div id="cantEZeroNave" class="progress-bar w-25" role="progressbar" aria-valuenow="2000" aria-valuemin="0" aria-valuemax="8000"
-                    data-toggle="popover" data-placement="top" title="" data-content="2000T">Elemento Zero</div>
-                <!-- titulo Elemento Zero  desde 10% -->
+            <div class="progress mt-3 mb-2" style="width: 100%; height: 25px;">
+                <div id="escudoNave" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100">Escudo (Nivel 3)</div>
+            </div>
+        </div>
+        <div id="containerEstadoCombustible" style="display: none;">
+            <canvas id="combustibleNivelNave" width="210px" height="200px"></canvas>
+            <div class="titulo text-center darkShadow">Nivel de Combustible&nbsp;
+                <label id="labelCombustible" class="m-0"></label>
+            </div>
+        </div>
+        <div id="containerEstadoSondas" style="display: none;">
+            <h5 class="d-inline-block darkShadow" style="color: #ffffff;">Numero de Sondas:
+            </h5>
+            <div id="numSondas" class="rounded-circle d-inline-block align-middle h4 ml-1 p-1">15</div>
+        </div>
+        <div id="containerEstadoMateriales" style="display: none;">
+            <div class="titulo text-center darkShadow mt-3">Materiales</div>
+            <div id="cantMateriales" class="progress mt-1 w-100" style="height: 25px;">
+                <div id="cantIridioNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
+                <div id="cantPlatinoNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
+                <div id="cantPaladioNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
+                <div id="cantEZeroNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
             </div>
         </div>
         <div id="btnIniciar" class="fa fa-play-circle fa-2x btnICON" onclick="iniciarSimulacion()"></div>
