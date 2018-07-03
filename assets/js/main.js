@@ -1,50 +1,71 @@
 var spritesActuales = [];
-
-$(document).ready(function () {
-
-
-});
+var hayMovimiento = false;
 
 function iniciarSimulacion() {
     if (galaxia.planetaOrigen.length === 3) {
         nebulosaActual = galaxia.nebulosas[galaxia.planetaOrigen[0]];
         sistemaSolarActual = nebulosaActual.sistemasPlanetarios[galaxia.planetaOrigen[1]];
         planetaActual = sistemaSolarActual.planetas[galaxia.planetaOrigen[2]];
-        deseleccionar();
         ocultarEdicion();
         actualizarVista();
         game.state.start('simulacion', false);
         $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
         $("#btnIniciar").attr("onclick", "pausarSimulacion()");
+        $("title").text("Simulación - Proyecto Infinity");
+        DisableAllInputEnable();
         cargarFormularioNave();
     } else {
         alertify.error('Para iniciar la simulación es necesario tener un planeta de inicio');
     }
+}
 
-    //     nave = game.add.sprite(galaxia.nebulosas[0].sprite.position.x, galaxia.nebulosas[0].sprite.position.y, "nave");
-    //     nave.width = 100;
-    //     nave.height = 100;
-    //     nave.inputEnabled = true;
-    //     nave.input.enableDrag();
-    //     var s2 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite;
-    //     var s1 = galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite;
-    //     game.physics.enable([nave, s2, s1], Phaser.Physics.ARCADE);
-    //     nave.body.setSize(2, 2, nave.position.x, nave.position.y);
-    //     s2.body.collideWorldBounds = true;
-    //     s1.body.collideWorldBounds = true;
-    //     nave.body.collideWorldBounds = true;
-    //     var camino = new Dijkstra(galaxia.nebulosas[nebulosaActual].matrizAdyacencia, 0, galaxia.nebulosas[nebulosaActual].matrizAdyacencia.length);
-    //     console.log(camino.caminosMinimos(1));
-    //     game.physics.arcade.moveToObject(nave, s2, 100);
 
+
+function DisableAllInputEnable() {
+    for (var iN in galaxia.nebulosas) {
+        galaxia.nebulosas[iN].sprite.inputEnabled = false;
+        for (var iS in galaxia.nebulosas[iN].sistemasPlanetarios) {
+            galaxia.nebulosas[iN].sistemasPlanetarios[iS].sprite.inputEnabled = false;
+            for (var iP in galaxia.nebulosas[iN].sistemasPlanetarios[iS].planetas) {
+                galaxia.nebulosas[iN].sistemasPlanetarios[iS].planetas[iP].sprite.inputEnabled = false;
+            }
+        }
+    }
 }
 
 function pausarSimulacion() {
+    alert("posición: X=" + nave.sprite.x + ", Y=" + nave.sprite.y);
     alertify.dismissAll();
     $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
     if (game.paused = !game.paused) {
         alertify.message('Simulación Pausada', 0);
     }
+}
+// Motor de Movimiento
+function moverNaveHacia(x, y) {
+    var rotacion = game.add.tween(nave.sprite);
+    var movimientoNave = game.add.tween(nave.sprite);
+    var cantRotacion = game.physics.arcade.angleBetween(nave.sprite, {
+        x: x,
+        y: y
+    });
+    rotacion.to({
+        rotation: cantRotacion
+    }, 500);
+    movimientoNave.to({
+        x: x,
+        y: y
+    }, 2000);
+    rotacion.onComplete.add(function () {
+        rotacion.stop();
+        hayMovimiento = true;
+        movimientoNave.start();
+    });
+    movimientoNave.onComplete.add(function () {
+        movimientoNave.stop();
+        hayMovimiento = false;
+    });
+    rotacion.start();
 }
 
 //Metodos Phaser
@@ -59,24 +80,6 @@ function isDrag() {
 }
 
 //Metodos de update de Phaser
-function checkCollision() {
-    // if (nebulosaActual !== undefined && sistemaSolarActual === undefined) {
-    //     if (galaxia.nebulosas[nebulosaActual].sistemasPlanetarios.length >= 3) {
-    //         if (game.physics.arcade.collide(nave, galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite)) {
-    //             //console.log("colision1");
-    //             nave.body.velocity.setTo(0, 0);
-    //             galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite.body.velocity.setTo(0, 0);
-    //             //game.physics.arcade.moveToObject(nave, galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite, 100);
-    //         }
-    //         if (game.physics.arcade.collide(nave, galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite)) {
-    //             //console.log("colision2");
-    //             nave.body.velocity.setTo(0, 0);
-    //             galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[2].sprite.body.velocity.setTo(0, 0);
-    //             game.physics.arcade.moveToObject(nave, galaxia.nebulosas[nebulosaActual].sistemasPlanetarios[1].sprite, 100);
-    //         }
-    //     }
-    // }
-}
 
 function printLines(arrayLineas) {
     if (arrayLineas.length === 0) {
@@ -108,3 +111,21 @@ function lineasObjectToDraw(Lineas) {
 // indicadorCombustible.set(0);
 // $("#combustibleNivelNave").attr("data-content", value + "L");
 // $('#theprogressbar').attr('aria-valuenow', newprogress).css('width',newprogress);
+
+// var numN = galaxia.nebulosas.length;
+// var numS = 0;
+// var numP = 0;
+// for (let index = 0; index < galaxia.nebulosas.length; index++) {
+//     const element = galaxia.nebulosas[index];
+//     numS += element.sistemasPlanetarios.length;
+//     for (let index2 = 0; index2 < element.sistemasPlanetarios.length; index2++) {
+//         const element2 = element.sistemasPlanetarios[index2];
+//         for (let index3 = 0; index3 < element2.planetas.length; index3++) {
+//             const element3 = element2.planetas[index3];
+//             if (element3.tipo == "planeta") {
+//                 numP += 1;
+//             }
+//         }
+//     }
+// }
+// alert("nebulosas=" + numN + ", sis=" + numS + ", pl=" + numP);
