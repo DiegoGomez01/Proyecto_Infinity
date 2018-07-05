@@ -19,8 +19,6 @@ function iniciarSimulacion() {
     }
 }
 
-
-
 function DisableAllInputEnable() {
     for (var iN in galaxia.nebulosas) {
         galaxia.nebulosas[iN].sprite.inputEnabled = false;
@@ -34,7 +32,6 @@ function DisableAllInputEnable() {
 }
 
 function pausarSimulacion() {
-    alert("posición: X=" + nave.sprite.x + ", Y=" + nave.sprite.y);
     alertify.dismissAll();
     $("#btnIniciar").toggleClass("fa-play-circle fa-pause-circle");
     if (game.paused = !game.paused) {
@@ -42,7 +39,7 @@ function pausarSimulacion() {
     }
 }
 // Motor de Movimiento
-function moverNaveHacia(x, y) {
+function moverNave(x, y, consumoCombustible) {
     var rotacion = game.add.tween(nave.sprite);
     var movimientoNave = game.add.tween(nave.sprite);
     var cantRotacion = game.physics.arcade.angleBetween(nave.sprite, {
@@ -59,6 +56,9 @@ function moverNaveHacia(x, y) {
     rotacion.onComplete.add(function () {
         rotacion.stop();
         hayMovimiento = true;
+        if (consumoCombustible > 0) {
+            consumirCombustible(consumoCombustible / 10, 0);
+        }
         movimientoNave.start();
     });
     movimientoNave.onComplete.add(function () {
@@ -66,6 +66,15 @@ function moverNaveHacia(x, y) {
         hayMovimiento = false;
     });
     rotacion.start();
+}
+
+function consumirCombustible(cantCombustible, tiempo) {
+    nave.combustible.set(nave.combustible.value - cantCombustible);
+    if (tiempo < 1800) {
+        setTimeout(() => {
+            consumirCombustible(cantCombustible, tiempo + 200);
+        }, 200);
+    }
 }
 
 //Metodos Phaser
