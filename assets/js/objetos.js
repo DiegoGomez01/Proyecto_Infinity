@@ -1,7 +1,32 @@
 class NaveInfinity {
-    constructor(indicadorCombustible, sprite) {
-        this.combustible = indicadorCombustible;
+    constructor(sprite, indicadorCombustible) {
         this.sprite = sprite;
+        this.combustible = indicadorCombustible;
+        this.cantSondas;
+        this.cantIridio;
+        this.cantPlatino;
+        this.cantPaladio;
+        this.cantEZero;
+    }
+    setCantSondas(cant) {
+        $("#numSondas").text(cant);
+        this.cantSondas = cant;
+    }
+    setCantIridio(cant) {
+        this.cantIridio = cant;
+        actualizarBarraMaterial(cant, "Iridio");
+    }
+    setCantPlatino(cant) {
+        this.setCantPlatino = cant;
+        actualizarBarraMaterial(cant, "Platino");
+    }
+    setCantPaladio(cant) {
+        this.setCantPaladio = cant;
+        actualizarBarraMaterial(cant, "Paladio");
+    }
+    setCantEZero(cant) {
+        this.cantEZero = cant;
+        actualizarBarraMaterial(cant, "EZero");
     }
 }
 
@@ -10,6 +35,9 @@ class Galaxia {
         this.nombre = nombre;
         this.planetaOrigen = [];
         this.nebulosas = [];
+    }
+    get arrayElementos() {
+        return this.nebulosas;
     }
 }
 
@@ -25,9 +53,12 @@ class Nebulosa {
         this.lineas = [];
         this.matrizAdyacencia = [];
     }
+    get arrayElementos() {
+        return this.sistemasPlanetarios;
+    }
 }
 
-class SistemasPlanetarios {
+class SistemasPlanetario {
     constructor(id, nombre, sprite) {
         this.id = id;
         this.nombre = nombre;
@@ -35,6 +66,9 @@ class SistemasPlanetarios {
         this.planetas = [];
         this.lineas = [];
         this.matrizAdyacencia = [];
+    }
+    get arrayElementos() {
+        return this.planetas;
     }
 }
 

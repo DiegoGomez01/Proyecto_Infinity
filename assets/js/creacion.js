@@ -2,6 +2,7 @@
 var nave;
 var galaxia = new Galaxia("Via Láctea");
 var seleccionAux;
+var notifierSeleccion;
 
 var ancho = $(window).width();
 var alto = $(window).height();
@@ -27,8 +28,8 @@ $(document).ready(function () {
     };
 
     var simulacionState = {
-        create: createSimulacion
-        // update: updateSimu,
+        create: createSimulacion,
+        update: updateSimulacion
         // render: render
     };
 
@@ -89,6 +90,8 @@ $(document).ready(function () {
         game.load.image('nave1', 'assets/images/nave1.png');
         game.load.image('nave2', 'assets/images/nave2.png');
         game.load.image('nave3', 'assets/images/nave3.png');
+        //Sonidos 
+        game.load.audio('nave', 'assets/sonidos/naveEspacial.mp3');
     }
 
     function createCreacion() {
@@ -119,44 +122,18 @@ $(document).ready(function () {
     }
 
     function createSimulacion() {
-        //Creación Nave Espacial Infinity
-        var indicadorCombustible;
-        indicadorCombustible = new Gauge(document.getElementById("combustibleNivelNave")).setOptions({
-            angle: -0.2,
-            lineWidth: 0.07,
-            radiusScale: 0.75,
-            pointer: {
-                length: 0.6,
-                strokeWidth: 0.02,
-                color: '#22A7F0'
-            },
-            limitMax: true,
-            limitMin: false,
-            colorStart: '#4183D7',
-            colorStop: '#4183D7',
-            strokeColor: '#ECECEC',
-            generateGradient: true,
-            highDpiSupport: true,
-            percentColors: [
-                [0.0, "#F03434"],
-                [0.45, "#F9BF3B"],
-                [1.0, "#26A65B"]
-            ],
-            renderTicks: {
-                divisions: 10,
-                divWidth: 1,
-                divLength: 0.6,
-                divColor: '#22313F',
-                subDivisions: 3,
-                subLength: 0.5,
-                subWidth: 0.6,
-                subColor: '#2C3E50'
-            }
-        });
-        indicadorCombustible.maxValue = 200000;
-        indicadorCombustible.setMinValue(100000);
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+    }
 
-        nave = new NaveInfinity(indicadorCombustible, undefined);
+    function updateSimulacion() {
+        // if (hayMovimiento) {
+        //     if (nave.sprite.overlap(fondo)) {
+        //         hayMovimiento=false;
+        //         setTimeout(function () {
+        //             detenerNave();
+        //         }, 1000);
+        //     }
+        // }
     }
 
     game.state.add('creacion', creacionState);
@@ -176,6 +153,7 @@ function newNebulosa() {
     var nebulaSprite = game.add.sprite(100, 100, selected);
     nebulaSprite.width = 180;
     nebulaSprite.height = 180;
+    nebulaSprite.anchor.setTo(0.5, 0.5);
     nebulaSprite.inputEnabled = true;
     nebulaSprite.events.onInputUp.add(clickNebula, {
         idNeb: idNeb
@@ -200,6 +178,7 @@ function newSisPlanetario() {
     var sisPlanSprite = game.add.sprite(100, 100, selected);
     sisPlanSprite.width = 100;
     sisPlanSprite.height = 100;
+    sisPlanSprite.anchor.setTo(0.5, 0.5);
     sisPlanSprite.inputEnabled = true;
     sisPlanSprite.events.onInputDown.add(clickSisPlanetario, {
         id: idSisPlanetario
@@ -210,7 +189,7 @@ function newSisPlanetario() {
     if ((nombre.trim()).length === 0) {
         nombre = "Sistema Solar " + (idSisPlanetario + 1)
     }
-    var sistemaPlanetario = new SistemasPlanetarios(idSisPlanetario, nombre, sisPlanSprite);
+    var sistemaPlanetario = new SistemasPlanetario(idSisPlanetario, nombre, sisPlanSprite);
     nebulosaActual.sistemasPlanetarios.push(sistemaPlanetario);
     addColumnMatrizAdyacencia(nebulosaActual.matrizAdyacencia);
 }
@@ -266,6 +245,7 @@ function newPlanet() {
     var Sprite = game.add.sprite(100, 100, selected);
     Sprite.width = 100;
     Sprite.height = 100;
+    Sprite.anchor.setTo(0.5, 0.5);
     Sprite.events.onInputDown.add(clickPlaneta, {
         id: idPlaneta,
         tipo: tipoPlaneta
@@ -315,8 +295,11 @@ function createLine(arraySelected) {
     }
     if (seleccionAux == undefined) {
         seleccionAux = arraySelected;
-        $("#infoSeleccion p").text("Se Seleccionó -> " + seleccionado.nombre);
-        $("#infoSeleccion").addClass("active");
+        notifierSeleccion = alertify.message("Se Seleccionó " + seleccionado.nombre, 0);
+        notifierSeleccion.ondismiss = function () {
+            seleccionAux = undefined;
+            notifierSeleccion = undefined;
+        };
     } else if (seleccionAux[2] != arraySelected[2]) {
         var seleccionado0;
         if (sistemaSolarActual == undefined) {
@@ -367,9 +350,7 @@ function createLine(arraySelected) {
 
 function deseleccionar() {
     if (seleccionAux !== undefined) {
-        $("#infoSeleccion").removeClass("active");
-        $("#infoSeleccion p").text("");
-        seleccionAux = undefined;
+        notifierSeleccion.dismiss();
     }
 }
 
@@ -406,6 +387,7 @@ function guardarEdicion() {
             id: planetaActual.id,
             tipo: "planeta"
         }, this);
+        Sprite.anchor.setTo(0.5, 0.5);
         Sprite.inputEnabled = true;
         Sprite.input.enableDrag();
         Sprite.animations.add('giro');
@@ -426,6 +408,7 @@ function guardarEdicion() {
         var sisPlanSprite = game.add.sprite(sistemaSolarActual.sprite.position.x, sistemaSolarActual.sprite.position.y, selected);
         sisPlanSprite.width = 100;
         sisPlanSprite.height = 100;
+        sisPlanSprite.anchor.setTo(0.5, 0.5);
         sisPlanSprite.inputEnabled = true;
         sisPlanSprite.events.onInputDown.add(clickSisPlanetario, {
             id: sistemaSolarActual.id
@@ -443,6 +426,7 @@ function guardarEdicion() {
         var nebulaSprite = game.add.sprite(nebulosaActual.sprite.position.x, nebulosaActual.sprite.position.y, selected);
         nebulaSprite.width = 180;
         nebulaSprite.height = 180;
+        nebulaSprite.anchor.setTo(0.5, 0.5);
         nebulaSprite.inputEnabled = true;
         nebulaSprite.events.onInputUp.add(clickNebula, {
             idNeb: nebulosaActual.id
@@ -518,13 +502,13 @@ function eliminarElementoActual() {
     }
     alertify.confirm('<h3 class="alertify-titulo-info">Eliminar ' + tipo + '</h3>', '<div class="text-center">¿Desea eliminar ' + elemento.nombre + '?' + alertOrigen + ' </div>',
         function () {
-            irAtras();
+            $("#btnAtras").click();
             if (lineas !== undefined) {
                 padreElemento.lineas = lineas.filter(function (linea) {
                     return linea[1] != elemento && linea[2] != elemento;
                 });
             }
-            eliminarObjetoFromGalaxia(elemento,tipo,nebulosaActual,sistemaSolarActual);
+            delete padreElemento.arrayElementos[elemento.id];
             if (esOrigen) {
                 galaxia.planetaOrigen = [];
                 alertify.message('Se elimino el planeta origen');
@@ -537,6 +521,7 @@ function eliminarElementoActual() {
                 nebulosaActual.estacionEspacial = [];
                 alertify.message('Se elimino la estación espacial de la nebulosa actual');
             }
+            elemento.sprite.destroy();
             alertify.confirm().destroy();
         },
         function () {
@@ -548,6 +533,76 @@ function eliminarElementoActual() {
         },
         reverseButtons: false
     });
+}
+
+function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) {
+    var estiloSeleccionado = $(".estiloNave.activo").attr("data-idImg");
+    var spriteNave = game.add.sprite(1500, 282, estiloSeleccionado);
+    spriteNave.width = 100;
+    spriteNave.height = 100;
+    spriteNave.anchor.setTo(0.5, 0.5);
+    game.physics.enable(spriteNave, Phaser.Physics.ARCADE);
+    spriteNave.body.allowRotation = false;
+    var indicadorCombustible = new Gauge(document.getElementById("combustibleNivelNave")).setOptions({
+        angle: -0.3,
+        lineWidth: 0.07,
+        radiusScale: 0.75,
+        pointer: {
+            length: 0.6,
+            strokeWidth: 0.02,
+            color: '#22A7F0'
+        },
+        limitMax: true,
+        limitMin: false,
+        colorStart: '#4183D7',
+        colorStop: '#4183D7',
+        strokeColor: '#ECECEC',
+        generateGradient: true,
+        highDpiSupport: true,
+        percentColors: [
+            [0.0, "#F03434"],
+            [0.45, "#F9BF3B"],
+            [1.0, "#26A65B"]
+        ],
+        renderTicks: {
+            divisions: 10,
+            divWidth: 1,
+            divLength: 0.6,
+            divColor: '#22313F',
+            subDivisions: 3,
+            subLength: 0.5,
+            subWidth: 0.6,
+            subColor: '#2C3E50'
+        }
+    });
+    indicadorCombustible.maxValue = 200000;
+    indicadorCombustible.setMinValue(0);
+    indicadorCombustible.setTextField(document.getElementById("labelCombustible"));
+    nave = new NaveInfinity(spriteNave, indicadorCombustible);
+    nave.combustible.set($("#cantCombustibleInicial").val());
+    nave.setCantIridio(cantIridio);
+    nave.setCantPlatino(cantPlatino);
+    nave.setCantPaladio(cantPaladio);
+    nave.setCantEZero(cantEZero);
+    nave.setCantSondas(cantSondas);
+    //Vuelo Inicial
+    var sonidoNave = game.add.audio('nave');
+    sonidoNave.addMarker('Inicial', 0, 13);
+    moverNaveHacia(100, 100);
+    sonidoNave.play("Inicial");
+    setTimeout(() => {
+        moverNaveHacia(400, 400);
+        setTimeout(() => {
+            moverNaveHacia(1200, 332);
+            setTimeout(() => {
+                moverNaveHacia(1100, 332);
+                sonidoNave.volume -= 0.5;
+            }, 2550);
+        }, 2550);
+    }, 2550);
+    // setTimeout(() => {
+    //     alert("esto se prendio");
+    // }, 10000);
 }
 
 alertify.defaults = {
@@ -571,7 +626,7 @@ alertify.defaults = {
     transition: "zoom",
     notifier: {
         delay: 5,
-        position: 'bottom-right',
+        position: 'top-center',
         closeButton: false
     },
     glossary: {
@@ -584,22 +639,3 @@ alertify.defaults = {
         cancel: "btn btn-secundario"
     }
 };
-
-function eliminarObjetoFromGalaxia(elemento,tipoAEliminar,nebulosa,sisSolar){
-    if(tipoAEliminar=='Nebulosa'){
-        if(galaxia.nebulosas!==undefined){
-            galaxia.nebulosas[elemento.id].sprite.destroy();
-            galaxia.nebulosas[elemento.id]=undefined;
-        }
-    }else if(tipoAEliminar=='Sistema Solar'){
-        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios!==undefined){
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id].sprite.destroy();
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[elemento.id]=undefined;
-        }
-    }else{
-        if(galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas!==undefined){
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id].sprite.destroy();
-            galaxia.nebulosas[nebulosa.id].sistemasPlanetarios[sisSolar.id].planetas[elemento.id]=undefined;
-        }
-    }
-}

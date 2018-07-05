@@ -36,12 +36,6 @@ $(document).ready(function () {
         $("#submenuContainer").toggleClass("active");
     });
 
-
-    $("#submenuContainer .menuItem").on("click", function () {
-        //alert($(this).text());
-        $("#btnSeleccionarMapa").click();
-    });
-
     //Botones de interfaz
     $('#btnCrear, #btnEditar, #btnEliminar, #btnAtras, #btnCargar, #cantIridioNave,#cantPlatinoNave,#cantPaladioNave,#cantEZeroNave,#submenuContainer .menuItem').popover({
         trigger: 'hover'
@@ -89,10 +83,6 @@ $(document).ready(function () {
         $('#overlay').fadeIn();
     }
 
-    $("#infoSeleccion").on("click", function () {
-        deseleccionar();
-    });
-
     $("#btnInfoFooter").on("click", function () {
         $('#overlay').fadeIn();
         $('#footerGame,#closeFooter').addClass("active");
@@ -108,7 +98,19 @@ $(document).ready(function () {
     });
 
     $("#btnAtras").on("click", function () {
-        irAtras();
+        if (nebulosaActual !== undefined) {
+            if (planetaActual !== undefined) {
+                cargarVistaEdicion("S");
+            } else if (sistemaSolarActual !== undefined) {
+                cargarVistaEdicion("N");
+            } else {
+                cargarVistaEdicion("G");
+            }
+            deseleccionar();
+            salir();
+        } else {
+            $("#portadaContainer").fadeIn("slow");
+        }
     });
 
     $("#btnUbicar").on("click", function () {
@@ -123,19 +125,32 @@ $(document).ready(function () {
     });
 
     $("#btnIniciarNave").on("click", function () {
-        if ($.isNumeric($("#inputSondas").val())) {
-            $('#sideBarConfig').removeClass('active');
-            $('#overlay').fadeOut();
-            alertify.success('La Simulación Empezó!!');
+        var numSondas = $("#inputSondas").val();
+        if ($.isNumeric(numSondas)) {
+            var cantIridio = parseInt($("#cantIridioRango").val(), 10);
+            var cantPlatino = parseInt($("#cantPlatinoRango").val(), 10);
+            var cantPaladio = parseInt($("#cantPaladioRango").val(), 10);
+            var cantEZero = parseInt($("#cantEZeroRango").val(), 10);
+            if ((cantIridio + cantPlatino + cantPaladio + cantEZero) > 8000) {
+                alertify.error("La cantidad de materiales no debe superar la capacidad máxima de la nave");
+            } else {
+                numSondas = parseInt(numSondas, 10);
+                cargarInterfazNave();
+                crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, numSondas);
+                $('#sideBarConfig').removeClass('active');
+                $('#overlay').fadeOut();
+                $('#sideBarConfig').addClass("d-none");
+                alertify.success('La Simulación Empezó!!');
+            }
         } else {
             alertify.error("Se debe ingresar un número de sondas");
         }
     });
 
     //Activacion de estilo
-    $('.estiloNabe').on("click", function () {
+    $('.estiloNave').on("click", function () {
         if (!$(this).hasClass("activo")) {
-            $(".estiloNabe.activo").removeClass("activo");
+            $(".estiloNave.activo").removeClass("activo");
             $(this).addClass("activo");
         }
     });
@@ -242,6 +257,36 @@ $(document).ready(function () {
     });
 });
 
+function cargarVistaEdicion(nivel) {
+    switch (nivel) {
+        case "P":
+            $("#btnCrear").addClass("d-none");
+            $("#btnEditar").attr("data-content", "Editar este planeta");
+            $("#btnEliminar").attr("data-content", "Eliminar este planeta");
+            break;
+        case "S":
+            cargarFormularioPlaneta();
+            $("#btnCrear").attr("data-content", "Crear Nuevo Planeta");
+            $("#btnEditar").attr("data-content", "Editar este sistema solar");
+            $("#btnEliminar").attr("data-content", "Eliminar este sistema solar");
+            $("#btnCrear").removeClass("d-none");
+            break;
+        case "N":
+            cargarFormularioSistemaSolar();
+            $("#btnCrear").attr("data-content", "Crear Nuevo Sistema Solar");
+            $("#btnEditar").attr("data-content", "Editar esta nebulosa");
+            $("#btnEliminar").attr("data-content", "Eliminar esta nebulosa");
+            $("#btnEliminar").removeClass("d-none");
+            break;
+        case "G":
+            cargarFormularioNebulosa();
+            $("#btnCrear").attr("data-content", "Crear Nueva Nebulosa");
+            $("#btnEditar").attr("data-content", "Editar la galaxia");
+            $("#btnEliminar").addClass("d-none");
+            break;
+    }
+}
+
 function cargarFormularioNebulosa() {
     $('.estiloSistemaSolar').addClass("d-none"); // ocultar estilos sistema solar
     //Formulario Nebulosa
@@ -300,7 +345,7 @@ function cargarFormularioNave() {
     $("#btnUbicar").addClass("d-none");
     //Formulario Nave
     $("#crearTituloInfo").text("Nave Infinity"); // cambiar titulo
-    $('.estiloNabe').removeClass("d-none"); // ocultar estilos nebulosa
+    $('.estiloNave').removeClass("d-none"); // ocultar estilos nebulosa
     $("#combustibleNaveContainer").removeClass("d-none");
     $("#inputSondasContainer").removeClass("d-none");
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
@@ -308,7 +353,8 @@ function cargarFormularioNave() {
     $("#cantPlatinoRango").val(0);
     $("#cantPaladioRango").val(0);
     $("#cantEZeroRango").val(0);
-    $("#cantIridioRango,#cantPlatinoRango,#cantPaladioRango,#cantEZeroRango").trigger("input");
+    $("#cantCombustibleInicial").val(100000);
+    $("#cantIridioRango,#cantPlatinoRango,#cantPaladioRango,#cantEZeroRango,#cantCombustibleInicial").trigger("input");
     $("#btnIniciarNave").removeClass("d-none");
     $('#sideBarConfig').addClass('active');
     $('#overlay').fadeIn();
@@ -316,11 +362,11 @@ function cargarFormularioNave() {
 }
 
 function ocultarEdicion() {
+    deseleccionar();
     $("#btnAtras").addClass("d-none");
     $("#navToolsCreate").addClass("d-none");
     $("#infoUbicacion").addClass("leftInfo");
 }
-
 
 function cargarEdicion() {
     $("#btnGuardar").removeClass("d-none");
@@ -358,5 +404,23 @@ function cargarEdicion() {
         $("#inputNombre").attr("placeholder", "Ingrese el nombre de la Galaxia");
         $("#nebulosaEsPeligrosa").addClass("d-none");
         $("#containerEstilos").addClass("d-none");
+    }
+}
+
+function cargarInterfazNave() {
+    $("#containerEstadoVida, #containerEstadoCombustible, #containerEstadoSondas, #containerEstadoMateriales").fadeIn("slow");
+}
+
+function actualizarBarraMaterial(cant, material) {
+    var porcentaje = (100 * cant) / 8000;
+    var $barraCantidad = $("#cant" + material + "Nave");
+    $barraCantidad.width(porcentaje + "%");
+    if (porcentaje < 5) {
+        $barraCantidad.attr("data-content", "Cantidad " + material + ": " + cant + "T");
+        $barraCantidad.text("");
+    } else {
+        $barraCantidad.attr("data-content", cant + "T");
+        if ($barraCantidad.text() == "")
+            $barraCantidad.text(material);
     }
 }
