@@ -135,7 +135,7 @@ $(document).ready(function () {
                 alertify.error("La cantidad de materiales no debe superar la capacidad máxima de la nave");
             } else {
                 numSondas = parseInt(numSondas, 10);
-                cargarInterfazNave();
+                mostrarInterfazNave();
                 crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, numSondas);
                 $('#sideBarConfig').removeClass('active');
                 $('#overlay').fadeOut();
@@ -145,6 +145,13 @@ $(document).ready(function () {
         } else {
             alertify.error("Se debe ingresar un número de sondas");
         }
+    });
+
+    $("#btnAtacar").on("click", function () {
+        // salidaNave();
+        // entradaNave();
+        // teletransportar();
+
     });
 
     //Activacion de estilo
@@ -407,8 +414,12 @@ function cargarEdicion() {
     }
 }
 
-function cargarInterfazNave() {
+function mostrarInterfazNave() {
     $("#containerEstadoVida, #containerEstadoCombustible, #containerEstadoSondas, #containerEstadoMateriales").fadeIn("slow");
+}
+
+function ocultarInterfazNave() {
+    $("#containerEstadoVida, #containerEstadoCombustible, #containerEstadoSondas, #containerEstadoMateriales").fadeOut("slow");
 }
 
 function actualizarBarraMaterial(cant, material) {

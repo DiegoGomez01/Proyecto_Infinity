@@ -177,7 +177,7 @@ Interfaz Principal
 
 #btnAtacar {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     right: 200px;
     border: 1px solid #FFF;
 }

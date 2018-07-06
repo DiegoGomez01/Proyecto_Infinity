@@ -29,6 +29,7 @@ $(document).ready(function () {
     function preloadCreacion() {
         //Sprite galaxia
         game.load.image('fondoGalaxia', 'assets/images/galaxia.jpg');
+        game.load.spritesheet('fondoHiperespacio', 'assets/images/teletransportacionSprite.png', 1366, 664, 40);
         //Sprites nebulosa
         game.load.image('nebulosa1', 'assets/images/nebulosa1.png');
         game.load.image('nebulosa2', 'assets/images/nebulosa2.png');
@@ -518,7 +519,7 @@ function eliminarElementoActual() {
 
 function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) {
     var estiloSeleccionado = $(".estiloNave.activo").attr("data-idImg");
-    var spriteNave = game.add.sprite(1500, 282, estiloSeleccionado);
+    var spriteNave = game.add.sprite(1500, 600, estiloSeleccionado);
     spriteNave.width = 100;
     spriteNave.height = 100;
     spriteNave.anchor.setTo(0.5, 0.5);
@@ -569,10 +570,10 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     //Vuelo Inicial
     var sonidoNave = game.add.audio('nave');
     sonidoNave.addMarker('Inicial', 0, 13);
-    caminoActual.push([100, 100, 50000]);
-    caminoActual.push([400, 400, 10000]);
-    caminoActual.push([1200, 332, 5000]);
-    caminoActual.push([1100, 332, 1000]);
+    caminoActual.push([500, 100, 50000]);
+    caminoActual.push([200, 200, 10000]);
+    caminoActual.push([90, 300, 5000]);
+    caminoActual.push([100, 300, 1000]);
     sonidoNave.play("Inicial");
     empezarMovimiento();
 }
