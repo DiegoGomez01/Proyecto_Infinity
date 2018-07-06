@@ -108,9 +108,9 @@ $(document).ready(function () {
     }
 
     function updateSimulacion() {
-        // if (hayMovimiento) {
+        // if (flagMovimiento) {
         //     if (nave.sprite.overlap(fondo)) {
-        //         hayMovimiento=false;
+        //         flagMovimiento=false;
         //         setTimeout(function () {
         //             detenerNave();
         //         }, 1000);
@@ -569,21 +569,12 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     //Vuelo Inicial
     var sonidoNave = game.add.audio('nave');
     sonidoNave.addMarker('Inicial', 0, 13);
-    moverNave(100, 100, 50000);
+    caminoActual.push([100, 100, 50000]);
+    caminoActual.push([400, 400, 10000]);
+    caminoActual.push([1200, 332, 5000]);
+    caminoActual.push([1100, 332, 1000]);
     sonidoNave.play("Inicial");
-    setTimeout(() => {
-        moverNave(400, 400, 10000);
-        setTimeout(() => {
-            moverNave(1200, 332, 5000);
-            setTimeout(() => {
-                moverNave(1100, 332, 1000);
-                sonidoNave.volume -= 0.7;
-            }, 2550);
-        }, 2550);
-    }, 2550);
-    // setTimeout(() => {
-    //     alert("esto se prendio");
-    // }, 10000);
+    empezarMovimiento();
 }
 
 alertify.defaults = {

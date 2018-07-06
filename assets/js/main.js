@@ -1,5 +1,6 @@
 var spritesActuales = [];
-var hayMovimiento = false;
+var flagMovimiento = false;
+var caminoActual = [];
 
 function iniciarSimulacion() {
     if (galaxia.planetaOrigen.length === 3) {
@@ -39,31 +40,43 @@ function pausarSimulacion() {
     }
 }
 // Motor de Movimiento
-function moverNave(x, y, consumoCombustible) {
+
+function empezarMovimiento() {
+    if (caminoActual.length) {
+        flagMovimiento = true;
+        moverNave();
+    }
+}
+
+function moverNave() {
+    var etapa = caminoActual.shift();
+    var cantRotacion = game.physics.arcade.angleBetween(nave.sprite, {
+        x: etapa[0],
+        y: etapa[1]
+    });
     var rotacion = game.add.tween(nave.sprite);
     var movimientoNave = game.add.tween(nave.sprite);
-    var cantRotacion = game.physics.arcade.angleBetween(nave.sprite, {
-        x: x,
-        y: y
-    });
     rotacion.to({
         rotation: cantRotacion
     }, 500);
     movimientoNave.to({
-        x: x,
-        y: y
+        x: etapa[0],
+        y: etapa[1]
     }, 2000);
     rotacion.onComplete.add(function () {
         rotacion.stop();
-        hayMovimiento = true;
-        if (consumoCombustible > 0) {
-            consumirCombustible(consumoCombustible / 10, 0);
+        if (etapa[2] > 0) {
+            consumirCombustible(etapa[2] / 10, 0);
         }
         movimientoNave.start();
     });
     movimientoNave.onComplete.add(function () {
         movimientoNave.stop();
-        hayMovimiento = false;
+        if (caminoActual.length) {
+            moverNave();
+        } else {
+            flagMovimiento = false;
+        }
     });
     rotacion.start();
 }
