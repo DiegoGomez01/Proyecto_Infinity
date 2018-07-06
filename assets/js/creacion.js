@@ -38,8 +38,9 @@ $(document).ready(function () {
         game.load.image('naveNodriza', 'assets/images/naveNodriza.png');
         game.load.image('naveAvanzada', 'assets/images/naveAvanzada.png');
         game.load.image('naveExploradora', 'assets/images/naveExploradora.png');
-        game.load.image('navePlayer', 'assets/images/nave1.png');
+        game.load.image('navePlayer', 'assets/images/nave2.png');
         game.load.image('bala1', 'assets/images/bala.png');
+        game.load.image('sonda', 'assets/images/sonda.png');
     }
 
     function preloadCreacion() {

@@ -85,6 +85,15 @@ class Planetas {
     }
 }
 
+class Enemigo {
+    constructor(id, tipo, vida, sprite) {
+        this.id = id;
+        this.tipo = tipo;
+        this.vida = vida;
+        this.sprite = sprite;
+    }
+}
+
 class Dijkstra {
 
     constructor(totalPesos, verticeOrigen, cantidadNodos) {
