@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+    $("#btnPruebas").on("click", function () {
+        nave.sprite.rotation += 0.5;
+    });
+
     $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
         return false;
     });
@@ -148,10 +153,13 @@ $(document).ready(function () {
     });
 
     $("#btnAtacar").on("click", function () {
-        // salidaNave();
-        // entradaNave();
-        // teletransportar();
-
+        if ($(this).hasClass("active")) {
+            $(this).text("Atacar");
+            alert("Atacaaarr");
+        } else {
+            $(this).text("¡Desplegar Ataque!");
+        }
+        $("#containerConfigAtaque, #btnAtacar").toggleClass("active");
     });
 
     //Activacion de estilo
@@ -159,6 +167,13 @@ $(document).ready(function () {
         if (!$(this).hasClass("activo")) {
             $(".estiloNave.activo").removeClass("activo");
             $(this).addClass("activo");
+        }
+    });
+    $('.estiloEnemigo').on("click", function () {
+        if (!$(this).hasClass("activo")) {
+            $(".estiloEnemigo.activo").removeClass("activo");
+            $(this).addClass("activo");
+            $("#infoTipoEnemigo").text($(this).attr("data-tipoEnemigo"));
         }
     });
     $('.estiloNebulosa').on("click", function () {

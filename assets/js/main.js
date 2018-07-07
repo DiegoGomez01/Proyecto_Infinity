@@ -78,10 +78,34 @@ function moverNave() {
             moverNave();
         } else {
             flagMovimiento = false;
+            //Sacar Sonda
+            nave.sondaSprite.reset(100, 300);
+            var sacarSonda = game.add.tween(nave.sondaSprite);
+            sacarSonda.to({
+                width: 100
+            }, 1000);
+            sacarSonda.onComplete.add(function () {
+                sacarSonda.stop();
+            });
+            sacarSonda.start();
         }
     });
     rotacion.start();
 }
+
+// salidaNave();
+// entradaNave();
+// teletransportar();
+//Sacar Sonda
+// var ocultarSonda = game.add.tween(nave.sondaSprite);
+// ocultarSonda.to({
+//     x: 190
+// }, 1000);
+// ocultarSonda.onComplete.add(function () {
+//     ocultarSonda.stop();
+//     nave.sondaSprite.kill();
+// });
+// ocultarSonda.start();
 
 function consumirCombustible(cantCombustible, tiempo) {
     nave.combustible.set(nave.combustible.value - cantCombustible);

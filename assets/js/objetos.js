@@ -1,6 +1,7 @@
 class NaveInfinity {
-    constructor(sprite, indicadorCombustible) {
+    constructor(sprite, sonda, indicadorCombustible) {
         this.sprite = sprite;
+        this.sondaSprite = sonda;
         this.combustible = indicadorCombustible;
         this.cantSondas;
         this.cantIridio;
