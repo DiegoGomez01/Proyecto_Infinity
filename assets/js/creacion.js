@@ -33,19 +33,19 @@ $(document).ready(function () {
         // render: render
     };
 
-    function preloadAttack(){
+    function preloadAttack() {
         //Naves Enemigas
         game.load.image('naveNodriza', 'assets/images/naveNodriza.png');
         game.load.image('naveAvanzada', 'assets/images/naveAvanzada.png');
         game.load.image('naveExploradora', 'assets/images/naveExploradora.png');
         game.load.image('navePlayer', 'assets/images/nave2.png');
         game.load.image('bala1', 'assets/images/bala.png');
-        game.load.image('sonda', 'assets/images/sonda.png');
     }
 
     function preloadCreacion() {
         //Sprite galaxia
         game.load.image('fondoGalaxia', 'assets/images/galaxia.jpg');
+        game.load.spritesheet('fondoHiperespacio', 'assets/images/teletransportacionSprite.png', 1366, 664, 40);
         //Sprites nebulosa
         game.load.image('nebulosa1', 'assets/images/nebulosa1.png');
         game.load.image('nebulosa2', 'assets/images/nebulosa2.png');
@@ -91,6 +91,7 @@ $(document).ready(function () {
         game.load.image('nave1', 'assets/images/nave1.png');
         game.load.image('nave2', 'assets/images/nave2.png');
         game.load.image('nave3', 'assets/images/nave3.png');
+        game.load.image('sonda', 'assets/images/sonda.png');
         //Sonidos 
         game.load.audio('nave', 'assets/sonidos/naveEspacial.mp3');
     }
@@ -102,7 +103,7 @@ $(document).ready(function () {
         game.input.mouse.capture = true;
     }
 
-    
+
 
     function updateCreacion() {
         updateLines();
@@ -139,7 +140,7 @@ $(document).ready(function () {
 
     game.state.add('creacion', creacionState);
     game.state.add('simulacion', simulacionState);
-    game.state.add('attack',attackState);
+    game.state.add('attack', attackState);
     game.state.start('creacion');
 });
 
@@ -538,7 +539,12 @@ function eliminarElementoActual() {
 
 function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) {
     var estiloSeleccionado = $(".estiloNave.activo").attr("data-idImg");
-    var spriteNave = game.add.sprite(1500, 282, estiloSeleccionado);
+    var spriteSonda = game.add.sprite(100, 300, "sonda");
+    spriteSonda.width = 0;
+    spriteSonda.height = 10;
+    spriteSonda.anchor.setTo(0, 0.5);
+    spriteSonda.kill();
+    var spriteNave = game.add.sprite(1500, 600, estiloSeleccionado);
     spriteNave.width = 100;
     spriteNave.height = 100;
     spriteNave.anchor.setTo(0.5, 0.5);
@@ -579,7 +585,7 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     indicadorCombustible.maxValue = 200000;
     indicadorCombustible.setMinValue(0);
     indicadorCombustible.setTextField(document.getElementById("labelCombustible"));
-    nave = new NaveInfinity(spriteNave, indicadorCombustible);
+    nave = new NaveInfinity(spriteNave, spriteSonda, indicadorCombustible);
     nave.combustible.set($("#cantCombustibleInicial").val());
     nave.setCantIridio(cantIridio);
     nave.setCantPlatino(cantPlatino);
@@ -589,10 +595,9 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     //Vuelo Inicial
     var sonidoNave = game.add.audio('nave');
     sonidoNave.addMarker('Inicial', 0, 13);
-    caminoActual.push([100, 100, 50000]);
-    caminoActual.push([400, 400, 10000]);
-    caminoActual.push([1200, 332, 5000]);
-    caminoActual.push([1100, 332, 1000]);
+    caminoActual.push([500, 100, 0]);
+    caminoActual.push([90, 300, 0]);
+    caminoActual.push([100, 300, 0]);
     sonidoNave.play("Inicial");
     empezarMovimiento();
 }

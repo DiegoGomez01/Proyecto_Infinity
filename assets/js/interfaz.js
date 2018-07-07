@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+    $("#btnPruebas").on("click", function () {
+        nave.sprite.rotation += 0.5;
+    });
+
     $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
         return false;
     });
@@ -135,7 +140,7 @@ $(document).ready(function () {
                 alertify.error("La cantidad de materiales no debe superar la capacidad máxima de la nave");
             } else {
                 numSondas = parseInt(numSondas, 10);
-                cargarInterfazNave();
+                mostrarInterfazNave();
                 crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, numSondas);
                 $('#sideBarConfig').removeClass('active');
                 $('#overlay').fadeOut();
@@ -147,11 +152,28 @@ $(document).ready(function () {
         }
     });
 
+    $("#btnAtacar").on("click", function () {
+        if ($(this).hasClass("active")) {
+            $(this).text("Atacar");
+            alert("Atacaaarr");
+        } else {
+            $(this).text("¡Desplegar Ataque!");
+        }
+        $("#containerConfigAtaque, #btnAtacar").toggleClass("active");
+    });
+
     //Activacion de estilo
     $('.estiloNave').on("click", function () {
         if (!$(this).hasClass("activo")) {
             $(".estiloNave.activo").removeClass("activo");
             $(this).addClass("activo");
+        }
+    });
+    $('.estiloEnemigo').on("click", function () {
+        if (!$(this).hasClass("activo")) {
+            $(".estiloEnemigo.activo").removeClass("activo");
+            $(this).addClass("activo");
+            $("#infoTipoEnemigo").text($(this).attr("data-tipoEnemigo"));
         }
     });
     $('.estiloNebulosa').on("click", function () {
@@ -407,8 +429,12 @@ function cargarEdicion() {
     }
 }
 
-function cargarInterfazNave() {
+function mostrarInterfazNave() {
     $("#containerEstadoVida, #containerEstadoCombustible, #containerEstadoSondas, #containerEstadoMateriales").fadeIn("slow");
+}
+
+function ocultarInterfazNave() {
+    $("#containerEstadoVida, #containerEstadoCombustible, #containerEstadoSondas, #containerEstadoMateriales").fadeOut("slow");
 }
 
 function actualizarBarraMaterial(cant, material) {
