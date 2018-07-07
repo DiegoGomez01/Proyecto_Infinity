@@ -18,13 +18,64 @@ $(document).ready(function () {
     $("#btnAttack").on("click", function () {
         game.state.start('attack');
     });
+
+    $("#NodrizaAlAtaque").on("click", function () {
+        verificarSiHayAtaques();
+        console.log(SpriteEnemyNodriza);
+        SpriteEnemyNodriza.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+        });
+        enemigoAtacando="nodriza";
+    });
+
+    $("#AvanzadaAlAtaque").on("click", function () {
+        verificarSiHayAtaques();
+        SpriteEnemyAvanz.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+        });
+        enemigoAtacando="avanzada";
+    });
+
+    $("#ExplAlAtaque").on("click", function () {
+        verificarSiHayAtaques();
+        SpriteEnemiesExp.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+        });
+        enemigoAtacando="exploradores";
+    });
 });
+
+function verificarSiHayAtaques(){
+    if(enemigoAtacando!==undefined){
+        switch (enemigoAtacando){
+            case "nodriza":
+                SpriteEnemyNodriza.kill();
+                break;
+            case "avanzada":
+                SpriteEnemyAvanz.kill();
+                break;
+            case "exploradores":
+                SpriteEnemiesExp.kill();
+                break;
+        }
+        enemigoAtacando=undefined;
+    }
+}
 
 var cursors;
 var weapon;
 var SpriteEnemyNodriza;
 var SpriteEnemyAvanz;
 var SpriteEnemiesExp;
+var enemigoAtacando;
+var vidaEnemigo=100;
+var gifExplosion=[];
 
 function createAttack(){
     var numeroPlaneta = returnIdBackground(planetaActual);
@@ -37,18 +88,19 @@ function createAttack(){
 }
 
 function empezarAtaque(){ 
-    var nodr = SpriteEnemyNodriza.create(game.rnd.between(1000, 1100), game.rnd.between(0, alto), 'naveNodriza');
+    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho+50, ancho+100), 300, 'naveNodriza');
     nodr.anchor.setTo(0.5,0.5);   
-    var avanz = SpriteEnemyAvanz.create(game.rnd.between(1000, 1100), game.rnd.between(0, alto), 'naveAvanzada');
+    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho+50, ancho+100), 300, 'naveAvanzada');
     avanz.anchor.setTo(0.5,0.5);
     
     for(var j=0;j<enemigoExplorador;j++){
-        var exp = SpriteEnemiesExp.create(game.rnd.between(1000, 1100), game.rnd.between(0, alto), 'naveExploradora');
+        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho+50, ancho+100), game.rnd.between(0, alto), 'naveExploradora');
         exp.anchor.setTo(0.5,0.5);
-        var tween = game.add.tween(exp);
-        tween.to({x:800}, 3000, Phaser.Easing.Bounce.Out);
-        tween.start();
     }
+}
+
+function probabilidadExito(){
+
 }
 
 function agregarNaveDefensa(){
@@ -95,16 +147,37 @@ function updateAttack() {
 }
 
 function collAvz(bullet, enemies) {
-    console.log("avanzada");
+    efectoExplosion(SpriteEnemyAvanz.hash[0]);
     colision(bullet);
 }
+
 function collNod(bullet, enemies) {
-    console.log("nodriza");
+    efectoExplosion(SpriteEnemyNodriza.hash[0]);
     colision(bullet);
 }
 function collExp(bullet, enemies) {
-    console.log("exp");
+    SpriteEnemiesExp.hash.forEach(function(enemigo){
+        efectoExplosion(enemigo);
+    });
     colision(bullet);
+}
+
+function efectoExplosion(sprite){
+    explosion = game.add.sprite(sprite.position.x+20, sprite.position.y, 'gifExplosion');
+    explosion.width = 100;
+    explosion.height = 100;
+    explosion.anchor.setTo(0.5, 0.5);
+    explosion.animations.add('giro');
+    explosion.animations.play('giro', 10, true);
+    gifExplosion.push(explosion);
+    game.time.events.add(Phaser.Timer.SECOND * 2, destroyExplosion, this);
+}
+
+function destroyExplosion(){
+    gifExplosion.forEach(function(explosion){
+        explosion.kill();
+    });
+    gifExplosion=[];
 }
 
 function colision(bullet){

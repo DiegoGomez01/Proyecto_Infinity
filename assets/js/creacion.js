@@ -43,6 +43,7 @@ $(document).ready(function () {
         game.load.image('sonda', 'assets/images/sonda.png');
         game.load.audio('disparo', 'assets/sonidos/disparo.mp3');
         game.load.audio('explosion', 'assets/sonidos/explosion.mp3');
+        game.load.spritesheet('gifExplosion', 'assets/images/explosion.png', 80, 80, 17);
     }
 
     function preloadCreacion() {
