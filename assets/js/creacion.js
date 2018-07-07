@@ -41,6 +41,8 @@ $(document).ready(function () {
         game.load.image('navePlayer', 'assets/images/nave2.png');
         game.load.image('bala1', 'assets/images/bala.png');
         game.load.image('sonda', 'assets/images/sonda.png');
+        game.load.audio('disparo', 'assets/sonidos/disparo.mp3');
+        game.load.audio('explosion', 'assets/sonidos/explosion.mp3');
     }
 
     function preloadCreacion() {
