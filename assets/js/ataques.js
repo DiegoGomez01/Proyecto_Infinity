@@ -36,6 +36,7 @@ $(document).ready(function () {
             var tween = game.add.tween(sprite);
             tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
             tween.start();
+            tween.onComplete.add(disparoDeEnemigo, this);
         });
         enemigoAtacando="avanzada";
     });
@@ -70,6 +71,7 @@ function verificarSiHayAtaques(){
 
 var cursors;
 var weapon;
+var weaponEnemigo;
 var SpriteEnemyNodriza;
 var SpriteEnemyAvanz;
 var SpriteEnemiesExp;
@@ -145,12 +147,17 @@ function updateAttack() {
     if(enemigoAtacando){
         switch (enemigoAtacando){
             case "nodriza":
+                SpriteEnemyNodriza.hash[0].rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyNodriza.hash[0]);
                 sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyNodriza.hash[0]);
                 break;
             case "avanzada":
+                SpriteEnemyAvanz.hash[0].rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyAvanz.hash[0]);
                 sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyAvanz.hash[0]);
                 break;
             case "exploradores":
+                SpriteEnemiesExp.hash.forEach(function(enemigo){
+                    enemigo.rotation = game.physics.arcade.angleBetween(sprite,enemigo);  
+                });
                 sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemiesExp.hash[0]);
                 break;
         }
@@ -158,6 +165,29 @@ function updateAttack() {
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyAvanz, collAvz, null, this);
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyNodriza, collNod, null, this);
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemiesExp, collExp, null, this);
+}
+
+function disparoDeEnemigo(){
+    weaponEnemigo = game.add.weapon(1, 'bala1');
+    weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
+    weaponEnemigo.bulletSpeed = 400;
+
+    switch (enemigoAtacando){
+        case "nodriza":
+            weaponEnemigo.trackSprite(SpriteEnemyNodriza.hash[0], 0, 0, true);
+        break;
+        case "avanzada":
+            weaponEnemigo.trackSprite(SpriteEnemyAvanz.hash[0],0,0,true);
+            // weaponEnemigo.bulletAngleOffset = game.physics.arcade.angleBetween(sprite, SpriteEnemyAvanz.hash[0]);
+            // weaponEnemigo.fireAngle = game.physics.arcade.angleBetween(sprite, SpriteEnemyAvanz.hash[0]); 
+        break;
+        case "exploradores":
+            SpriteEnemiesExp.hash.forEach(function(enemigo){
+                weaponEnemigo.trackSprite(enemigo, 0, 0, true);
+            });
+        break;
+    }
+    weaponEnemigo.fire();
 }
 
 function collAvz(bullet, enemies) {
