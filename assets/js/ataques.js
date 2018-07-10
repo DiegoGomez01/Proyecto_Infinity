@@ -88,13 +88,13 @@ function createAttack(){
 }
 
 function empezarAtaque(){ 
-    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho+50, ancho+100), 300, 'naveNodriza');
+    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho+50, ancho+100), game.rnd.between(0, alto-50), 'naveNodriza');
     nodr.anchor.setTo(0.5,0.5);   
-    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho+50, ancho+100), 300, 'naveAvanzada');
+    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho+50, ancho+100), game.rnd.between(0, alto-50), 'naveAvanzada');
     avanz.anchor.setTo(0.5,0.5);
     
     for(var j=0;j<enemigoExplorador;j++){
-        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho+50, ancho+100), game.rnd.between(0, alto), 'naveExploradora');
+        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho+50, ancho+100), game.rnd.between(0, alto-50), 'naveExploradora');
         exp.anchor.setTo(0.5,0.5);
     }
 }
@@ -128,18 +128,32 @@ function agregarNaveDefensa(){
 }
 
 function updateAttack() {
-    if (cursors.left.isDown){
-        sprite.body.angularVelocity = -300;
-    }else if (cursors.right.isDown){
-        sprite.body.angularVelocity = 300;
-    }else{
-        sprite.body.angularVelocity = 0;
-    }
+    // if (cursors.left.isDown){
+    //     console.log(sprite);
+    //     sprite.body.angularVelocity = -300;
+    // }else if (cursors.right.isDown){
+    //     sprite.body.angularVelocity = 300;
+    // }else{
+    //     sprite.body.angularVelocity = 0;
+    // }
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
         var sonidoDisparo = game.add.audio('disparo');
         sonidoDisparo.addMarker('inicioDisparo', 0, 13);
         sonidoDisparo.play("inicioDisparo");
         weapon.fire();
+    }
+    if(enemigoAtacando){
+        switch (enemigoAtacando){
+            case "nodriza":
+                sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyNodriza.hash[0]);
+                break;
+            case "avanzada":
+                sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemyAvanz.hash[0]);
+                break;
+            case "exploradores":
+                sprite.rotation = game.physics.arcade.angleBetween(sprite,SpriteEnemiesExp.hash[0]);
+                break;
+        }
     }
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyAvanz, collAvz, null, this);
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyNodriza, collNod, null, this);
