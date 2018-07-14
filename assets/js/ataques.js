@@ -1,11 +1,24 @@
-var enemigoExplorador=15;
+var enemigoExplorador=8;
+
+var cursors;
+var weapon;
+var weaponEnemigo;
+var vidaEnemigo=0;
+var dañoEnemigo=0;
+var SpriteEnemyNodriza;
+var SpriteEnemyAvanz;
+var SpriteEnemiesExp;
+var enemigoAtacando;
+var gifExplosion=[];
+var disparosEnemigosExploradores=[];
+
 $(document).ready(function () {
     $("#btnConfigEnemigos").on("click", function () {
         alertify.prompt("<h6>Ingrese la cantidad de enemigos tipo exploradores.<br>En el comento hay <b>"+enemigoExplorador+"</b> enemigos.</h6>", "",
         function(closeEvent, cantidadEnemigoExplorador){
-            if(!$.isNumeric(cantidadEnemigoExplorador) || cantidadEnemigoExplorador<0){
+            if(!$.isNumeric(cantidadEnemigoExplorador) || cantidadEnemigoExplorador<0 || cantidadEnemigoExplorador>8){
                 closeEvent.cancel = true;
-                alertify.error('Ingrese un valor numérico positivo');
+                alertify.error('Ingrese un valor numérico positivo menor o igual a 8');
             }else{
                 enemigoExplorador = cantidadEnemigoExplorador;
                 alertify.success('Los enemigos se actualizaron de forma correcta.');
@@ -21,34 +34,47 @@ $(document).ready(function () {
 
     $("#NodrizaAlAtaque").on("click", function () {
         verificarSiHayAtaques();
-        console.log(SpriteEnemyNodriza);
-        SpriteEnemyNodriza.hash.forEach(function(sprite) {
-            var tween = game.add.tween(sprite);
-            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-            tween.start();
-        });
         enemigoAtacando="nodriza";
+        vidaEnemigo=500;
+        dañoEnemigo=150;
+        if(probabilidadExito()){
+            SpriteEnemyNodriza.hash.forEach(function(sprite) {
+                var tween = game.add.tween(sprite);
+                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+                tween.start();
+                tween.onComplete.add(disparoDeEnemigo, this);
+            });
+        }
     });
 
     $("#AvanzadaAlAtaque").on("click", function () {
         verificarSiHayAtaques();
-        SpriteEnemyAvanz.hash.forEach(function(sprite) {
-            var tween = game.add.tween(sprite);
-            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-            tween.start();
-            tween.onComplete.add(disparoDeEnemigo, this);
-        });
         enemigoAtacando="avanzada";
+        vidaEnemigo=400;
+        dañoEnemigo=100;
+        if(probabilidadExito()){
+            SpriteEnemyAvanz.hash.forEach(function(sprite) {
+                var tween = game.add.tween(sprite);
+                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+                tween.start();
+                tween.onComplete.add(disparoDeEnemigo, this);
+            });  
+        }      
     });
 
     $("#ExplAlAtaque").on("click", function () {
         verificarSiHayAtaques();
-        SpriteEnemiesExp.hash.forEach(function(sprite) {
-            var tween = game.add.tween(sprite);
-            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-            tween.start();
-        });
         enemigoAtacando="exploradores";
+        vidaEnemigo=100;
+        dañoEnemigo=50;
+        if(probabilidadExito()){
+            SpriteEnemiesExp.hash.forEach(function(sprite) {
+                var tween = game.add.tween(sprite);
+                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+                tween.start();
+                tween.onComplete.add(disparoDeEnemigo, this);
+            });
+        } 
     });
 });
 
@@ -68,16 +94,6 @@ function verificarSiHayAtaques(){
         enemigoAtacando=undefined;
     }
 }
-
-var cursors;
-var weapon;
-var weaponEnemigo;
-var SpriteEnemyNodriza;
-var SpriteEnemyAvanz;
-var SpriteEnemiesExp;
-var enemigoAtacando;
-var vidaEnemigo=100;
-var gifExplosion=[];
 
 function createAttack(){
     var numeroPlaneta = returnIdBackground(planetaActual);
@@ -102,7 +118,13 @@ function empezarAtaque(){
 }
 
 function probabilidadExito(){
-
+    var disparosNave = vidaEnemigo/nave.dañoArmaBase;
+    var disparosEnemigos = (nave.vida+nave.escudo)/dañoEnemigo;
+    if (disparosEnemigos<=disparosNave){
+        alertify.error("SE VA O LO MATAN");
+        return false;
+    }
+    return true;
 }
 
 function agregarNaveDefensa(){
@@ -113,6 +135,11 @@ function agregarNaveDefensa(){
     weapon = game.add.weapon(1, 'bala1');
     weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
     weapon.bulletSpeed = 400;
+
+    weaponEnemigo = game.add.weapon(15, 'bala1');
+    weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
+    weaponEnemigo.bulletSpeed = 400;
+    weaponEnemigo.fireRate = 60;
 
     spriteSonda = game.add.sprite(110, 300, 'sonda');
     spriteSonda.anchor.set(0.5);
@@ -130,14 +157,6 @@ function agregarNaveDefensa(){
 }
 
 function updateAttack() {
-    // if (cursors.left.isDown){
-    //     console.log(sprite);
-    //     sprite.body.angularVelocity = -300;
-    // }else if (cursors.right.isDown){
-    //     sprite.body.angularVelocity = 300;
-    // }else{
-    //     sprite.body.angularVelocity = 0;
-    // }
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
         var sonidoDisparo = game.add.audio('disparo');
         sonidoDisparo.addMarker('inicioDisparo', 0, 13);
@@ -165,12 +184,13 @@ function updateAttack() {
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyAvanz, collAvz, null, this);
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemyNodriza, collNod, null, this);
     game.physics.arcade.overlap(weapon.bullets, SpriteEnemiesExp, collExp, null, this);
+    disparosEnemigosExploradores.forEach(function(wEnemigo){
+        game.physics.arcade.overlap(wEnemigo.bullets, sprite, collNave, null, this);
+    });
+    
 }
 
-function disparoDeEnemigo(){
-    weaponEnemigo = game.add.weapon(1, 'bala1');
-    weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
-    weaponEnemigo.bulletSpeed = 400;
+function disparoDeEnemigo(spriteEmenigo){
 
     switch (enemigoAtacando){
         case "nodriza":
@@ -178,32 +198,58 @@ function disparoDeEnemigo(){
         break;
         case "avanzada":
             weaponEnemigo.trackSprite(SpriteEnemyAvanz.hash[0],0,0,true);
-            // weaponEnemigo.bulletAngleOffset = game.physics.arcade.angleBetween(sprite, SpriteEnemyAvanz.hash[0]);
-            // weaponEnemigo.fireAngle = game.physics.arcade.angleBetween(sprite, SpriteEnemyAvanz.hash[0]); 
         break;
         case "exploradores":
-            SpriteEnemiesExp.hash.forEach(function(enemigo){
-                weaponEnemigo.trackSprite(enemigo, 0, 0, true);
-            });
+            weaponEnemigo = game.add.weapon(1, 'bala1');
+            weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
+            weaponEnemigo.bulletSpeed = 400;                
+            weaponEnemigo.trackSprite(spriteEmenigo, 0, 0, true);
+            
         break;
     }
-    weaponEnemigo.fire();
+    weaponEnemigo.fireAtXY(100,300);
+    disparosEnemigosExploradores.push(weaponEnemigo);
+}
+
+function enemigoFueEliminado(){
+    vidaEnemigo -= nave.dañoArmaBase;
+    if(vidaEnemigo<=0){
+        alertify.success("Enemigo Eliminado");
+        return true;
+    }
+    return false;
 }
 
 function collAvz(bullet, enemies) {
     efectoExplosion(SpriteEnemyAvanz.hash[0]);
     colision(bullet);
+    if(enemigoFueEliminado()){
+        SpriteEnemyAvanz.kill;
+    }
 }
 
 function collNod(bullet, enemies) {
     efectoExplosion(SpriteEnemyNodriza.hash[0]);
     colision(bullet);
+    if(enemigoFueEliminado()){
+        SpriteEnemyNodriza.kill;
+    }
 }
+
 function collExp(bullet, enemies) {
     SpriteEnemiesExp.hash.forEach(function(enemigo){
         efectoExplosion(enemigo);
     });
     colision(bullet);
+    if(enemigoFueEliminado()){
+        SpriteEnemiesExp.kill;
+    }
+}
+
+function collNave(enemies, bullet) {
+    efectoExplosion(sprite);
+    colision(bullet);
+
 }
 
 function efectoExplosion(sprite){

@@ -7,6 +7,19 @@ class NaveInfinity {
         this.cantPlatino;
         this.cantPaladio;
         this.cantEZero;
+        this.dañoArmaBase=60;
+        this.vidaMaxima=1200;
+        this.escudoMaximo=1200;
+        this.escudo=1200;
+        this.vida=1200;
+    }
+    setEscudo(cant){
+        if(nave.escudo+cant>this.escudoMaximo){
+            cant=this.escudoMaximo;
+            alertify.success("El escudo está al máximo").setHeader("Máximo!");
+        }
+        this.escudo=cant;
+        actualizarBarraEscudo(cant);
     }
     setCantSondas(cant) {
         $("#numSondas").text(cant);
@@ -17,11 +30,11 @@ class NaveInfinity {
         actualizarBarraMaterial(cant, "Iridio");
     }
     setCantPlatino(cant) {
-        this.setCantPlatino = cant;
+        this.cantPlatino = cant;
         actualizarBarraMaterial(cant, "Platino");
     }
     setCantPaladio(cant) {
-        this.setCantPaladio = cant;
+        this.CantPaladio = cant;
         actualizarBarraMaterial(cant, "Paladio");
     }
     setCantEZero(cant) {

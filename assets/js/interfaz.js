@@ -424,3 +424,9 @@ function actualizarBarraMaterial(cant, material) {
             $barraCantidad.text(material);
     }
 }
+
+function actualizarBarraEscudo(cant){
+    var porcentaje = (100 * cant) / nave.escudoMaximo;
+    var $barraCantidad = $("#escudoNave");
+    $barraCantidad.width(porcentaje + "%");
+}
