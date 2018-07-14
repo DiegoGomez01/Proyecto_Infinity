@@ -8,6 +8,47 @@ class NaveInfinity {
         this.cantPlatino;
         this.cantPaladio;
         this.cantEZero;
+        this.dañoArmaBase=60;
+        this.vidaMaxima=1200;
+        this.escudoMaximo=1200;
+        this.escudo=0;
+        this.cañonTanixComprado=false;
+        this.disparoPorTanix=false;
+        this.contadorDisparos=0;
+        this.vida=1200;
+        this.mejoras=[];
+    }
+    setEscudo(cant,opcion){
+        //cant es la cantidad a actualizar
+        if(opcion=="aumentar"){
+            if(cant>this.escudoMaximo){
+                cant=this.escudoMaximo;
+                alertify.success("El escudo está al máximo");
+            }
+        }else if(opcion=="quitar"){
+            if(cant<0){
+                this.setVida(this.vida+cant,"quitar");
+                cant=0;
+            }
+        }
+        this.escudo=cant;
+        actualizarBarraEscudo(this.escudo);
+    }
+    setVida(cant,opcion){
+        //cant es la cantidad a actualizar
+        if(opcion=="aumentar"){
+            if(cant>this.vidaMaxima){
+                cant=this.vidaMaxima;
+                alertify.success("La vida está al máximo");
+            }
+        }else if(opcion=="quitar"){
+            if(cant<0){
+                cant=0;
+                alertify.error("GAME OVER");
+            }
+        }
+        this.vida=cant;
+        actualizarBarraVidaNave(this.vida);
     }
     setCantSondas(cant) {
         $("#numSondas").text(cant);
@@ -18,16 +59,27 @@ class NaveInfinity {
         actualizarBarraMaterial(cant, "Iridio");
     }
     setCantPlatino(cant) {
-        this.setCantPlatino = cant;
+        this.cantPlatino = cant;
         actualizarBarraMaterial(cant, "Platino");
     }
     setCantPaladio(cant) {
-        this.setCantPaladio = cant;
+        this.CantPaladio = cant;
         actualizarBarraMaterial(cant, "Paladio");
     }
     setCantEZero(cant) {
         this.cantEZero = cant;
         actualizarBarraMaterial(cant, "EZero");
+    }
+}
+
+class Mejora{
+    constructor(nombre,zero,paladio,iridio,platino){
+        this.nombre=nombre;
+        this.zero=zero;
+        this.paladio=paladio;
+        this.iridio=iridio;
+        this.paladio=paladio;
+        this.activa=true;
     }
 }
 

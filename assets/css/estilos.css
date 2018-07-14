@@ -478,6 +478,18 @@ Interfaz Simulación Nave
     width: 350px;
 }
 
+#containerEstadoVidaEnemigo {
+    position: fixed;
+    bottom: 10px;
+    top: 27px;
+    left: 1180px;
+    width: 170px;
+}
+
+#vidaNaveEnemiga {
+    text-shadow: 0 0 4px #000;
+    background-color: #ff8400;
+}
 #vidaNave {
     text-shadow: 0 0 4px #000;
     background-color: #26A65B;

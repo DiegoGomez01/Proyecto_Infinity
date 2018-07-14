@@ -20,6 +20,7 @@
     <script type="text/javascript" src="assets/js/interfaz.js"></script>
     <script type="text/javascript" src="assets/js/cargarJSON.js"></script>
     <script type="text/javascript" src="assets/js/ataques.js"></script>
+    <script type="text/javascript" src="assets/js/mejoras.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrapAlertify.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
@@ -29,7 +30,7 @@
 
 <body>
     <div id="overlay"></div>
-    <!-- <button id="btnAttack">Atacar</button> -->
+    <!-- <button id="Mejoras">mejorar</button> -->
     <!-- <button id="generarJSON">GenerarJSON</button> -->
     <div id="btnCerrarSideBar" class="fa fa-arrow-circle-right fa-2x btnICON"></div>
     <div id="sideBarConfig" class="p-3">
@@ -184,6 +185,7 @@
                 <div id="btnSeguirCreando" class="menuItem mt-2">Continuar con la creación</div>
                 <div id="btnSeleccionarMapa" class="menuItem mt-2">Seleccionar un mapa</div>
                 <div id="btnConfigPrecios" class="menuItem mt-2">Configurar Precios</div>
+                <div id="btnConfigEnemigos" class="menuItem mt-2">Configurar Enemigos</div>
                 <div id="btnAbrirCreditos" class="menuItem mt-2">Créditos</div>
                 <div id="btnVolverPortada" class="menuItem mt-2">Volver</div>
             </div>
@@ -229,7 +231,7 @@
                 <div id="vidaNave" class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Vida al 100%</div>
             </div>
             <div class="progress mt-3 mb-2" style="width: 100%; height: 25px;">
-                <div id="escudoNave" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100"
+                <div id="escudoNave" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="100"
                     aria-valuemin="0" aria-valuemax="100">Escudo (Nivel 3)</div>
             </div>
         </div>
@@ -257,20 +259,26 @@
         <div id="containerConfigAtaque" class="p-2">
             <h4 class="titulo border-bottom text-center">Tipos de naves enemigas</h4>
             <div class="d-flex flex-wrap justify-content-center">
-                <div class="estiloEnemigo imgEstilo p-1 m-2 activo" data-idImg="" data-tipoEnemigo="Nave de Avanzada" data-toggle="popover"
+                <div id="optionAttackAvanzada" class="estiloEnemigo imgEstilo p-1 m-2 activo" data-idImg="" data-tipoEnemigo="Nave de Avanzada" data-toggle="popover"
                     data-placement="left" data-content="Atrás">
                     <img src="assets/images/naveAvanzada.png" width="100" height="100">
                 </div>
-                <div class="estiloEnemigo imgEstilo p-1 m-2" data-idImg="" data-tipoEnemigo="Nave Exploradora">
+                <div id="optionAttackExp" class="estiloEnemigo imgEstilo p-1 m-2" data-idImg="" data-tipoEnemigo="Nave Exploradora">
                     <img src="assets/images/naveExploradora.png" width="100" height="100">
                 </div>
-                <div class="estiloEnemigo imgEstilo p-1 m-2" data-idImg="" data-tipoEnemigo="Nave Nodriza">
+                <div id="optionAttackNodriza" class="estiloEnemigo imgEstilo p-1 m-2" data-idImg="" data-tipoEnemigo="Nave Nodriza">
                     <img src="assets/images/naveNodriza.png" width="100" height="100">
                 </div>
             </div>
             <h5 id="infoTipoEnemigo" class="titulo border-top border-bottom text-center p-1 mt-4">Nave de Avanzada</h5>
         </div>
         <div id="btnAtacar" class="btn btn-danger">Atacar</div>
+        <div id="containerEstadoVidaEnemigo">
+            <div class="progress" style="width: 100%; height: 25px;">
+                <div id="vidaNaveEnemiga" class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Vida Enemiga al 100%</div>
+            </div>
+        </div>
+
         <!-- Botón para ejecutar Pruebas -->
         <div id="btnPruebas" class="btnICON fa fa-question fa-2x"></div>
     </div>
