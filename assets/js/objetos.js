@@ -14,13 +14,37 @@ class NaveInfinity {
         this.escudo=1200;
         this.vida=1200;
     }
-    setEscudo(cant){
-        if(nave.escudo+cant>this.escudoMaximo){
-            cant=this.escudoMaximo;
-            alertify.success("El escudo está al máximo").setHeader("Máximo!");
+    setEscudo(cant,opcion){
+        //cant es la cantidad a actualizar
+        if(opcion=="aumentar"){
+            if(cant>this.escudoMaximo){
+                cant=this.escudoMaximo;
+                alertify.success("El escudo está al máximo");
+            }
+        }else if(opcion=="quitar"){
+            if(cant<0){
+                this.setVida(this.vida+cant,"quitar");
+                cant=0;
+            }
         }
         this.escudo=cant;
-        actualizarBarraEscudo(cant);
+        actualizarBarraEscudo(this.escudo);
+    }
+    setVida(cant,opcion){
+        //cant es la cantidad a actualizar
+        if(opcion=="aumentar"){
+            if(cant>this.vidaMaxima){
+                cant=this.vidaMaxima;
+                alertify.success("La vida está al máximo");
+            }
+        }else if(opcion=="quitar"){
+            if(cant<0){
+                cant=0;
+                alertify.error("GAME OVER");
+            }
+        }
+        this.vida=cant;
+        actualizarBarraVidaNave(this.vida);
     }
     setCantSondas(cant) {
         $("#numSondas").text(cant);

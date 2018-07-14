@@ -58,10 +58,10 @@ function hacerMejora(tipo){
 }
 
 function mejoraEscudoMultinucleo(aumento){
-    nave.setEscudo(nave.escudo+aumento);
+    nave.setEscudo(nave.escudo+aumento,"aumentar");
 }
 function mejoraBlindajeNavesPesadas(){
-    nave.setEscudo(1200);
+    nave.setEscudo(1200,"aumentar");
 }
 function mejoraCañonTTanix(){
     

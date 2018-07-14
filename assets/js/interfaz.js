@@ -156,10 +156,13 @@ $(document).ready(function () {
         if ($(this).hasClass("active")) {
             $(this).text("Atacar");
             game.state.start('attack');
+            $("#vidaNaveEnemiga").width("100%");
+            $("#vidaNaveEnemiga").html("Vida Enemiga al 100%");
             setTimeout(function(){
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
                 switch (selected){
                     case "Nave de Avanzada":
+                        $("#optionAttackAvanzada").prop("disabled", true);
                         AvanzadaAlAtaque();
                     break;
                     case "Nave Exploradora":
@@ -473,6 +476,7 @@ function actualizarBarraEscudo(cant){
 
 function actualizarBarraVidaNave(cant){
     var porcentaje = (100 * cant) / nave.vidaMaxima;
-    //var $barraCantidad = $("#escudoNave");
-    //$barraCantidad.width(porcentaje + "%");
+    var $barraCantidad = $("#vidaNave");
+    $("#vidaNave").html("Vida al "+porcentaje+"%");
+    $barraCantidad.width(porcentaje + "%");
 }

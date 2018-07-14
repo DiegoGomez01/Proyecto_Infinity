@@ -4,6 +4,7 @@ var cursors;
 var weapon;
 var weaponEnemigo;
 var vidaEnemigo=0;
+var turnoDisparoNave=false;
 var vidaMaximaEnemigo;
 var dañoEnemigo=0;
 var SpriteEnemyNodriza;
@@ -153,11 +154,11 @@ function agregarNaveDefensa(){
     game.physics.enable(sprite, Phaser.Physics.ARCADE);
     this.weapon.trackSprite(sprite, 0, 0, true);
     cursors = game.input.keyboard.createCursorKeys();
-    game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
 }
 
 function updateAttack() {
-    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+    if (turnoDisparoNave)
+        turnoDisparoNave=false;
         var sonidoDisparo = game.add.audio('disparo');
         sonidoDisparo.addMarker('inicioDisparo', 0, 13);
         sonidoDisparo.play("inicioDisparo");
@@ -216,7 +217,17 @@ function enemigoFueEliminado(){
     actualizarBarraVidaEnemiga(vidaEnemigo);
     if(vidaEnemigo<=0){
         alertify.success("Enemigo Eliminado");
+        enemigoAtacando=undefined;
         return true;
+    }else{
+        game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoEnemigo, this);
+        // if(enemigoAtacando=="exploradores"){
+        //     SpriteEnemiesExp.hash.forEach(function(sprite) {
+        //         disparoDeEnemigo(sprite);
+        //     });   
+        // }else{
+        //     disparoDeEnemigo(null);
+        // }
     }
     return false;
 }
@@ -250,7 +261,28 @@ function collExp(bullet, enemies) {
 function collNave(enemies, bullet) {
     efectoExplosion(sprite);
     colision(bullet);
+    if(nave.escudo>0){
+        nave.setEscudo(nave.escudo-dañoEnemigo,"quitar");
+    }else{
+        nave.setVida(nave.vida-dañoEnemigo,"quitar");
+    }
+    game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoNave, this);
+    //turnoDisparoNave=true;
+    //return false;
+}
 
+function activarTurnoEnemigo(){
+    if(enemigoAtacando=="exploradores"){
+        SpriteEnemiesExp.hash.forEach(function(sprite) {
+            disparoDeEnemigo(sprite);
+        });   
+    }else{
+        disparoDeEnemigo(null);
+    }
+}
+
+function activarTurnoNave(){
+    turnoDisparoNave=true;
 }
 
 function efectoExplosion(sprite){
@@ -281,7 +313,11 @@ function colision(bullet){
 function actualizarBarraVidaEnemiga(cant){
     var porcentaje = (100 * cant) / vidaMaximaEnemigo;
     var $barraCantidad = $("#vidaNaveEnemiga");
+    if(porcentaje<0){
+        porcentaje=0;
+    }
     $barraCantidad.width(porcentaje + "%");
+    $("#vidaNaveEnemiga").html("Vida Enemiga al "+porcentaje+"%");
 }
 
 function alistarEnemigos(){
