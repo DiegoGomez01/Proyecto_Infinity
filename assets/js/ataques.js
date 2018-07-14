@@ -4,6 +4,7 @@ var cursors;
 var weapon;
 var weaponEnemigo;
 var vidaEnemigo=0;
+var vidaMaximaEnemigo;
 var dañoEnemigo=0;
 var SpriteEnemyNodriza;
 var SpriteEnemyAvanz;
@@ -28,55 +29,54 @@ $(document).ready(function () {
             alertify.prompt().destroy();
         }).setHeader("Cantidad de enemigos exploradores");
     });
-    $("#btnAttack").on("click", function () {
-        game.state.start('attack');
-    });
-
-    $("#NodrizaAlAtaque").on("click", function () {
-        verificarSiHayAtaques();
-        enemigoAtacando="nodriza";
-        vidaEnemigo=500;
-        dañoEnemigo=150;
-        if(probabilidadExito()){
-            SpriteEnemyNodriza.hash.forEach(function(sprite) {
-                var tween = game.add.tween(sprite);
-                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-                tween.start();
-                tween.onComplete.add(disparoDeEnemigo, this);
-            });
-        }
-    });
-
-    $("#AvanzadaAlAtaque").on("click", function () {
-        verificarSiHayAtaques();
-        enemigoAtacando="avanzada";
-        vidaEnemigo=400;
-        dañoEnemigo=100;
-        if(probabilidadExito()){
-            SpriteEnemyAvanz.hash.forEach(function(sprite) {
-                var tween = game.add.tween(sprite);
-                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-                tween.start();
-                tween.onComplete.add(disparoDeEnemigo, this);
-            });  
-        }      
-    });
-
-    $("#ExplAlAtaque").on("click", function () {
-        verificarSiHayAtaques();
-        enemigoAtacando="exploradores";
-        vidaEnemigo=100;
-        dañoEnemigo=50;
-        if(probabilidadExito()){
-            SpriteEnemiesExp.hash.forEach(function(sprite) {
-                var tween = game.add.tween(sprite);
-                tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
-                tween.start();
-                tween.onComplete.add(disparoDeEnemigo, this);
-            });
-        } 
-    });
 });
+function NodrizaAlAtaque(){
+    verificarSiHayAtaques();
+    enemigoAtacando="nodriza";
+    vidaEnemigo=500;
+    vidaMaximaEnemigo=vidaEnemigo;
+    dañoEnemigo=150;
+    if(probabilidadExito()){
+        SpriteEnemyNodriza.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+            tween.onComplete.add(disparoDeEnemigo, this);
+        });
+    }
+}
+
+function AvanzadaAlAtaque(){
+    verificarSiHayAtaques();
+    enemigoAtacando="avanzada";
+    vidaEnemigo=400;
+    vidaMaximaEnemigo=vidaEnemigo;
+    dañoEnemigo=100;
+    if(probabilidadExito()){
+        SpriteEnemyAvanz.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+            tween.onComplete.add(disparoDeEnemigo, this);
+        });  
+    }
+}
+
+function ExplAlAtaque(){
+    verificarSiHayAtaques();
+    enemigoAtacando="exploradores";
+    vidaEnemigo=100;
+    vidaMaximaEnemigo=vidaEnemigo;
+    dañoEnemigo=50;
+    if(probabilidadExito()){
+        SpriteEnemiesExp.hash.forEach(function(sprite) {
+            var tween = game.add.tween(sprite);
+            tween.to({x:game.rnd.between(900, 1100)}, 3000, Phaser.Easing.Bounce.Out);
+            tween.start();
+            tween.onComplete.add(disparoDeEnemigo, this);
+        });
+    }
+}
 
 function verificarSiHayAtaques(){
     if(enemigoAtacando!==undefined){
@@ -213,6 +213,7 @@ function disparoDeEnemigo(spriteEmenigo){
 
 function enemigoFueEliminado(){
     vidaEnemigo -= nave.dañoArmaBase;
+    actualizarBarraVidaEnemiga(vidaEnemigo);
     if(vidaEnemigo<=0){
         alertify.success("Enemigo Eliminado");
         return true;
@@ -224,7 +225,7 @@ function collAvz(bullet, enemies) {
     efectoExplosion(SpriteEnemyAvanz.hash[0]);
     colision(bullet);
     if(enemigoFueEliminado()){
-        SpriteEnemyAvanz.kill;
+        SpriteEnemyAvanz.kill();
     }
 }
 
@@ -232,7 +233,7 @@ function collNod(bullet, enemies) {
     efectoExplosion(SpriteEnemyNodriza.hash[0]);
     colision(bullet);
     if(enemigoFueEliminado()){
-        SpriteEnemyNodriza.kill;
+        SpriteEnemyNodriza.kill();
     }
 }
 
@@ -242,7 +243,7 @@ function collExp(bullet, enemies) {
     });
     colision(bullet);
     if(enemigoFueEliminado()){
-        SpriteEnemiesExp.kill;
+        SpriteEnemiesExp.kill();
     }
 }
 
@@ -275,6 +276,12 @@ function colision(bullet){
     var sonidoExp = game.add.audio('explosion');
     sonidoExp.addMarker('inicioExplosion', 0, 13);
     sonidoExp.play("inicioExplosion");
+}
+
+function actualizarBarraVidaEnemiga(cant){
+    var porcentaje = (100 * cant) / vidaMaximaEnemigo;
+    var $barraCantidad = $("#vidaNaveEnemiga");
+    $barraCantidad.width(porcentaje + "%");
 }
 
 function alistarEnemigos(){

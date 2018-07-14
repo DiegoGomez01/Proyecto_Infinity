@@ -155,7 +155,21 @@ $(document).ready(function () {
     $("#btnAtacar").on("click", function () {
         if ($(this).hasClass("active")) {
             $(this).text("Atacar");
-            alert("Atacaaarr");
+            game.state.start('attack');
+            setTimeout(function(){
+                selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
+                switch (selected){
+                    case "Nave de Avanzada":
+                        AvanzadaAlAtaque();
+                    break;
+                    case "Nave Exploradora":
+                        ExplAlAtaque();
+                    break;
+                    case "Nave Nodriza":
+                        NodrizaAlAtaque();
+                    break;
+                }
+            }, 500);
         } else {
             $(this).text("¡Desplegar Ataque!");
         }
@@ -455,4 +469,10 @@ function actualizarBarraEscudo(cant){
     var porcentaje = (100 * cant) / nave.escudoMaximo;
     var $barraCantidad = $("#escudoNave");
     $barraCantidad.width(porcentaje + "%");
+}
+
+function actualizarBarraVidaNave(cant){
+    var porcentaje = (100 * cant) / nave.vidaMaxima;
+    //var $barraCantidad = $("#escudoNave");
+    //$barraCantidad.width(porcentaje + "%");
 }
