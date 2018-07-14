@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#Mejoras").on("click", function () {
-        alert(hacerMejora("cañonPlasma"));
+        alert(hacerMejora("escudoMultinucleo"));
     });
 });
 
@@ -48,6 +48,7 @@ function hacerMejora(tipo){
 
 function mejoraEscudoMultinucleo(aumento){
     nave.setVida(nave.vida+aumento,"aumentar");
+    alertify.success("La vida se aumentó en 400 puntos");
 }
 function blindajeNavesPesadas(tipo){
     nave.setEscudo(1200,"aumentar");
@@ -55,25 +56,33 @@ function blindajeNavesPesadas(tipo){
         $("#escudoNave").width("100%");
         nave.mejoras[posicionDeMejora].activa=false;
     }
+    alertify.success("El escudo se ha cargado al 100%");
 }
 function mejoraCañonTanix(){
     nave.cañonTanixComprado=true;
     nave.disparoPorTanix=5;
+    nave.mejoras[posicionDeMejora].activa=false;
+    alertify.success("El cañón Tanix está activado!");
 }
 function mejoraPropulsorOnix(){
-
+    alertify.error("Se encuentra en diseño");
 }
 function mejoraCañonPlasma(){
     nave.dañoArmaBase+=100;
+    nave.mejoras[posicionDeMejora].activa=false;
+    alertify.success("Los disparos tiene 100 puntos más de daño.");
 }
 function mejoraCapacidadDepositos(){
 
 }
 function mejoraVidaNave(){
-
+    nave.setVida(1200,"aumentar");
+    alertify.success("La nave tiene vida completa.");
 }
 function mejoraCapacidadCombustible(){
-
+    nave.combustible.maxValue=250000;
+    nave.mejoras[posicionDeMejora].activa=false;
+    alertify.success("Se ha aumentado la capacidad del combustible.");
 }
 
 function descontarElementos(tipo){

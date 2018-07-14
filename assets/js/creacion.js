@@ -618,7 +618,7 @@ function asociarMejoras(){
     var mejoraPropulsorOnix = new Mejora("propulsorOnix",1000,800,1200,1500);
     var mejoraCañonPlasma = new Mejora("cañonPlasma",500,2000,1800,2500);
     var mejoraCapacidadDepositos = new Mejora("capacidadDepositos",2000,2000,2000,2000);
-    var mejoraVidaNave = new Mejora("vidaNave",500,1000,1000,1000);
+    var mejoraVidaNave = new Mejora("vidaNave",2500,1000,1000,1000);
     var mejoraCapacidadCombustible = new Mejora("capacidadCombustible",1500,2000,1500,3000);
     nave.mejoras=[];
     nave.mejoras.push(mejoraEscudoMultinucleo);
