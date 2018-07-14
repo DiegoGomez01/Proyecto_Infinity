@@ -1,76 +1,70 @@
 $(document).ready(function () {
     $("#Mejoras").on("click", function () {
-        alert(hacerMejora("escudoMultinucleo"));
+        alert(hacerMejora("cañonPlasma"));
     });
 });
+
+var posicionDeMejora;
+
 function hacerMejora(tipo){
-    switch(tipo){
-        case "escudoMultinucleo":
-            if(descontarElementos(500,1200,1800,1600)){
-                mejoraEscudoMultinucleo(200);//aumento de escudo
+    if(descontarElementos(tipo)){
+        switch(tipo){
+            case "escudoMultinucleo":
+                mejoraEscudoMultinucleo(400);
                 return true;
-            }
-        break;
-        case "blindajeNavesPesadas":
-            if(descontarElementos(4000,5500,3500,5100)){
-                mejoraBlindajeNavesPesadas();
+            break;
+            case "blindajeNavesPesadas":
+                blindajeNavesPesadas("compra");
                 return true;
-            }
-        break;
-        case "cañonTTanix":
-            if(descontarElementos(4000,6000,6000,6000)){
-                mejoraCañonTTanix();
+            break;
+            case "cañonTanix":
+                mejoraCañonTanix();
                 return true;
-            }
-        break;
-        case "propulsorOnix":
-            if(descontarElementos(1000,800,1200,1500)){
+            break;
+            case "propulsorOnix":
                 mejoraPropulsorOnix();
                 return true;
-            }
-        break;
-        case "cañonPlasma":
-            if(descontarElementos(2500,3000,2800,3500)){
+            break;
+            case "cañonPlasma":
                 mejoraCañonPlasma();
                 return true;
-            }
-        break;
-        case "capacidadDepositos":
-            if(descontarElementos(4000,4000,4000,4000)){
+            break;
+            case "capacidadDepositos":
                 mejoraCapacidadDepositos();
                 return true;
-            }
-        break;
-        case "vidaNave":
-            if(descontarElementos(500,1000,1000,1000)){
+            break;
+            case "vidaNave":
                 mejoraVidaNave();
                 return true;
-            }
-        break;
-        case "capacidadCombustible":
-            if(descontarElementos(1500,2000,1500,3000)){
+            break;
+            case "capacidadCombustible":
                 mejoraCapacidadCombustible();
                 return true;
-            }
-        break;
+            break;
+        }
     }
     return false;
 }
 
 function mejoraEscudoMultinucleo(aumento){
-    nave.setEscudo(nave.escudo+aumento,"aumentar");
+    nave.setVida(nave.vida+aumento,"aumentar");
 }
-function mejoraBlindajeNavesPesadas(){
+function blindajeNavesPesadas(tipo){
     nave.setEscudo(1200,"aumentar");
+    if(tipo=="compra"){
+        $("#escudoNave").width("100%");
+        nave.mejoras[posicionDeMejora].activa=false;
+    }
 }
-function mejoraCañonTTanix(){
-    
+function mejoraCañonTanix(){
+    nave.cañonTanixComprado=true;
+    nave.disparoPorTanix=5;
 }
 function mejoraPropulsorOnix(){
 
 }
 function mejoraCañonPlasma(){
-
+    nave.dañoArmaBase+=100;
 }
 function mejoraCapacidadDepositos(){
 
@@ -82,8 +76,21 @@ function mejoraCapacidadCombustible(){
 
 }
 
-function descontarElementos(zero,paladio,iridio,platino){
-    if(elementosSuficinetes(zero,paladio,iridio,platino)){
+function descontarElementos(tipo){
+    var zero,paladio,iridio,platino,activa;
+
+    for(var i=0;i< nave.mejoras.length;i++){
+        if(nave.mejoras[i].nombre==tipo){
+            zero=nave.mejoras[i].zero;
+            paladio=nave.mejoras[i].paladio;
+            iridio=nave.mejoras[i].iridio;
+            platino=nave.mejoras[i].platino;
+            activa=nave.mejoras[i].activa;
+            posicionDeMejora=i;
+            break;
+        }
+    }
+    if(activa && elementosSuficinetes(zero,paladio,iridio,platino)){
         nave.setCantIridio(nave.cantIridio-iridio);
         nave.setCantPlatino((nave.cantPlatino-platino));
         nave.setCantPaladio(nave.cantPaladio-paladio);

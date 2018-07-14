@@ -39,10 +39,14 @@ $(document).ready(function () {
         game.load.image('naveAvanzada', 'assets/images/naveAvanzada.png');
         game.load.image('naveExploradora', 'assets/images/naveExploradora.png');
         game.load.image('navePlayer', 'assets/images/nave2.png');
-        game.load.image('bala1', 'assets/images/bala.png');
+        game.load.image('cañon', 'assets/images/cañon.png');
+        game.load.image('bala', 'assets/images/bala.png');
+        game.load.image('bala2', 'assets/images/bala2.png');
         game.load.image('sonda', 'assets/images/sonda.png');
         game.load.audio('disparo', 'assets/sonidos/disparo.mp3');
+        game.load.audio('disparoTanix', 'assets/sonidos/disparoTanix.mp3');
         game.load.audio('explosion', 'assets/sonidos/explosion.mp3');
+        game.load.audio('explosionTanix', 'assets/sonidos/explosionTanix.mp3');
         game.load.spritesheet('gifExplosion', 'assets/images/explosion.png', 80, 80, 17);
     }
 
@@ -596,6 +600,7 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     nave.setCantPaladio(cantPaladio);
     nave.setCantEZero(cantEZero);
     nave.setCantSondas(cantSondas);
+    asociarMejoras();
     //Vuelo Inicial
     var sonidoNave = game.add.audio('nave');
     sonidoNave.addMarker('Inicial', 0, 13);
@@ -604,6 +609,26 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     caminoActual.push([100, 300, 0]);
     sonidoNave.play("Inicial");
     empezarMovimiento();
+}
+
+function asociarMejoras(){
+    var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo",500,1200,1800,1600);
+    var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas",2000,3000,1500,3100);
+    var mejoraCañonTTanix = new Mejora("cañonTanix",1000,3000,3000,3000);
+    var mejoraPropulsorOnix = new Mejora("propulsorOnix",1000,800,1200,1500);
+    var mejoraCañonPlasma = new Mejora("cañonPlasma",500,2000,1800,2500);
+    var mejoraCapacidadDepositos = new Mejora("capacidadDepositos",2000,2000,2000,2000);
+    var mejoraVidaNave = new Mejora("vidaNave",500,1000,1000,1000);
+    var mejoraCapacidadCombustible = new Mejora("capacidadCombustible",1500,2000,1500,3000);
+    nave.mejoras=[];
+    nave.mejoras.push(mejoraEscudoMultinucleo);
+    nave.mejoras.push(mejoraBlindajeNavesPesadas);
+    nave.mejoras.push(mejoraCañonTTanix);
+    nave.mejoras.push(mejoraPropulsorOnix);
+    nave.mejoras.push(mejoraCañonPlasma);
+    nave.mejoras.push(mejoraCapacidadDepositos);
+    nave.mejoras.push(mejoraVidaNave);
+    nave.mejoras.push(mejoraCapacidadCombustible);
 }
 
 alertify.defaults = {

@@ -4,7 +4,7 @@ var cursors;
 var weapon;
 var weaponEnemigo;
 var vidaEnemigo=0;
-var turnoDisparoNave=false;
+var cantidadDisparosANave=0;
 var vidaMaximaEnemigo;
 var dañoEnemigo=0;
 var SpriteEnemyNodriza;
@@ -120,9 +120,14 @@ function empezarAtaque(){
 
 function probabilidadExito(){
     var disparosNave = vidaEnemigo/nave.dañoArmaBase;
-    var disparosEnemigos = (nave.vida+nave.escudo)/dañoEnemigo;
+    var disparosEnemigos;
+    if(enemigoAtacando=="exploradores"){
+        disparosEnemigos = (nave.vida+nave.escudo)/(dañoEnemigo*8);
+    }else{
+        disparosEnemigos = (nave.vida+nave.escudo)/dañoEnemigo;
+    }
     if (disparosEnemigos<=disparosNave){
-        alertify.error("SE VA O LO MATAN");
+        alertify.error("Por seguridad, nos vamos a retirar");
         return false;
     }
     return true;
@@ -132,12 +137,8 @@ function agregarNaveDefensa(){
     game.renderer.clearBeforeRender = false;
     game.renderer.roundPixels = true;
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    
-    weapon = game.add.weapon(1, 'bala1');
-    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    weapon.bulletSpeed = 400;
 
-    weaponEnemigo = game.add.weapon(15, 'bala1');
+    weaponEnemigo = game.add.weapon(15, 'bala');
     weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
     weaponEnemigo.bulletSpeed = 400;
     weaponEnemigo.fireRate = 60;
@@ -152,18 +153,40 @@ function agregarNaveDefensa(){
     sprite.width = 100;
     sprite.height = 100;
     game.physics.enable(sprite, Phaser.Physics.ARCADE);
-    this.weapon.trackSprite(sprite, 0, 0, true);
+
+    cargarDisparoNormal();
     cursors = game.input.keyboard.createCursorKeys();
 }
 
-function updateAttack() {
-    if (turnoDisparoNave)
-        turnoDisparoNave=false;
+function sonidoDisparo(){
+    if(nave.disparoPorTanix==true){
+        var sonidoDisparo = game.add.audio('disparoTanix');
+    }else{
         var sonidoDisparo = game.add.audio('disparo');
-        sonidoDisparo.addMarker('inicioDisparo', 0, 13);
-        sonidoDisparo.play("inicioDisparo");
-        weapon.fire();
     }
+    sonidoDisparo.addMarker('inicioDisparo', 0, 13);
+    sonidoDisparo.play("inicioDisparo");
+}
+
+function cargarCañonTanix(){
+    weapon = game.add.weapon(1, 'cañon');
+    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    weapon.bulletSpeed = 400;
+    weapon.trackSprite(sprite, 0, 0, true);
+}
+
+function cargarDisparoNormal(){
+    if(nave.dañoArmaBase>60){
+        weapon = game.add.weapon(1, 'bala2');
+    }else{
+        weapon = game.add.weapon(1, 'bala');
+    }
+    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    weapon.bulletSpeed = 400;
+    weapon.trackSprite(sprite, 0, 0, true);
+}
+
+function updateAttack() {
     if(enemigoAtacando){
         switch (enemigoAtacando){
             case "nodriza":
@@ -201,7 +224,7 @@ function disparoDeEnemigo(spriteEmenigo){
             weaponEnemigo.trackSprite(SpriteEnemyAvanz.hash[0],0,0,true);
         break;
         case "exploradores":
-            weaponEnemigo = game.add.weapon(1, 'bala1');
+            weaponEnemigo = game.add.weapon(1, 'bala');
             weaponEnemigo.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS; 
             weaponEnemigo.bulletSpeed = 400;                
             weaponEnemigo.trackSprite(spriteEmenigo, 0, 0, true);
@@ -209,11 +232,18 @@ function disparoDeEnemigo(spriteEmenigo){
         break;
     }
     weaponEnemigo.fireAtXY(100,300);
+    sonidoDisparo();
     disparosEnemigosExploradores.push(weaponEnemigo);
 }
 
 function enemigoFueEliminado(){
-    vidaEnemigo -= nave.dañoArmaBase;
+    if(nave.disparoPorTanix==true){
+        vidaEnemigo -= vidaMaximaEnemigo/2;
+        nave.disparoPorTanix=false;
+        cargarDisparoNormal();
+    }else{
+        vidaEnemigo -= nave.dañoArmaBase;
+    }
     actualizarBarraVidaEnemiga(vidaEnemigo);
     if(vidaEnemigo<=0){
         alertify.success("Enemigo Eliminado");
@@ -221,14 +251,8 @@ function enemigoFueEliminado(){
         return true;
     }else{
         game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoEnemigo, this);
-        // if(enemigoAtacando=="exploradores"){
-        //     SpriteEnemiesExp.hash.forEach(function(sprite) {
-        //         disparoDeEnemigo(sprite);
-        //     });   
-        // }else{
-        //     disparoDeEnemigo(null);
-        // }
     }
+    
     return false;
 }
 
@@ -259,16 +283,23 @@ function collExp(bullet, enemies) {
 }
 
 function collNave(enemies, bullet) {
+    cantidadDisparosANave++;
     efectoExplosion(sprite);
     colision(bullet);
+    
     if(nave.escudo>0){
         nave.setEscudo(nave.escudo-dañoEnemigo,"quitar");
     }else{
         nave.setVida(nave.vida-dañoEnemigo,"quitar");
     }
-    game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoNave, this);
-    //turnoDisparoNave=true;
-    //return false;
+    if(enemigoAtacando=="exploradores"){
+        if(cantidadDisparosANave==enemigoExplorador){//ultimo disparo recibido
+            game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoNave, this);
+            cantidadDisparosANave=0;
+        }
+    }else{
+        game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoNave, this);
+    }
 }
 
 function activarTurnoEnemigo(){
@@ -282,7 +313,16 @@ function activarTurnoEnemigo(){
 }
 
 function activarTurnoNave(){
-    turnoDisparoNave=true;
+    //CONDICIONAL DE PRUEBA
+    if(nave.cañonTanixComprado && nave.contadorDisparos>5){
+        nave.disparoPorTanix=true;
+        nave.contadorDisparos=0;
+        cargarCañonTanix();
+    }
+    cargarDisparoNormal();//puede que se haya activado una mejora
+    nave.contadorDisparos++;
+    sonidoDisparo();
+    weapon.fire();
 }
 
 function efectoExplosion(sprite){
@@ -305,7 +345,11 @@ function destroyExplosion(){
 
 function colision(bullet){
     bullet.kill();
-    var sonidoExp = game.add.audio('explosion');
+    if(nave.disparoPorTanix==true){
+        var sonidoExp = game.add.audio('explosionTanix');
+    }else{
+        var sonidoExp = game.add.audio('explosion');
+    }
     sonidoExp.addMarker('inicioExplosion', 0, 13);
     sonidoExp.play("inicioExplosion");
 }

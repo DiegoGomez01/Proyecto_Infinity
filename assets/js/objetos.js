@@ -11,8 +11,12 @@ class NaveInfinity {
         this.dañoArmaBase=60;
         this.vidaMaxima=1200;
         this.escudoMaximo=1200;
-        this.escudo=1200;
+        this.escudo=0;
+        this.cañonTanixComprado=false;
+        this.disparoPorTanix=false;
+        this.contadorDisparos=0;
         this.vida=1200;
+        this.mejoras=[];
     }
     setEscudo(cant,opcion){
         //cant es la cantidad a actualizar
@@ -65,6 +69,17 @@ class NaveInfinity {
     setCantEZero(cant) {
         this.cantEZero = cant;
         actualizarBarraMaterial(cant, "EZero");
+    }
+}
+
+class Mejora{
+    constructor(nombre,zero,paladio,iridio,platino){
+        this.nombre=nombre;
+        this.zero=zero;
+        this.paladio=paladio;
+        this.iridio=iridio;
+        this.paladio=paladio;
+        this.activa=true;
     }
 }
 
