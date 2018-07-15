@@ -8,14 +8,15 @@ class NaveInfinity {
         this.cantPlatino;
         this.cantPaladio;
         this.cantEZero;
+        this.msRecorrido=2000;//2 segundos para hacer el recorrido entre objetos
         this.dañoArmaBase = 60;
         this.vidaMaxima = 1200;
         this.escudoMaximo = 1200;
         this.escudo = 0;
+        this.vida = 1200;
         this.cañonTanixComprado = false;
         this.disparoPorTanix = false;
         this.contadorDisparos = 0;
-        this.vida = 1200;
         this.mejoras = [];
     }
     setEscudo(cant, opcion) {
