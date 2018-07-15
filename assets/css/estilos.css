@@ -612,15 +612,12 @@ div.ajs-footer {
 
 .progressP .progress-bar {
     position: fixed;
-    top: 50%;
+    top: 60%;
     left: 0%;
     height:25px;
     animation-name: animateBar;
     animation-iteration-count: 1;
     animation-timing-function: ease-in;
-    
-    
-    /* animation-duration: .4s; */
 }
 @keyframes animateBar {
     0% {transform: translateX(-100%);}

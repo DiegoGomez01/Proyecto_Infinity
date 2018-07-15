@@ -112,7 +112,21 @@ function extraerElementos(cantIridio,cantPaladio,cantPlatino,cantEZero){
             }
         }
     }
-    botarSonda();     
+    botarSonda();
+    finalizarEstadiaPlaneta();     
+}
+
+function finalizarEstadiaPlaneta(){
+    alertify.success("La estadía en el planete ha terminado");
+    reiniciarElementosPlaneta();
+}
+
+function reiniciarElementosPlaneta(){
+    $("#btnAtacar").css({ opacity: 0 });
+    $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
+    $("#optionAttackAvanzada").css({ opacity: 1 });
+    $("#optionAttackExp").css({ opacity: 1 });
+    $("#optionAttackNodriza").css({ opacity: 1 });
 }
 
 function modificarBarraExtraccion(porcentaje){
@@ -127,14 +141,14 @@ function modificarBarraExtraccion(porcentaje){
         }
     }else{
         alertify.success("La extracción de los materiales se realizó correctamente.");
-        extraerElementos(1000,1000,1000,1000);
+        extraerElementos(2000,2000,2000,2000);
         $barraCantidad.width("0%");
         $("#progressBarSonda").html("");
     }
 }
 
 function interrumpirExtraccion(){
-    nave.sondaSprite.destroy();
+    nave.sondaSprite.kill();
     $("#progressBarSonda").width("0%");
     $("#progressBarSonda").html("");
     sonidoTaladro.mute=true;
@@ -145,11 +159,7 @@ function interrumpirExtraccion(){
 // teletransportar();
 
 function sacarSonda(){
-    //nave.sprite.rotation=0;
-    //nave.sondaSprite.destroy();
-    // console.log(nave.sondaSprite);
     nave.sondaSprite.reset(100, 300);
-    // console.log(nave.sondaSprite);
     var sacarSonda = game.add.tween(nave.sondaSprite);
     sacarSonda.to({
         width: 100

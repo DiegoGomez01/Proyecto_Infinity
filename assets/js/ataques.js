@@ -13,6 +13,7 @@ var SpriteEnemiesExp;
 var enemigoAtacando;
 var gifExplosion = [];
 var disparosEnemigosExploradores = [];
+var enemigosYaAtacados=[];
 
 $(document).ready(function () {
     $("#btnConfigEnemigos").on("click", function () {
@@ -38,6 +39,7 @@ function NodrizaAlAtaque() {
     vidaEnemigo = 500;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 150;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemyNodriza.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -56,6 +58,7 @@ function AvanzadaAlAtaque() {
     vidaEnemigo = 400;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 100;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemyAvanz.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -74,6 +77,7 @@ function ExplAlAtaque() {
     vidaEnemigo = 100;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 50;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemiesExp.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -83,6 +87,18 @@ function ExplAlAtaque() {
             tween.start();
             tween.onComplete.add(disparoDeEnemigo, this);
         });
+    }
+}
+
+function modificarSeleccionNavesEnemigas(){
+    var listaOrdenadaEnemigos=["avanzada","exploradores","nodriza"];
+    var listaOpcionesEnemigos=["optionAttackAvanzada","optionAttackExp","optionAttackNodriza"];
+    enemigosYaAtacados.push(enemigoAtacando);
+    for (var i =0;i<listaOrdenadaEnemigos.length;i++){
+        if(!enemigosYaAtacados.includes( listaOrdenadaEnemigos[i] )){
+            $('#'+listaOpcionesEnemigos[i]).trigger('click');
+            break;
+        }
     }
 }
 
@@ -114,13 +130,13 @@ function createAttack() {
 }
 
 function empezarAtaque() {
-    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveNodriza');
+    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveNodriza');
     nodr.anchor.setTo(0.5, 0.5);
-    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveAvanzada');
+    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveAvanzada');
     avanz.anchor.setTo(0.5, 0.5);
 
     for (var j = 0; j < enemigoExplorador; j++) {
-        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveExploradora');
+        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveExploradora');
         exp.anchor.setTo(0.5, 0.5);
     }
 }
@@ -215,7 +231,6 @@ function updateAttack() {
     disparosEnemigosExploradores.forEach(function (wEnemigo) {
         game.physics.arcade.overlap(wEnemigo.bullets, sprite, collNave, null, this);
     });
-
 }
 
 function disparoDeEnemigo(spriteEmenigo) {
@@ -254,7 +269,9 @@ function enemigoFueEliminado() {
         alertify.success("Enemigo Eliminado");
         enemigoAtacando = undefined;
         preloadExtraerElementos();
-        //extraerElementos(1000,1000,1000,1000);
+        if(enemigosYaAtacados.length==3){
+            $("#btnAtacar").css({ opacity: 0 });
+        }
         return true;
     } else {
         game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoEnemigo, this);
