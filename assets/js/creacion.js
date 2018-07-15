@@ -287,9 +287,9 @@ function newPlanet() {
 }
 
 function addColumnMatrizAdyacencia(matriz) {
-    matriz.push(new Array(matriz.length).fill(99999999));
+    matriz.push(new Array(matriz.length).fill(Infinity));
     for (var i = 0; i < matriz.length; i++) {
-        matriz[i].push(99999999);
+        matriz[i].push(Infinity);
     }
 }
 

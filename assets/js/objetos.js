@@ -8,46 +8,46 @@ class NaveInfinity {
         this.cantPlatino;
         this.cantPaladio;
         this.cantEZero;
-        this.dañoArmaBase=60;
-        this.vidaMaxima=1200;
-        this.escudoMaximo=1200;
-        this.escudo=0;
-        this.cañonTanixComprado=false;
-        this.disparoPorTanix=false;
-        this.contadorDisparos=0;
-        this.vida=1200;
-        this.mejoras=[];
+        this.dañoArmaBase = 60;
+        this.vidaMaxima = 1200;
+        this.escudoMaximo = 1200;
+        this.escudo = 0;
+        this.cañonTanixComprado = false;
+        this.disparoPorTanix = false;
+        this.contadorDisparos = 0;
+        this.vida = 1200;
+        this.mejoras = [];
     }
-    setEscudo(cant,opcion){
+    setEscudo(cant, opcion) {
         //cant es la cantidad a actualizar
-        if(opcion=="aumentar"){
-            if(cant>this.escudoMaximo){
-                cant=this.escudoMaximo;
+        if (opcion == "aumentar") {
+            if (cant > this.escudoMaximo) {
+                cant = this.escudoMaximo;
                 alertify.success("El escudo está al máximo");
             }
-        }else if(opcion=="quitar"){
-            if(cant<0){
-                this.setVida(this.vida+cant,"quitar");
-                cant=0;
+        } else if (opcion == "quitar") {
+            if (cant < 0) {
+                this.setVida(this.vida + cant, "quitar");
+                cant = 0;
             }
         }
-        this.escudo=cant;
+        this.escudo = cant;
         actualizarBarraEscudo(this.escudo);
     }
-    setVida(cant,opcion){
+    setVida(cant, opcion) {
         //cant es la cantidad a actualizar
-        if(opcion=="aumentar"){
-            if(cant>this.vidaMaxima){
-                cant=this.vidaMaxima;
+        if (opcion == "aumentar") {
+            if (cant > this.vidaMaxima) {
+                cant = this.vidaMaxima;
                 alertify.success("La vida está al máximo");
             }
-        }else if(opcion=="quitar"){
-            if(cant<0){
-                cant=0;
+        } else if (opcion == "quitar") {
+            if (cant < 0) {
+                cant = 0;
                 alertify.error("GAME OVER");
             }
         }
-        this.vida=cant;
+        this.vida = cant;
         actualizarBarraVidaNave(this.vida);
     }
     setCantSondas(cant) {
@@ -72,14 +72,14 @@ class NaveInfinity {
     }
 }
 
-class Mejora{
-    constructor(nombre,zero,paladio,iridio,platino){
-        this.nombre=nombre;
-        this.zero=zero;
-        this.paladio=paladio;
-        this.iridio=iridio;
-        this.paladio=paladio;
-        this.activa=true;
+class Mejora {
+    constructor(nombre, zero, paladio, iridio, platino) {
+        this.nombre = nombre;
+        this.zero = zero;
+        this.paladio = paladio;
+        this.iridio = iridio;
+        this.platino = platino;
+        this.activa = true;
     }
 }
 
@@ -147,70 +147,27 @@ class Enemigo {
     }
 }
 
-class Dijkstra {
-
-    constructor(totalPesos, verticeOrigen, cantidadNodos) {
-        this.verticeOrigen = verticeOrigen;
-        this.cantidadNodos = cantidadNodos;
-        this.totalPesos = totalPesos;
-        this.ultimoVertice = [cantidadNodos];
-        this.costosMinimos = [cantidadNodos];
-        this.revisado = [cantidadNodos];
+class estado {
+    constructor(planetas, combustible) {
+        this.planetas = planetas;
+        this.combustible = combustible;
     }
+}
 
-    caminosMinimos(ruta) {
-        var salida = "";
-        for (var i = 0; i < this.cantidadNodos; i++) {
-            this.revisado[i] = false;
-            this.costosMinimos[i] = this.totalPesos[this.verticeOrigen][i];
-            this.ultimoVertice[i] = this.verticeOrigen;
-        }
-        this.revisado[this.verticeOrigen] = true;
-        this.costosMinimos[this.verticeOrigen] = 99999999;
-        for (var i = 0; i < this.cantidadNodos; i++) {
-            var v = this.minimo();
-            this.revisado[v] = true;
-            for (var j = 0; j < this.cantidadNodos; j++) {
-                if (this.costosMinimos[v] + this.totalPesos[v][j] < this.costosMinimos[j]) {
-                    this.costosMinimos[j] = this.costosMinimos[v] + this.totalPesos[v][j];
-                    this.ultimoVertice[j] = v;
-                }
-            }
-        }
-        for (var i = 0; i < this.cantidadNodos; i++) {
-            salida += "costo mínimo de " + this.verticeOrigen + " a " + i + ": " + this.costosMinimos[i] + "\n";
-        }
-        salida += this.ruta(ruta);
-        return salida;
+class planetaCandidato {
+    constructor(planeta, nebID, sisID) {
+        this.id = planeta.id;
+        this.nebulosa = nebID;
+        this.sistemaSolar = sisID;
+        this.iridio = planeta.iridio;
+        this.platino = planeta.platino;
+        this.paladio = planeta.paladio;
+        this.eZero = planeta.elementoZero;
     }
-
-    minimo() {
-        var mx = 1000000000; //el menor vertice del origen//vertice que tiene el camino minimo desde el origen
-        var v = 1;
-        for (var i = 0; i < this.cantidadNodos; i++) {
-            if (!this.revisado[i] && (this.costosMinimos[i] <= mx)) {
-                mx = this.costosMinimos[i];
-                v = i;
-            }
-        }
-        return v;
-    }
-
-    ruta(j) {
-        var s = "";
-        var salida = "";
-        var valorInicial = j;
-        while (this.ultimoVertice[j] != this.verticeOrigen) {
-            s = this.ultimoVertice[j] + "-";
-            salida = s + salida;
-            j = this.ultimoVertice[j];
-        }
-        salida = this.verticeOrigen + "-" + salida + valorInicial;
-        if (this.costosMinimos[valorInicial] >= 999) {
-            s = "No se puede calcular la ruta más corta con respecto al vértice " + j;
-        } else {
-            s = "La ruta mas corta para el vértice " + valorInicial + " es: " + salida;
-        }
-        return s;
+    setMateriales(planeta) {
+        this.iridio = planeta.iridio;
+        this.platino = planeta.platino;
+        this.paladio = planeta.paladio;
+        this.eZero = planeta.elementoZero;
     }
 }
