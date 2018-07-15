@@ -181,8 +181,8 @@
         <div id="portadaPrincipal" style="display: none;">
             <p>Haz click en la pantalla</p>
         </div>
-        <div id="menuPrincipal">
-            <div id="menuContainer">
+        <div id="menuPrincipal" class="row">
+            <div id="menuContainer" class="col-sm-3">
                 <h4 class="titulo">Menú Principal</h4>
                 <div id="btnSeguirCreando" class="menuItem mt-2">Continuar con la creación</div>
                 <div id="btnSeleccionarMapa" class="menuItem mt-2">Seleccionar un mapa</div>
@@ -191,15 +191,17 @@
                 <div id="btnAbrirCreditos" class="menuItem mt-2">Créditos</div>
                 <div id="btnVolverPortada" class="menuItem mt-2">Volver</div>
             </div>
-            <div id="submenuContainer">
-                <div onclick="cargarJson('mapa1');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+            <div id="submenuContainer" class="col-sm-1">
+                <div onclick="cargarJson('mapa1');" class="menuItem menuMapa mt-2 d-none" data-toggle="popover" data-placement="right" title="Descripción"
                     data-html="true" data-content="6 Nebulosas <br/> 30 sistemas solares <br/> 160 planetas">Mapa 1</div>
-                <div onclick="cargarJson('mapa2');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                <div onclick="cargarJson('mapa2');" class="menuItem menuMapa mt-2 d-none" data-toggle="popover" data-placement="right" title="Descripción"
                     data-html="true" data-content="6 Nebulosas <br/> 33 sistemas solares <br/> 166 planetas">Mapa 2</div>
-                <div onclick="cargarJson('mapa3');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                <div onclick="cargarJson('mapa3');" class="menuItem menuMapa mt-2 d-none" data-toggle="popover" data-placement="right" title="Descripción"
                     data-html="true" data-content="6 Nebulosas <br/> 30 sistemas solares <br/> 142 planetas">Mapa 3</div>
-                <div onclick="cargarJson('mapa4');" class="menuItem mt-2" data-toggle="popover" data-placement="right" title="Descripción"
+                <div onclick="cargarJson('mapa4');" class="menuItem menuMapa mt-2 d-none" data-toggle="popover" data-placement="right" title="Descripción"
                     data-html="true" data-content="3 Nebulosas <br/> 20 sistemas solares <br/> 40 planetas">Mapa 4</div>
+                <div class="menuItem mt-2 menuPrecio d-none" onclick="cambiarPrecioCombustible();">Precio del Combustible</div>
+                <div class="menuItem mt-2 menuPrecio d-none" onclick="cambiarPrecioSondas();">Precio de las Sondas</div>
             </div>
         </div>
         <div id="creditos" style="display: none;">

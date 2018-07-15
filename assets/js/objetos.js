@@ -163,11 +163,24 @@ class planetaCandidato {
         this.platino = planeta.platino;
         this.paladio = planeta.paladio;
         this.eZero = planeta.elementoZero;
+        this.BeneficioXCosto = 0;
     }
     setMateriales(planeta) {
         this.iridio = planeta.iridio;
         this.platino = planeta.platino;
         this.paladio = planeta.paladio;
         this.eZero = planeta.elementoZero;
+    }
+    setBC(necesidadesM, costo) {
+        if ((nave.combustible.value - costo) > 0) {
+            var puntos = 0;
+            puntos += this.iridio * 100 / necesidadesM[0];
+            puntos += this.platino * 100 / necesidadesM[1];
+            puntos += this.paladio * 100 / necesidadesM[2];
+            puntos += this.eZero * 100 / necesidadesM[3];
+            this.BeneficioXCosto = puntos / costo;
+        } else {
+            this.BeneficioXCosto = -100;
+        }
     }
 }

@@ -37,8 +37,22 @@ $(document).ready(function () {
     });
 
     $("#btnSeleccionarMapa").on("click", function () {
-        $(this).toggleClass("active");
-        $("#submenuContainer").toggleClass("active");
+        $(this).addClass("active");
+        $("#btnConfigPrecios").removeClass("active");
+        $("#submenuContainer .menuItem.menuPrecio").addClass("d-none");
+        $("#submenuContainer .menuItem.menuMapa").removeClass("d-none");
+    });
+
+    $("#btnConfigPrecios").on("click", function () {
+        $(this).addClass("active");
+        $("#btnSeleccionarMapa").removeClass("active");
+        $("#submenuContainer .menuItem.menuMapa").addClass("d-none");
+        $("#submenuContainer .menuItem.menuPrecio").removeClass("d-none");
+    });
+
+    $("#submenuContainer .menuItem").on("click", function () {
+        $("#btnConfigPrecios,#btnSeleccionarMapa").removeClass("active");
+        $("#submenuContainer .menuItem").addClass("d-none");
     });
 
     //Botones de interfaz
@@ -158,19 +172,19 @@ $(document).ready(function () {
             game.state.start('attack');
             $("#vidaNaveEnemiga").width("100%");
             $("#vidaNaveEnemiga").html("Vida Enemiga al 100%");
-            setTimeout(function(){
+            setTimeout(function () {
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
-                switch (selected){
+                switch (selected) {
                     case "Nave de Avanzada":
                         $("#optionAttackAvanzada").prop("disabled", true);
                         AvanzadaAlAtaque();
-                    break;
+                        break;
                     case "Nave Exploradora":
                         ExplAlAtaque();
-                    break;
+                        break;
                     case "Nave Nodriza":
                         NodrizaAlAtaque();
-                    break;
+                        break;
                 }
             }, 500);
         } else {
@@ -468,15 +482,15 @@ function actualizarBarraMaterial(cant, material) {
     }
 }
 
-function actualizarBarraEscudo(cant){
+function actualizarBarraEscudo(cant) {
     var porcentaje = (100 * cant) / nave.escudoMaximo;
     var $barraCantidad = $("#escudoNave");
     $barraCantidad.width(porcentaje + "%");
 }
 
-function actualizarBarraVidaNave(cant){
+function actualizarBarraVidaNave(cant) {
     var porcentaje = (100 * cant) / nave.vidaMaxima;
     var $barraCantidad = $("#vidaNave");
-    $("#vidaNave").html("Vida al "+porcentaje+"%");
+    $("#vidaNave").html("Vida al " + porcentaje + "%");
     $barraCantidad.width(porcentaje + "%");
 }

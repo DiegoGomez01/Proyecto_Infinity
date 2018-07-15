@@ -52,20 +52,6 @@ function moverNave() {
     rotacion.start();
 }
 
-// salidaNave();
-// entradaNave();
-// teletransportar();
-//Sacar Sonda
-// var ocultarSonda = game.add.tween(nave.sondaSprite);
-// ocultarSonda.to({
-//     x: 190
-// }, 1000);
-// ocultarSonda.onComplete.add(function () {
-//     ocultarSonda.stop();
-//     nave.sondaSprite.kill();
-// });
-// ocultarSonda.start();
-
 function consumirCombustible(cantCombustible, tiempo) {
     nave.combustible.set(nave.combustible.value - cantCombustible);
     if (tiempo < 1800) {

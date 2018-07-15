@@ -1,44 +1,70 @@
 var menorCS;
 var LNV = [];
-var planetasCandidatos = [];
 var camino;
 // this.iridio = planeta.iridio;
 // this.platino = planeta.platino;
 // this.paladio = planeta.paladio;
 // this.eZero = planeta.elementoZero;
+
+function calcularMejorRuta() {
+    //caminoActual
+
+}
+
+function calcularCotaSuperior() {
+
+}
+
+function actualizarBeneficioXCosto() {
+    var nec = calcularNecesidadMejoras();
+    var costo = costoHaciaPlaneta();
+    for (let i = 0; i < planetasCandidatos.length; i++) {
+        planetasCandidatos[i].setBC(nec, costo);
+    }
+    planetasCandidatos.sort(function (a, b) {
+        return b.BeneficioXCosto - a.BeneficioXCosto;
+    });
+}
+
 function getPlanetasC() {
+    var planetasCandidatos = [];
     for (var iN in galaxia.nebulosas) {
         var nebulosa = galaxia.nebulosas[iN];
         for (var iS in nebulosa.sistemasPlanetarios) {
             var sistemasolar = nebulosa.sistemasPlanetarios[iS];
             for (var iP in sistemasolar.planetas) {
-                planetasCandidatos.push(new planetaCandidato(sistemasolar.planetas[iP], iN, iS));
+                if (sistemasolar.planetas[iP].tipo == "planeta") {
+                    planetasCandidatos.push(new planetaCandidato(sistemasolar.planetas[iP], iN, iS));
+                }
             }
         }
     }
+    return planetasCandidatos;
 }
 
 function costoHaciaPlaneta(iSD, iND, iSO, iNO) {
+    var costo = 0;
+    if (galaxia.nebulosas[iND].esPeligrosa) {
+        costo += 4000;
+    }
     nebOrg = galaxia.nebulosas[iNO];
     if (iND !== iNO) {
-        var costoANeb = 0;
         var nebDes = galaxia.nebulosas[iND];
         if (nebOrg.teletransportador.length > 0 && nebDes.teletransportador.length > 0) {
             if (nebOrg.teletransportador[1] !== iSO) {
-                costoANeb += nebOrg.matrizAdyacencia[iSO][nebOrg.teletransportador[1]][1];
+                costo += nebOrg.matrizAdyacencia[iSO][nebOrg.teletransportador[1]][1];
             }
             if (nebDes.teletransportador[1] !== iSD) {
-                costoANeb += nebOrg.matrizAdyacencia[nebDes.teletransportador[1]][iSD][1];
+                costo += nebOrg.matrizAdyacencia[nebDes.teletransportador[1]][iSD][1];
             }
-            return costoANeb;
         } else {
-            return Infinity;
+            costo = Infinity;
         }
     } else if (iSD !== iSO) {
-        return nebOrg.matrizAdyacencia[iSO][iSD][1];
-    } else {
-        return 0;
+        costo += nebOrg.matrizAdyacencia[iSO][iSD][1];
     }
+    return costo;
+
 }
 //caminoAS.push("S");
 
