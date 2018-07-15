@@ -3,6 +3,8 @@ var nave;
 var galaxia = new Galaxia("Via Láctea");
 var seleccionAux;
 var notifierSeleccion;
+var compraSondas = [10, 5, 5, 1, 5]; //iridio, platino, paladio, eZero, cantidad a recibir
+var compraCombustible = [100, 100, 500, 10, 10000]; //iridio, platino, paladio, eZero, litros comprados
 
 var ancho = $(window).width();
 var alto = $(window).height();
@@ -613,16 +615,126 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     empezarMovimiento();
 }
 
-function asociarMejoras(){
-    var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo",500,1200,1800,1600);
-    var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas",2000,3000,1500,3100);
-    var mejoraCañonTTanix = new Mejora("cañonTanix",1000,3000,3000,3000);
-    var mejoraPropulsorOnix = new Mejora("propulsorOnix",1000,800,1200,1500);
-    var mejoraCañonPlasma = new Mejora("cañonPlasma",500,2000,1800,2500);
-    var mejoraCapacidadDepositos = new Mejora("capacidadDepositos",2000,2000,2000,2000);
-    var mejoraVidaNave = new Mejora("vidaNave",2500,1000,1000,1000);
-    var mejoraCapacidadCombustible = new Mejora("capacidadCombustible",1500,2000,1500,3000);
-    nave.mejoras=[];
+function cambiarPrecioCombustible() {
+    alertify.confirm('<h3 class="alertify-titulo-info">Definir Precio Combustible</h3>',
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Combustible (L):&nbsp;&nbsp;</span>' +
+        '</div>' +
+        '<input id="cantComb" type="number" class="form-control" placeholder="Combustible a recibir" value="' + compraCombustible[4] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Iridio (T):</span>' +
+        '</div>' +
+        '<input id="cantIridioCC" type="number" class="form-control" placeholder="Cantidad de Iridio" value="' + compraCombustible[0] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Platino (T):</span>' +
+        '</div>' +
+        '<input id="cantPlatinoCC" type="number" class="form-control" placeholder="Cantidad de Platino" value="' + compraCombustible[1] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Paladio (T):</span>' +
+        '</div>' +
+        '<input id="cantPaladioCC" type="number" class="form-control" placeholder="Cantidad de Paladio" value="' + compraCombustible[2] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de E. Zero (T):</span>' +
+        '</div>' +
+        '<input id="cantEZeroCC" type="number" class="form-control" placeholder="Cantidad de E. Zero" value="' + compraCombustible[3] + '">' +
+        '</div>',
+        function (closeEvent) {
+            var cir = document.getElementById("cantIridioCC").value;
+            var cpl = document.getElementById("cantPlatinoCC").value;
+            var cpa = document.getElementById("cantPaladioCC").value;
+            var cez = document.getElementById("cantEZeroCC").value;
+            var cco = document.getElementById("cantComb").value;
+            if ($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cco)) {
+                compraCombustible[0] = cir;
+                compraCombustible[1] = cpl;
+                compraCombustible[2] = cpa;
+                compraCombustible[3] = cez;
+                compraCombustible[4] = cco;
+                alertify.confirm().destroy();
+            } else {
+                closeEvent.cancel = true;
+                alertify.error('Ingrese un valores numérico');
+            }
+        },
+        function () {
+            alertify.confirm().destroy();
+        });
+}
+
+function cambiarPrecioSondas() {
+    alertify.confirm('<h3 class="alertify-titulo-info">Definir Precio Sondas</h3>',
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Paquete de Sondas:&nbsp;&nbsp;</span>' +
+        '</div>' +
+        '<input id="cantSondasP" type="number" class="form-control" placeholder="Sondas a recibir" value="' + compraSondas[4] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Iridio (T):</span>' +
+        '</div>' +
+        '<input id="cantIridioSC" type="number" class="form-control" placeholder="Cantidad de Iridio" value="' + compraSondas[0] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Platino (T):</span>' +
+        '</div>' +
+        '<input id="cantPlatinoSC" type="number" class="form-control" placeholder="Cantidad de Platino" value="' + compraSondas[1] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de Paladio (T):</span>' +
+        '</div>' +
+        '<input id="cantPaladioSC" type="number" class="form-control" placeholder="Cantidad de Paladio" value="' + compraSondas[2] + '">' +
+        '</div>' +
+        '<div class="input-group mb-3">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text">Cantidad de E. Zero (T):</span>' +
+        '</div>' +
+        '<input id="cantEZeroSC" type="number" class="form-control" placeholder="Cantidad de E. Zero" value="' + compraSondas[3] + '">' +
+        '</div>',
+        function (closeEvent) {
+            var cir = document.getElementById("cantIridioSC").value;
+            var cpl = document.getElementById("cantPlatinoSC").value;
+            var cpa = document.getElementById("cantPaladioSC").value;
+            var cez = document.getElementById("cantEZeroSC").value;
+            var cso = document.getElementById("cantSondasP").value;
+            if ($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cso)) {
+                compraSondas[0] = cir;
+                compraSondas[1] = cpl;
+                compraSondas[2] = cpa;
+                compraSondas[3] = cez;
+                compraSondas[4] = cso;
+                alertify.confirm().destroy();
+            } else {
+                closeEvent.cancel = true;
+                alertify.error('Ingrese un valores numérico');
+            }
+        },
+        function () {
+            alertify.confirm().destroy();
+        });
+}
+
+function asociarMejoras() {
+    var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo", 500, 1200, 1800, 1600);
+    var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas", 2000, 3000, 1500, 3100);
+    var mejoraCañonTTanix = new Mejora("cañonTanix", 1000, 3000, 3000, 3000);
+    var mejoraPropulsorOnix = new Mejora("propulsorOnix", 1000, 800, 1200, 1500);
+    var mejoraCañonPlasma = new Mejora("cañonPlasma", 500, 2000, 1800, 2500);
+    var mejoraCapacidadDepositos = new Mejora("capacidadDepositos", 2000, 2000, 2000, 2000);
+    var mejoraVidaNave = new Mejora("vidaNave", 2500, 1000, 1000, 1000);
+    var mejoraCapacidadCombustible = new Mejora("capacidadCombustible", 1500, 2000, 1500, 3000);
+    nave.mejoras = [];
     nave.mejoras.push(mejoraEscudoMultinucleo);
     nave.mejoras.push(mejoraBlindajeNavesPesadas);
     nave.mejoras.push(mejoraCañonTTanix);
