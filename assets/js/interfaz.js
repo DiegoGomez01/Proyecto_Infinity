@@ -172,17 +172,20 @@ $(document).ready(function () {
             game.state.start('attack');
             $("#vidaNaveEnemiga").width("100%");
             $("#vidaNaveEnemiga").html("Vida Enemiga al 100%");
-            setTimeout(function () {
+            setTimeout(function(){
+                $("#containerEstadoVidaEnemigo").css({ opacity: 1 });
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
                 switch (selected) {
                     case "Nave de Avanzada":
-                        $("#optionAttackAvanzada").prop("disabled", true);
+                        $("#optionAttackAvanzada").css({ opacity: 0 });
                         AvanzadaAlAtaque();
                         break;
                     case "Nave Exploradora":
+                        $("#optionAttackExp").css({ opacity: 0 });
                         ExplAlAtaque();
                         break;
                     case "Nave Nodriza":
+                        $("#optionAttackNodriza").css({ opacity: 0 });  
                         NodrizaAlAtaque();
                         break;
                 }
@@ -471,7 +474,7 @@ function ocultarInterfazNave() {
 function actualizarBarraMaterial(cant, material) {
     var porcentaje = (100 * cant) / 8000;
     var $barraCantidad = $("#cant" + material + "Nave");
-    $barraCantidad.width(porcentaje + "%");
+    $barraCantidad.css({ width: (porcentaje + "%")});
     if (porcentaje < 5) {
         $barraCantidad.attr("data-content", "Cantidad " + material + ": " + cant + "T");
         $barraCantidad.text("");

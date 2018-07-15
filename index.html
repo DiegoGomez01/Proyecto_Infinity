@@ -26,13 +26,14 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrapAlertify.css">
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome-all.min.css">
+    <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css"> -->
     <link rel="stylesheet" type="text/css" href="assets/css/alertify.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
 </head>
 
 <body>
     <div id="overlay"></div>
-    <!-- <button id="Mejoras">mejorar</button> -->
+    <button id="Mejoras">mejorar</button>
     <!-- <button id="generarJSON">GenerarJSON</button> -->
     <div id="btnCerrarSideBar" class="fa fa-arrow-circle-right fa-2x btnICON"></div>
     <div id="sideBarConfig" class="p-3">
@@ -253,10 +254,10 @@
         <div id="containerEstadoMateriales" style="display: none;">
             <div class="titulo text-center darkShadow mt-3">Materiales</div>
             <div id="cantMateriales" class="progress mt-1 w-100" style="height: 25px;">
-                <div id="cantIridioNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
-                <div id="cantPlatinoNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
-                <div id="cantPaladioNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
-                <div id="cantEZeroNave" class="progress-bar" role="progressbar" data-toggle="popover" data-placement="top" data-content=""></div>
+                <div id="cantIridioNave" class="progress-bar" role="progressbar" data-toggle="popover" style="width: 0%;" data-placement="top" data-content=""></div>
+                <div id="cantPlatinoNave" class="progress-bar" role="progressbar" data-toggle="popover" style="width: 0%;" data-placement="top" data-content=""></div>
+                <div id="cantPaladioNave" class="progress-bar" role="progressbar" data-toggle="popover" style="width: 0%;" data-placement="top" data-content=""></div>
+                <div id="cantEZeroNave" class="progress-bar" role="progressbar" data-toggle="popover" style="width: 0%;"data-placement="top" data-content=""></div>
             </div>
         </div>
         <div id="btnIniciar" class="fa fa-play-circle fa-2x btnICON" onclick="iniciarSimulacion()"></div>
@@ -282,6 +283,9 @@
                 <div id="vidaNaveEnemiga" class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0"
                     aria-valuemax="100">Vida Enemiga al 100%</div>
             </div>
+        </div>
+        <div class="progressP">
+            <div id="progressBarSonda" class="progress-bar progress-bar-warning" style="width: 0%;"></div>
         </div>
 
         <!-- Botón para ejecutar Pruebas -->

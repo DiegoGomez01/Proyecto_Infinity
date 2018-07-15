@@ -1,4 +1,6 @@
 // Motor de Movimiento
+
+var sonidoTaladro;
 function empezarMovimiento() {
     if (caminoActual.length) {
         flagMovimiento = true;
@@ -23,7 +25,7 @@ function moverNave() {
     movimientoNave.to({
         x: etapa[0],
         y: etapa[1]
-    }, 2000);
+    }, nave.msRecorrido);
     rotacion.onComplete.add(function () {
         rotacion.stop();
         if (etapa[2] > 0) {
@@ -37,19 +39,147 @@ function moverNave() {
             moverNave();
         } else {
             flagMovimiento = false;
-            //Sacar Sonda
-            nave.sondaSprite.reset(100, 300);
-            var sacarSonda = game.add.tween(nave.sondaSprite);
-            sacarSonda.to({
-                width: 100
-            }, 1000);
-            sacarSonda.onComplete.add(function () {
-                sacarSonda.stop();
-            });
-            sacarSonda.start();
+            if(nebulosaActual.esPeligrosa){
+                $("#btnAtacar").css({ opacity: 1 });
+            }
+            preloadExtraerElementos();
         }
     });
     rotacion.start();
+}
+
+function preloadExtraerElementos(){
+    sacarSonda();
+    sonidoTaladro = game.add.audio('taladro');
+    sonidoTaladro.addMarker('inicioTaladro', 0, 0);
+    sonidoTaladro.play("inicioTaladro");
+    modificarBarraExtraccion(1);
+}
+
+// function quicksort(primero,ultimo,cantElementos,nombreElementos){
+//     i = primero;
+//     j = ultimo;
+//     pivote = cantElementos[parseInt((i+j)/2)];
+//     do{
+//         while(cantElementos[i]<pivote){
+//             i++;
+//         }
+//         while(cantElementos[j]>pivote){
+//             j--;
+//         }
+//         if(i<=j){
+//             aux=cantElementos[j];
+//             cantElementos[j] = cantElementos[i]
+//             cantElementos[i] = aux;
+//             i++;
+//             j--;
+//         } 
+//     }while(i<j);
+//     if(primero<j){
+//         quicksort(primero,j);
+//     }
+//     if(ultimo>i){    
+//         quicksort(i,ultimo);
+//     }
+// }
+
+function extraerElementos(cantIridio,cantPaladio,cantPlatino,cantEZero){
+    nombreElementos=[""];
+    cantElementos=[];
+
+    if(nave.cantSondas>1){
+        nave.setCantSondas(nave.cantSondas-2);
+        nave.setCantIridio(cantIridio);
+        nave.setCantPlatino(cantPlatino);
+        nave.setCantPaladio(cantPaladio);
+        nave.setCantEZero(cantEZero);
+    }else{
+        nave.setCantSondas(0);
+        array =[nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero];
+        for(var i=0;i<2;i++){
+            if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantIridio){
+                nave.setCantIridio(cantIridio);
+                if(i==0){array.splice(0,1);}
+            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPaladio){
+                nave.setCantPaladio(cantPaladio);
+                if(i==0){array.splice(1,1);}
+            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPlatino){
+                nave.setCantPlatino(cantPlatino);
+                if(i==0){array.splice(2,1);}
+            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantEZero){
+                nave.setCantEZero(cantEZero);
+                if(i==0){array.splice(3,1);}
+            }
+        }
+    }
+    botarSonda();
+    finalizarEstadiaPlaneta();     
+}
+
+function finalizarEstadiaPlaneta(){
+    alertify.success("La estadía en el planete ha terminado");
+    reiniciarElementosPlaneta();
+}
+
+function reiniciarElementosPlaneta(){
+    $("#btnAtacar").css({ opacity: 0 });
+    $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
+    $("#optionAttackAvanzada").css({ opacity: 1 });
+    $("#optionAttackExp").css({ opacity: 1 });
+    $("#optionAttackNodriza").css({ opacity: 1 });
+}
+
+function modificarBarraExtraccion(porcentaje){
+    var $barraCantidad = $("#progressBarSonda");
+    if (porcentaje < 101) {
+        if(!enemigoAtacando){
+            $barraCantidad.width(porcentaje + "%");
+            $("#progressBarSonda").html("Extrayendo Elementos... " + porcentaje + "%");
+            setTimeout(function(){modificarBarraExtraccion(porcentaje+1);},200);
+        }else{
+            interrumpirExtraccion();
+        }
+    }else{
+        alertify.success("La extracción de los materiales se realizó correctamente.");
+        extraerElementos(2000,2000,2000,2000);
+        $barraCantidad.width("0%");
+        $("#progressBarSonda").html("");
+    }
+}
+
+function interrumpirExtraccion(){
+    nave.sondaSprite.kill();
+    $("#progressBarSonda").width("0%");
+    $("#progressBarSonda").html("");
+    sonidoTaladro.mute=true;
+}
+
+// salidaNave();
+// entradaNave();
+// teletransportar();
+
+function sacarSonda(){
+    nave.sondaSprite.reset(100, 300);
+    var sacarSonda = game.add.tween(nave.sondaSprite);
+    sacarSonda.to({
+        width: 100
+    }, 1000);
+    sacarSonda.onComplete.add(function () {
+        sacarSonda.stop();
+    });
+    sacarSonda.start();
+}
+
+function botarSonda(){
+    var ocultarSonda = game.add.tween(nave.sondaSprite);
+    ocultarSonda.to({
+        x: 190
+    }, 1000);
+    ocultarSonda.onComplete.add(function () {
+        ocultarSonda.stop();
+        nave.sondaSprite.kill();
+    });
+    ocultarSonda.start();
 }
 
 function consumirCombustible(cantCombustible, tiempo) {

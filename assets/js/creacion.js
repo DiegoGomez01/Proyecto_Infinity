@@ -49,6 +49,7 @@ $(document).ready(function () {
         game.load.audio('disparoTanix', 'assets/sonidos/disparoTanix.mp3');
         game.load.audio('explosion', 'assets/sonidos/explosion.mp3');
         game.load.audio('explosionTanix', 'assets/sonidos/explosionTanix.mp3');
+        game.load.audio('taladro', 'assets/sonidos/taladro.mp3');
         game.load.spritesheet('gifExplosion', 'assets/images/explosion.png', 80, 80, 17);
     }
 
@@ -104,6 +105,7 @@ $(document).ready(function () {
         game.load.image('sonda', 'assets/images/sonda.png');
         //Sonidos 
         game.load.audio('nave', 'assets/sonidos/naveEspacial.mp3');
+        game.load.audio('taladro', 'assets/sonidos/taladro.mp3');
     }
 
     function createCreacion() {

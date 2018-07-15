@@ -13,6 +13,7 @@ var SpriteEnemiesExp;
 var enemigoAtacando;
 var gifExplosion = [];
 var disparosEnemigosExploradores = [];
+var enemigosYaAtacados=[];
 
 $(document).ready(function () {
     $("#btnConfigEnemigos").on("click", function () {
@@ -38,6 +39,7 @@ function NodrizaAlAtaque() {
     vidaEnemigo = 500;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 150;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemyNodriza.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -56,6 +58,7 @@ function AvanzadaAlAtaque() {
     vidaEnemigo = 400;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 100;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemyAvanz.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -74,6 +77,7 @@ function ExplAlAtaque() {
     vidaEnemigo = 100;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 50;
+    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
         SpriteEnemiesExp.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
@@ -83,6 +87,18 @@ function ExplAlAtaque() {
             tween.start();
             tween.onComplete.add(disparoDeEnemigo, this);
         });
+    }
+}
+
+function modificarSeleccionNavesEnemigas(){
+    var listaOrdenadaEnemigos=["avanzada","exploradores","nodriza"];
+    var listaOpcionesEnemigos=["optionAttackAvanzada","optionAttackExp","optionAttackNodriza"];
+    enemigosYaAtacados.push(enemigoAtacando);
+    for (var i =0;i<listaOrdenadaEnemigos.length;i++){
+        if(!enemigosYaAtacados.includes( listaOrdenadaEnemigos[i] )){
+            $('#'+listaOpcionesEnemigos[i]).trigger('click');
+            break;
+        }
     }
 }
 
@@ -114,13 +130,13 @@ function createAttack() {
 }
 
 function empezarAtaque() {
-    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveNodriza');
+    var nodr = SpriteEnemyNodriza.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveNodriza');
     nodr.anchor.setTo(0.5, 0.5);
-    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveAvanzada');
+    var avanz = SpriteEnemyAvanz.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveAvanzada');
     avanz.anchor.setTo(0.5, 0.5);
 
     for (var j = 0; j < enemigoExplorador; j++) {
-        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 50), 'naveExploradora');
+        var exp = SpriteEnemiesExp.create(game.rnd.between(ancho + 50, ancho + 100), game.rnd.between(0, alto - 100), 'naveExploradora');
         exp.anchor.setTo(0.5, 0.5);
     }
 }
@@ -129,11 +145,13 @@ function probabilidadExito() {
     var disparosNave = vidaEnemigo / nave.dañoArmaBase;
     var disparosEnemigos;
     if (enemigoAtacando == "exploradores") {
-        disparosEnemigos = (nave.vida + nave.escudo) / (dañoEnemigo * 8);
+        disparosEnemigos = (nave.vida + nave.escudo) / (dañoEnemigo * enemigoExplorador);
     } else {
         disparosEnemigos = (nave.vida + nave.escudo) / dañoEnemigo;
     }
     if (disparosEnemigos <= disparosNave) {
+        $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
+        $("#btnAtacar").css({ opacity: 0 });
         alertify.error("Por seguridad, nos vamos a retirar");
         return false;
     }
@@ -150,12 +168,7 @@ function agregarNaveDefensa() {
     weaponEnemigo.bulletSpeed = 400;
     weaponEnemigo.fireRate = 60;
 
-    spriteSonda = game.add.sprite(110, 300, 'sonda');
-    spriteSonda.anchor.set(0.5);
-    spriteSonda.width = 90;
-    spriteSonda.height = 15;
-
-    sprite = game.add.sprite(100, 300, 'navePlayer');
+    sprite = game.add.sprite(nave.sprite.position.x, nave.sprite.position.y, nave.sprite.key, nave.sprite.frame);
     sprite.anchor.set(0.5);
     sprite.width = 100;
     sprite.height = 100;
@@ -218,7 +231,6 @@ function updateAttack() {
     disparosEnemigosExploradores.forEach(function (wEnemigo) {
         game.physics.arcade.overlap(wEnemigo.bullets, sprite, collNave, null, this);
     });
-
 }
 
 function disparoDeEnemigo(spriteEmenigo) {
@@ -253,8 +265,13 @@ function enemigoFueEliminado() {
     }
     actualizarBarraVidaEnemiga(vidaEnemigo);
     if (vidaEnemigo <= 0) {
+        $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
         alertify.success("Enemigo Eliminado");
         enemigoAtacando = undefined;
+        preloadExtraerElementos();
+        if(enemigosYaAtacados.length==3){
+            $("#btnAtacar").css({ opacity: 0 });
+        }
         return true;
     } else {
         game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoEnemigo, this);
@@ -290,6 +307,7 @@ function collExp(bullet, enemies) {
 }
 
 function collNave(enemies, bullet) {
+    interrumpirExtraccion();
     cantidadDisparosANave++;
     efectoExplosion(sprite);
     colision(bullet);
@@ -381,4 +399,23 @@ function alistarEnemigos() {
     SpriteEnemyNodriza.physicsBodyType = Phaser.Physics.ARCADE;
     SpriteEnemyAvanz.physicsBodyType = Phaser.Physics.ARCADE;
     SpriteEnemiesExp.physicsBodyType = Phaser.Physics.ARCADE;
+}
+
+function calculoMejorasEstimado(){
+    var daño1=150;
+    var daño2=100;
+    var daño3=50;
+    var disparosTotales=0;
+    var dañoTotal=0;
+    if (enemigoAtacando == "exploradores") {
+        disparosTotales+= (nave.vida + nave.escudo) / (daño3 * enemigoExplorador);
+    } else {
+        disparosTotales+= (nave.vida + nave.escudo) / daño3;
+    }
+    disparosTotales+=(nave.vida + nave.escudo) / daño2;
+    disparosTotales+=(nave.vida + nave.escudo) / daño1;
+    alert(Math.ceil(disparosTotales));
+    dañoTotal=disparosTotales*((daño1+daño2+daño3)/3);
+    var mejorasPorHacer=Math.round(dañoTotal/(30*nave.vidaMaxima));//30 es la vida minima para hacer mejora
+    alert(mejorasPorHacer);
 }
