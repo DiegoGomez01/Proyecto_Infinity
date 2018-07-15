@@ -159,6 +159,7 @@ $(document).ready(function () {
             $("#vidaNaveEnemiga").width("100%");
             $("#vidaNaveEnemiga").html("Vida Enemiga al 100%");
             setTimeout(function(){
+                $("#containerEstadoVidaEnemigo").css({ opacity: 1 });
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
                 switch (selected){
                     case "Nave de Avanzada":

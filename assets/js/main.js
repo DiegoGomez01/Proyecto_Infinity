@@ -26,11 +26,15 @@ function prepararElementos() {
         nebulosa.sprite.inputEnabled = false;
         nebulosa.matrizAdyacencia = floydWarshall(nebulosa.matrizAdyacencia, nebulosa.sistemasPlanetarios);
         for (var iS in nebulosa.sistemasPlanetarios) {
-            var sistemasolar = nebulosa.sistemasPlanetarios[iS];
-            sistemasolar.sprite.inputEnabled = false;
-            sistemasolar.matrizAdyacencia = floydWarshall(sistemasolar.matrizAdyacencia, sistemasolar.planetas);
-            for (var iP in sistemasolar.planetas) {
-                sistemasolar.planetas[iP].sprite.inputEnabled = false;
+            if(nebulosa.sistemasPlanetarios[iS] !==undefined){
+                var sistemasolar = nebulosa.sistemasPlanetarios[iS];
+                sistemasolar.sprite.inputEnabled = false;
+                sistemasolar.matrizAdyacencia = floydWarshall(sistemasolar.matrizAdyacencia, sistemasolar.planetas);
+                for (var iP in sistemasolar.planetas) {
+                    if(sistemasolar.planetas[iP]!==undefined){
+                        sistemasolar.planetas[iP].sprite.inputEnabled = false;
+                    }
+                }
             }
         }
     }

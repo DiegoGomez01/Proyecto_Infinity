@@ -129,11 +129,13 @@ function probabilidadExito() {
     var disparosNave = vidaEnemigo / nave.dañoArmaBase;
     var disparosEnemigos;
     if (enemigoAtacando == "exploradores") {
-        disparosEnemigos = (nave.vida + nave.escudo) / (dañoEnemigo * 8);
+        disparosEnemigos = (nave.vida + nave.escudo) / (dañoEnemigo * enemigoExplorador);
     } else {
         disparosEnemigos = (nave.vida + nave.escudo) / dañoEnemigo;
     }
     if (disparosEnemigos <= disparosNave) {
+        $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
+        $("#btnAtacar").css({ opacity: 0 });
         alertify.error("Por seguridad, nos vamos a retirar");
         return false;
     }
@@ -150,12 +152,7 @@ function agregarNaveDefensa() {
     weaponEnemigo.bulletSpeed = 400;
     weaponEnemigo.fireRate = 60;
 
-    spriteSonda = game.add.sprite(110, 300, 'sonda');
-    spriteSonda.anchor.set(0.5);
-    spriteSonda.width = 90;
-    spriteSonda.height = 15;
-
-    sprite = game.add.sprite(100, 300, 'navePlayer');
+    sprite = game.add.sprite(nave.sprite.position.x, nave.sprite.position.y, nave.sprite.key, nave.sprite.frame);
     sprite.anchor.set(0.5);
     sprite.width = 100;
     sprite.height = 100;
@@ -253,8 +250,11 @@ function enemigoFueEliminado() {
     }
     actualizarBarraVidaEnemiga(vidaEnemigo);
     if (vidaEnemigo <= 0) {
+        $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
         alertify.success("Enemigo Eliminado");
         enemigoAtacando = undefined;
+        preloadExtraerElementos();
+        //extraerElementos(1000,1000,1000,1000);
         return true;
     } else {
         game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoEnemigo, this);
@@ -290,6 +290,7 @@ function collExp(bullet, enemies) {
 }
 
 function collNave(enemies, bullet) {
+    interrumpirExtraccion();
     cantidadDisparosANave++;
     efectoExplosion(sprite);
     colision(bullet);
@@ -381,4 +382,23 @@ function alistarEnemigos() {
     SpriteEnemyNodriza.physicsBodyType = Phaser.Physics.ARCADE;
     SpriteEnemyAvanz.physicsBodyType = Phaser.Physics.ARCADE;
     SpriteEnemiesExp.physicsBodyType = Phaser.Physics.ARCADE;
+}
+
+function calculoMejorasEstimado(){
+    var daño1=150;
+    var daño2=100;
+    var daño3=50;
+    var disparosTotales=0;
+    var dañoTotal=0;
+    if (enemigoAtacando == "exploradores") {
+        disparosTotales+= (nave.vida + nave.escudo) / (daño3 * enemigoExplorador);
+    } else {
+        disparosTotales+= (nave.vida + nave.escudo) / daño3;
+    }
+    disparosTotales+=(nave.vida + nave.escudo) / daño2;
+    disparosTotales+=(nave.vida + nave.escudo) / daño1;
+    alert(Math.ceil(disparosTotales));
+    dañoTotal=disparosTotales*((daño1+daño2+daño3)/3);
+    var mejorasPorHacer=Math.round(dañoTotal/(30*nave.vidaMaxima));//30 es la vida minima para hacer mejora
+    alert(mejorasPorHacer);
 }
