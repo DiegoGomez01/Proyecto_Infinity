@@ -8,7 +8,6 @@ function cargarJson(mapa) {
     alertify.confirm('<h3 class="alertify-titulo-info">Cargar un mapa nuevo</h3>', '<div class="text-center">¡Todos los cambios realizados en el mapa se perderan!<br>' +
         '¿Desea continuar?</div>',
         function () {
-            $("#btnSeleccionarMapa").click();
             galaxia = new Galaxia("Via Láctea");
             $.getJSON("assets/Mapas/" + mapa + ".json", function (json) {
                 galaxia.planetaOrigen = json.planetaOrigen;

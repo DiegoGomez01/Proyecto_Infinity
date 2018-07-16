@@ -63,17 +63,11 @@ Portada del Juego
 #menuContainer {
     margin-top: 200px;
     margin-left: 50px;
-    display: inline-block;
 }
 
 #submenuContainer {
-    margin-left: 30px;
-    display: none;
-}
-
-#submenuContainer.active {
-    margin-left: 30px;
-    display: inline-block;
+    /* margin-left: 30px; */
+    margin-top: 250px;
 }
 
 .menuItem {
@@ -492,6 +486,7 @@ Interfaz Simulación Nave
     text-shadow: 0 0 4px #000;
     background-color: #ff8400;
 }
+
 #vidaNave {
     text-shadow: 0 0 4px #000;
     background-color: #26A65B;

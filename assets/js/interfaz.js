@@ -37,8 +37,22 @@ $(document).ready(function () {
     });
 
     $("#btnSeleccionarMapa").on("click", function () {
-        $(this).toggleClass("active");
-        $("#submenuContainer").toggleClass("active");
+        $(this).addClass("active");
+        $("#btnConfigPrecios").removeClass("active");
+        $("#submenuContainer .menuItem.menuPrecio").addClass("d-none");
+        $("#submenuContainer .menuItem.menuMapa").removeClass("d-none");
+    });
+
+    $("#btnConfigPrecios").on("click", function () {
+        $(this).addClass("active");
+        $("#btnSeleccionarMapa").removeClass("active");
+        $("#submenuContainer .menuItem.menuMapa").addClass("d-none");
+        $("#submenuContainer .menuItem.menuPrecio").removeClass("d-none");
+    });
+
+    $("#submenuContainer .menuItem").on("click", function () {
+        $("#btnConfigPrecios,#btnSeleccionarMapa").removeClass("active");
+        $("#submenuContainer .menuItem").addClass("d-none");
     });
 
     //Botones de interfaz
@@ -161,19 +175,19 @@ $(document).ready(function () {
             setTimeout(function(){
                 $("#containerEstadoVidaEnemigo").css({ opacity: 1 });
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
-                switch (selected){
+                switch (selected) {
                     case "Nave de Avanzada":
                         $("#optionAttackAvanzada").css({ opacity: 0 });
                         AvanzadaAlAtaque();
-                    break;
+                        break;
                     case "Nave Exploradora":
                         $("#optionAttackExp").css({ opacity: 0 });
                         ExplAlAtaque();
-                    break;
+                        break;
                     case "Nave Nodriza":
                         $("#optionAttackNodriza").css({ opacity: 0 });  
                         NodrizaAlAtaque();
-                    break;
+                        break;
                 }
             }, 500);
         } else {
@@ -471,15 +485,15 @@ function actualizarBarraMaterial(cant, material) {
     }
 }
 
-function actualizarBarraEscudo(cant){
+function actualizarBarraEscudo(cant) {
     var porcentaje = (100 * cant) / nave.escudoMaximo;
     var $barraCantidad = $("#escudoNave");
     $barraCantidad.width(porcentaje + "%");
 }
 
-function actualizarBarraVidaNave(cant){
+function actualizarBarraVidaNave(cant) {
     var porcentaje = (100 * cant) / nave.vidaMaxima;
     var $barraCantidad = $("#vidaNave");
-    $("#vidaNave").html("Vida al "+porcentaje+"%");
+    $("#vidaNave").html("Vida al " + porcentaje + "%");
     $barraCantidad.width(porcentaje + "%");
 }

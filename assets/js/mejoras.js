@@ -14,7 +14,7 @@ function hacerMejora(tipo){
             //     return true;
             // break;
             // case "blindajeNavesPesadas":
-            //     blindajeNavesPesadas("compra");
+            //     blindajeNavesPesadas();
             //     return true;
             // break;
             case "cañonTanix":
@@ -50,12 +50,9 @@ function hacerMejora(tipo){
 //     nave.setVida(nave.vida+aumento,"aumentar");
 //     alertify.success("La vida se aumentó en 400 puntos");
 // }
-// function blindajeNavesPesadas(tipo){
+// function blindajeNavesPesadas(){
 //     nave.setEscudo(1200,"aumentar");
-//     if(tipo=="compra"){
-//         $("#escudoNave").width("100%");
-//         nave.mejoras.splice(posicionDeMejora,1);
-//     }
+//     $("#escudoNave").width("100%");
 //     alertify.success("El escudo se ha cargado al 100%");
 // }
 
@@ -88,6 +85,7 @@ function mejoraCapacidadDepositos(){
 }
 function mejoraVidaNave(){
     nave.setVida(1200,"aumentar");
+    $("#vidaNave").width("100%");
     alertify.success("La nave tiene vida completa.");
 }
 function mejoraCapacidadCombustible(){
