@@ -8,7 +8,7 @@ class NaveInfinity {
         this.cantPlatino;
         this.cantPaladio;
         this.cantEZero;
-        this.msRecorrido=2000;//2 segundos para hacer el recorrido entre objetos
+        this.msRecorrido = 2000; //2 segundos para hacer el recorrido entre objetos
         this.dañoArmaBase = 60;
         this.vidaMaxima = 1200;
         this.escudoMaximo = 1200;
@@ -87,7 +87,7 @@ class Mejora {
 class Galaxia {
     constructor(nombre) {
         this.nombre = nombre;
-        this.planetaOrigen = [];
+        this.planetaOrigen = [];//nebulosa,sistema solar, planeta 
         this.nebulosas = [];
     }
     get arrayElementos() {
@@ -166,11 +166,11 @@ class planetaCandidato {
         this.eZero = planeta.elementoZero;
         this.BeneficioXCosto = 0;
     }
-    setMateriales(planeta) {
-        this.iridio = planeta.iridio;
-        this.platino = planeta.platino;
-        this.paladio = planeta.paladio;
-        this.eZero = planeta.elementoZero;
+    desMateriales(redIr, redPl, redPa, redEZ) {
+        this.iridio -= redIr;
+        this.platino -= redPl;
+        this.paladio -= redPa;
+        this.eZero -= redEZ;
     }
     setBC(necesidadesM, costo) {
         if ((nave.combustible.value - costo) > 0) {

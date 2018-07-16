@@ -1,6 +1,5 @@
-var menorCS;
+var costoActual = Infinity;
 var LNV = [];
-var camino;
 // this.iridio = planeta.iridio;
 // this.platino = planeta.platino;
 // this.paladio = planeta.paladio;
@@ -8,17 +7,28 @@ var camino;
 
 function calcularMejorRuta() {
     //caminoActual
-
+    var planetasCandidatos = getPlanetasC();
+    var ubicacionActual = [planetaActual.id, sistemaSolarActual.id, nebulosaActual.id];
+    var naveEst = {
+        combustible: nave.combustible.value,
+        sondas: nave.cantSondas,
+        iridio: nave.cantIridio,
+        platino: nave.cantPlatino,
+        paladio: nave.cantPaladio,
+        eZero: nave.cantEZero
+    };
+    iniciarEstado(ubicacionActual, planetasCandidatos);
 }
 
-function calcularCotaSuperior() {
+function iniciarEstado(ubicacionActual, planetas, naveEst) {
 
 }
 
 function actualizarBeneficioXCosto() {
     var nec = calcularNecesidadMejoras();
-    var costo = costoHaciaPlaneta();
+    var costo = 0;
     for (let i = 0; i < planetasCandidatos.length; i++) {
+        costo = costoHaciaPlaneta();
         planetasCandidatos[i].setBC(nec, costo);
     }
     planetasCandidatos.sort(function (a, b) {
@@ -28,13 +38,22 @@ function actualizarBeneficioXCosto() {
 
 function getPlanetasC() {
     var planetasCandidatos = [];
+    var planetaAux;
     for (var iN in galaxia.nebulosas) {
         var nebulosa = galaxia.nebulosas[iN];
         for (var iS in nebulosa.sistemasPlanetarios) {
             var sistemasolar = nebulosa.sistemasPlanetarios[iS];
             for (var iP in sistemasolar.planetas) {
                 if (sistemasolar.planetas[iP].tipo == "planeta") {
-                    planetasCandidatos.push(new planetaCandidato(sistemasolar.planetas[iP], iN, iS));
+                    planetaAux = sistemasolar.planetas[iP];
+                    planetasCandidatos.push({
+                        pos: [iP, iS, iN],
+                        iridio: planetaAux.iridio,
+                        platino: planetaAux.platino,
+                        paladio: planetaAux.paladio,
+                        eZero: planetaAux.elementoZero,
+                        BeneficioXCosto: 0
+                    });
                 }
             }
         }
@@ -42,9 +61,9 @@ function getPlanetasC() {
     return planetasCandidatos;
 }
 
-function costoHaciaPlaneta(iSD, iND, iSO, iNO) {
+function costoHaciaPlaneta(iSD, iND, iSO, iNO, peligrosidad) {
     var costo = 0;
-    if (galaxia.nebulosas[iND].esPeligrosa) {
+    if (peligrosidad && galaxia.nebulosas[iND].esPeligrosa) {
         costo += 4000;
     }
     nebOrg = galaxia.nebulosas[iNO];
@@ -64,7 +83,6 @@ function costoHaciaPlaneta(iSD, iND, iSO, iNO) {
         costo += nebOrg.matrizAdyacencia[iSO][iSD][1];
     }
     return costo;
-
 }
 //caminoAS.push("S");
 

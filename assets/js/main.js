@@ -21,17 +21,22 @@ function iniciarSimulacion() {
 }
 
 function prepararElementos() {
+    var planetaInicial = galaxia.nebulosas[planetaOrigen[0]].sistemasPlanetarios[planetaOrigen[1]].planetas[planetaOrigen[2]];
+    planetaInicial.iridio = 0;
+    planetaInicial.platino = 0;
+    planetaInicial.paladio = 0;
+    planetaInicial.elementoZero = 0;
     for (var iN in galaxia.nebulosas) {
         var nebulosa = galaxia.nebulosas[iN];
         nebulosa.sprite.inputEnabled = false;
         nebulosa.matrizAdyacencia = floydWarshall(nebulosa.matrizAdyacencia, nebulosa.sistemasPlanetarios);
         for (var iS in nebulosa.sistemasPlanetarios) {
-            if(nebulosa.sistemasPlanetarios[iS] !==undefined){
+            if (nebulosa.sistemasPlanetarios[iS] !== undefined) {
                 var sistemasolar = nebulosa.sistemasPlanetarios[iS];
                 sistemasolar.sprite.inputEnabled = false;
                 sistemasolar.matrizAdyacencia = floydWarshall(sistemasolar.matrizAdyacencia, sistemasolar.planetas);
                 for (var iP in sistemasolar.planetas) {
-                    if(sistemasolar.planetas[iP]!==undefined){
+                    if (sistemasolar.planetas[iP] !== undefined) {
                         sistemasolar.planetas[iP].sprite.inputEnabled = false;
                     }
                 }
@@ -45,7 +50,7 @@ function floydWarshall(matrizA, elementos) {
     for (var i in elementos) {
         matrizCaminos[i] = [];
         for (var j in elementos) {
-            matrizCaminos[i][j] = [j, matrizA[i][j]];
+            matrizCaminos[i][j] = [j, (matrizA[i][j] / 100)];
         }
     }
     for (var k in elementos) {
