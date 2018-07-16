@@ -3,17 +3,18 @@ class NaveInfinity {
         this.sprite = sprite;
         this.sondaSprite = sonda;
         this.combustible = indicadorCombustible;
-        this.cantSondas;
-        this.cantIridio;
-        this.cantPlatino;
-        this.cantPaladio;
-        this.cantEZero;
+        this.cantSondas=0;
+        this.cantIridio=0;
+        this.cantPlatino=0;
+        this.cantPaladio=0;
+        this.cantEZero=0;
         this.msRecorrido=2000;//2 segundos para hacer el recorrido entre objetos
         this.dañoArmaBase = 60;
         this.vidaMaxima = 1200;
         this.escudoMaximo = 1200;
         this.escudo = 0;
         this.vida = 1200;
+        this.capacidadCarga=8000;
         this.cañonTanixComprado = false;
         this.disparoPorTanix = false;
         this.contadorDisparos = 0;
@@ -64,7 +65,7 @@ class NaveInfinity {
         actualizarBarraMaterial(cant, "Platino");
     }
     setCantPaladio(cant) {
-        this.CantPaladio = cant;
+        this.cantPaladio = cant;
         actualizarBarraMaterial(cant, "Paladio");
     }
     setCantEZero(cant) {
@@ -80,7 +81,6 @@ class Mejora {
         this.paladio = paladio;
         this.iridio = iridio;
         this.platino = platino;
-        this.activa = true;
     }
 }
 

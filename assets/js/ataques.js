@@ -39,8 +39,8 @@ function NodrizaAlAtaque() {
     vidaEnemigo = 500;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 150;
-    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
+        modificarSeleccionNavesEnemigas();
         SpriteEnemyNodriza.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
             tween.to({
@@ -58,8 +58,8 @@ function AvanzadaAlAtaque() {
     vidaEnemigo = 400;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 100;
-    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
+        modificarSeleccionNavesEnemigas();
         SpriteEnemyAvanz.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
             tween.to({
@@ -77,8 +77,8 @@ function ExplAlAtaque() {
     vidaEnemigo = 100;
     vidaMaximaEnemigo = vidaEnemigo;
     dañoEnemigo = 50;
-    modificarSeleccionNavesEnemigas();
     if (probabilidadExito()) {
+        modificarSeleccionNavesEnemigas();
         SpriteEnemiesExp.hash.forEach(function (sprite) {
             var tween = game.add.tween(sprite);
             tween.to({
@@ -149,7 +149,7 @@ function probabilidadExito() {
     } else {
         disparosEnemigos = (nave.vida + nave.escudo) / dañoEnemigo;
     }
-    if (disparosEnemigos <= disparosNave) {
+    if (Math.ceil(disparosEnemigos) <= Math.ceil(disparosNave) && !utilizarMejorAtaque()) {
         $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
         $("#btnAtacar").css({ opacity: 0 });
         alertify.error("Por seguridad, nos vamos a retirar");
@@ -268,6 +268,7 @@ function enemigoFueEliminado() {
         $("#containerEstadoVidaEnemigo").css({ opacity: 0 });
         alertify.success("Enemigo Eliminado");
         enemigoAtacando = undefined;
+        verificarSiMejoraVida();
         preloadExtraerElementos();
         if(enemigosYaAtacados.length==3){
             $("#btnAtacar").css({ opacity: 0 });
@@ -278,6 +279,12 @@ function enemigoFueEliminado() {
     }
 
     return false;
+}
+
+function verificarSiMejoraVida(){
+    if(nave.vida<480){//480 = 40%
+        hacerMejora("vidaNave");
+    }
 }
 
 function collAvz(bullet, enemies) {
@@ -337,14 +344,28 @@ function activarTurnoEnemigo() {
     }
 }
 
-function activarTurnoNave() {
-    //CONDICIONAL DE PRUEBA
+function utilizarMejorAtaque(){
     if (nave.cañonTanixComprado && nave.contadorDisparos > 5) {
+        if(vidaEnemigo>=vidaMaximaEnemigo/2){
+            if(vidaEnemigo / nave.dañoArmaBase>4){
+                if((enemigosYaAtacados.includes("nodriza") && nave.dañoArmaBase==60) || !enemigosYaAtacados.includes("nodriza")){
+                    return true;
+                }
+            }            
+        }
+    }
+    return false;
+}
+
+function activarTurnoNave() {
+    if (utilizarMejorAtaque()) {
         nave.disparoPorTanix = true;
         nave.contadorDisparos = 0;
         cargarCañonTanix();
+    }else{
+        nave.disparoPorTanix = false;
+        cargarDisparoNormal();
     }
-    cargarDisparoNormal(); //puede que se haya activado una mejora
     nave.contadorDisparos++;
     sonidoDisparo();
     weapon.fire();

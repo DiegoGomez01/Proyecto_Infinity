@@ -1,6 +1,7 @@
 // Motor de Movimiento
 
 var sonidoTaladro;
+var maxCupo;
 function empezarMovimiento() {
     if (caminoActual.length) {
         flagMovimiento = true;
@@ -83,32 +84,62 @@ function preloadExtraerElementos(){
 //     }
 // }
 
+function verificarLimiteCapacidad(elementoAgregar){
+    maxCupo = nave.capacidadCarga - (nave.cantEZero+nave.cantIridio+nave.cantPaladio+nave.cantPlatino);
+    if(elementoAgregar<=maxCupo){
+        return true;
+    }
+    return false;
+}
+
 function extraerElementos(cantIridio,cantPaladio,cantPlatino,cantEZero){
     nombreElementos=[""];
     cantElementos=[];
 
-    if(nave.cantSondas>1){
-        nave.setCantSondas(nave.cantSondas-2);
-        nave.setCantIridio(cantIridio);
-        nave.setCantPlatino(cantPlatino);
-        nave.setCantPaladio(cantPaladio);
-        nave.setCantEZero(cantEZero);
-    }else{
-        nave.setCantSondas(0);
-        array =[nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero];
-        for(var i=0;i<2;i++){
-            if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantIridio){
-                nave.setCantIridio(cantIridio);
-                if(i==0){array.splice(0,1);}
-            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPaladio){
-                nave.setCantPaladio(cantPaladio);
-                if(i==0){array.splice(1,1);}
-            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPlatino){
-                nave.setCantPlatino(cantPlatino);
-                if(i==0){array.splice(2,1);}
-            }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantEZero){
-                nave.setCantEZero(cantEZero);
-                if(i==0){array.splice(3,1);}
+    array =[nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero];
+    for(var i=0;i<4;i++){
+        if(i==0 || i==2){
+            nave.setCantSondas(nave.cantSondas-1);
+        }
+        if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantIridio && array[0]!=undefined){
+            if(verificarLimiteCapacidad(cantIridio)){
+                nave.setCantIridio(cantIridio+nave.cantIridio);
+                planetaActual.iridio=0;
+                array[0]=undefined;
+            }else{
+                nave.setCantIridio(maxCupo+nave.cantIridio);
+                planetaActual.iridio -= maxCupo;
+                break;
+            }
+        }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPaladio && array[1]!=undefined){
+            if(verificarLimiteCapacidad(cantPaladio)){
+                nave.setCantPaladio(cantPaladio+nave.cantPaladio);
+                planetaActual.paladio=0;
+                array[1]=undefined;
+            }else{
+                nave.setCantPaladio(maxCupo+nave.cantPaladio);
+                planetaActual.paladio -= maxCupo;
+                break;
+            }
+        }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantPlatino && array[2]!=undefined){
+            if(verificarLimiteCapacidad(cantPlatino)){
+                nave.setCantPlatino(cantPlatino+nave.cantPlatino);
+                planetaActual.platino =0;
+                array[2]=undefined;
+            }else{
+                nave.setCantPlatino(maxCupo+nave.cantPlatino);
+                planetaActual.platino -= maxCupo;
+                break;
+            }
+        }else if(Math.min(nave.cantIridio,nave.cantPaladio,nave.cantPlatino,nave.cantEZero)==nave.cantEZero && array[3]!=undefined){
+            if(verificarLimiteCapacidad(cantEZero)){
+                nave.setCantEZero(cantEZero+nave.cantEZero);
+                planetaActual.elementoZero =0;
+                array[3]=undefined;
+            }else{
+                nave.setCantEZero(maxCupo+nave.cantEZero);
+                planetaActual.elementoZero -= maxCupo;
+                break;
             }
         }
     }
@@ -141,7 +172,7 @@ function modificarBarraExtraccion(porcentaje){
         }
     }else{
         alertify.success("La extracción de los materiales se realizó correctamente.");
-        extraerElementos(2000,2000,2000,2000);
+        extraerElementos(2000,2000,2000,2000);//
         $barraCantidad.width("0%");
         $("#progressBarSonda").html("");
     }

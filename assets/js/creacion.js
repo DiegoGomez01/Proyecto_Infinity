@@ -615,6 +615,26 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
     empezarMovimiento();
 }
 
+function asociarMejoras(){
+    //var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo",500,1200,1800,1600);
+    //var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas",2000,3000,1500,3100);
+    var mejoraCañonTTanix = new Mejora("cañonTanix",1000,3000,3000,3000);
+    var mejoraPropulsorOnix = new Mejora("propulsorOnix",1000,800,1200,1500);
+    var mejoraCañonPlasma = new Mejora("cañonPlasma",500,2000,1800,2500);
+    var mejoraCapacidadDepositos = new Mejora("capacidadDepositos",2000,2000,2000,2000);
+    var mejoraVidaNave = new Mejora("vidaNave",2500,1000,1000,1000);
+    var mejoraCapacidadCombustible = new Mejora("capacidadCombustible",1500,2000,1500,3000);
+    nave.mejoras=[];
+    nave.mejoras.push(mejoraVidaNave);
+    //nave.mejoras.push(mejoraEscudoMultinucleo);
+    //nave.mejoras.push(mejoraBlindajeNavesPesadas);
+    nave.mejoras.push(mejoraCañonTTanix);
+    nave.mejoras.push(mejoraCañonPlasma);
+    nave.mejoras.push(mejoraCapacidadCombustible);
+    nave.mejoras.push(mejoraCapacidadDepositos);
+    nave.mejoras.push(mejoraPropulsorOnix);
+}
+
 function cambiarPrecioCombustible() {
     alertify.confirm('<h3 class="alertify-titulo-info">Definir Precio Combustible</h3>',
         '<div class="input-group mb-3">' +
@@ -723,26 +743,6 @@ function cambiarPrecioSondas() {
         function () {
             alertify.confirm().destroy();
         });
-}
-
-function asociarMejoras() {
-    var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo", 500, 1200, 1800, 1600);
-    var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas", 2000, 3000, 1500, 3100);
-    var mejoraCañonTTanix = new Mejora("cañonTanix", 1000, 3000, 3000, 3000);
-    var mejoraPropulsorOnix = new Mejora("propulsorOnix", 1000, 800, 1200, 1500);
-    var mejoraCañonPlasma = new Mejora("cañonPlasma", 500, 2000, 1800, 2500);
-    var mejoraCapacidadDepositos = new Mejora("capacidadDepositos", 2000, 2000, 2000, 2000);
-    var mejoraVidaNave = new Mejora("vidaNave", 2500, 1000, 1000, 1000);
-    var mejoraCapacidadCombustible = new Mejora("capacidadCombustible", 1500, 2000, 1500, 3000);
-    nave.mejoras = [];
-    nave.mejoras.push(mejoraEscudoMultinucleo);
-    nave.mejoras.push(mejoraBlindajeNavesPesadas);
-    nave.mejoras.push(mejoraCañonTTanix);
-    nave.mejoras.push(mejoraPropulsorOnix);
-    nave.mejoras.push(mejoraCañonPlasma);
-    nave.mejoras.push(mejoraCapacidadDepositos);
-    nave.mejoras.push(mejoraVidaNave);
-    nave.mejoras.push(mejoraCapacidadCombustible);
 }
 
 alertify.defaults = {
