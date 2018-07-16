@@ -21,7 +21,7 @@ function iniciarSimulacion() {
 }
 
 function prepararElementos() {
-    var planetaInicial = galaxia.nebulosas[planetaOrigen[0]].sistemasPlanetarios[planetaOrigen[1]].planetas[planetaOrigen[2]];
+    var planetaInicial = galaxia.nebulosas[galaxia.planetaOrigen[0]].sistemasPlanetarios[galaxia.planetaOrigen[1]].planetas[galaxia.planetaOrigen[2]];
     planetaInicial.iridio = 0;
     planetaInicial.platino = 0;
     planetaInicial.paladio = 0;

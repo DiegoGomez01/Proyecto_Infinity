@@ -140,14 +140,7 @@ $(document).ready(function () {
     }
 
     function updateSimulacion() {
-        // if (flagMovimiento) {
-        //     if (nave.sprite.overlap(fondo)) {
-        //         flagMovimiento=false;
-        //         setTimeout(function () {
-        //             detenerNave();
-        //         }, 1000);
-        //     }
-        // }
+
     }
 
     game.state.add('creacion', creacionState);
