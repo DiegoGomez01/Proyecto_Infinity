@@ -1,8 +1,6 @@
 $(document).ready(function () {
     $("#Mejoras").on("click", function () {
-        //calculoMejorasEstimado();
-        //preloadExtraerElementos();
-        // alert(hacerMejora("escudoMultinucleo"));
+        hacerMejora("cañonPlasma");
     });
 });
 
@@ -11,14 +9,14 @@ var posicionDeMejora;
 function hacerMejora(tipo){
     if(descontarElementos(tipo)){
         switch(tipo){
-            case "escudoMultinucleo":
-                mejoraEscudoMultinucleo(400);
-                return true;
-            break;
-            case "blindajeNavesPesadas":
-                blindajeNavesPesadas("compra");
-                return true;
-            break;
+            // case "escudoMultinucleo":
+            //     mejoraEscudoMultinucleo(400);
+            //     return true;
+            // break;
+            // case "blindajeNavesPesadas":
+            //     blindajeNavesPesadas();
+            //     return true;
+            // break;
             case "cañonTanix":
                 mejoraCañonTanix();
                 return true;
@@ -48,22 +46,25 @@ function hacerMejora(tipo){
     return false;
 }
 
-function mejoraEscudoMultinucleo(aumento){
-    nave.setVida(nave.vida+aumento,"aumentar");
-    alertify.success("La vida se aumentó en 400 puntos");
-}
-function blindajeNavesPesadas(tipo){
-    nave.setEscudo(1200,"aumentar");
-    if(tipo=="compra"){
-        $("#escudoNave").width("100%");
+// function mejoraEscudoMultinucleo(aumento){
+//     nave.setVida(nave.vida+aumento,"aumentar");
+//     alertify.success("La vida se aumentó en 400 puntos");
+// }
+// function blindajeNavesPesadas(){
+//     nave.setEscudo(1200,"aumentar");
+//     $("#escudoNave").width("100%");
+//     alertify.success("El escudo se ha cargado al 100%");
+// }
 
-        nave.mejoras.splice(posicionDeMejora,1);
-    }
+function mejorarEscudo(){
+    nave.setEscudo(1200,"aumentar");
+    $("#escudoNave").width("100%");
     alertify.success("El escudo se ha cargado al 100%");
 }
+
 function mejoraCañonTanix(){
     nave.cañonTanixComprado=true;
-    nave.disparoPorTanix=5;
+    nave.disparoPorTanix=6;
     nave.mejoras.splice(posicionDeMejora,1);
     alertify.success("El cañón Tanix está activado!");
 }
@@ -78,10 +79,13 @@ function mejoraCañonPlasma(){
     alertify.success("Los disparos tiene 100 puntos más de daño.");
 }
 function mejoraCapacidadDepositos(){
-
+    nave.capacidadCarga*=1.5;
+    nave.mejoras.splice(posicionDeMejora,1);
+    alertify.success("La camacidad de carga se aumentó en un 50%");
 }
 function mejoraVidaNave(){
     nave.setVida(1200,"aumentar");
+    $("#vidaNave").width("100%");
     alertify.success("La nave tiene vida completa.");
 }
 function mejoraCapacidadCombustible(){
@@ -92,19 +96,19 @@ function mejoraCapacidadCombustible(){
 
 function descontarElementos(tipo){
     var zero,paladio,iridio,platino,activa;
-
+    var disponible=false;
     for(var i=0;i< nave.mejoras.length;i++){
         if(nave.mejoras[i].nombre==tipo){
             zero=nave.mejoras[i].zero;
             paladio=nave.mejoras[i].paladio;
             iridio=nave.mejoras[i].iridio;
             platino=nave.mejoras[i].platino;
-            activa=nave.mejoras[i].activa;
+            disponible=true;
             posicionDeMejora=i;
             break;
         }
     }
-    if(activa && elementosSuficinetes(zero,paladio,iridio,platino)){
+    if(disponible && elementosSuficinetes(zero,paladio,iridio,platino)){
         nave.setCantIridio(nave.cantIridio-iridio);
         nave.setCantPlatino((nave.cantPlatino-platino));
         nave.setCantPaladio(nave.cantPaladio-paladio);
