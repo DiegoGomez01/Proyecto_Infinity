@@ -614,8 +614,8 @@ function crearNave(cantIridio, cantPlatino, cantPaladio, cantEZero, cantSondas) 
 }
 
 function asociarMejoras(){
-    var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo",500,1200,1800,1600);
-    var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas",2000,3000,1500,3100);
+    //var mejoraEscudoMultinucleo = new Mejora("escudoMultinucleo",500,1200,1800,1600);
+    //var mejoraBlindajeNavesPesadas = new Mejora("blindajeNavesPesadas",2000,3000,1500,3100);
     var mejoraCañonTTanix = new Mejora("cañonTanix",1000,3000,3000,3000);
     var mejoraPropulsorOnix = new Mejora("propulsorOnix",1000,800,1200,1500);
     var mejoraCañonPlasma = new Mejora("cañonPlasma",500,2000,1800,2500);
@@ -623,14 +623,14 @@ function asociarMejoras(){
     var mejoraVidaNave = new Mejora("vidaNave",2500,1000,1000,1000);
     var mejoraCapacidadCombustible = new Mejora("capacidadCombustible",1500,2000,1500,3000);
     nave.mejoras=[];
-    nave.mejoras.push(mejoraEscudoMultinucleo);
-    nave.mejoras.push(mejoraBlindajeNavesPesadas);
-    nave.mejoras.push(mejoraCañonTTanix);
-    nave.mejoras.push(mejoraPropulsorOnix);
-    nave.mejoras.push(mejoraCañonPlasma);
-    nave.mejoras.push(mejoraCapacidadDepositos);
     nave.mejoras.push(mejoraVidaNave);
+    //nave.mejoras.push(mejoraEscudoMultinucleo);
+    //nave.mejoras.push(mejoraBlindajeNavesPesadas);
+    nave.mejoras.push(mejoraCañonTTanix);
+    nave.mejoras.push(mejoraCañonPlasma);
     nave.mejoras.push(mejoraCapacidadCombustible);
+    nave.mejoras.push(mejoraCapacidadDepositos);
+    nave.mejoras.push(mejoraPropulsorOnix);
 }
 
 alertify.defaults = {
