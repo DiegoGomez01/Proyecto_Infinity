@@ -8,10 +8,10 @@
       "nombre": "Hélix",
       "peligrosa": true,
       "estacionEspacial": [
-
+        0,4,2
       ],
       "teletransportador": [
-
+        0,2,2
       ],
       "sprite": {
         "posx": 862,
@@ -741,7 +741,7 @@
 
       ],
       "teletransportador": [
-
+        1,0,4
       ],
       "sprite": {
         "posx": 849,
@@ -1658,10 +1658,10 @@
       "nombre": "Majoris",
       "peligrosa": true,
       "estacionEspacial": [
-
+        2,3,4
       ],
       "teletransportador": [
-
+        2,1,4
       ],
       "sprite": {
         "posx": 293,
@@ -2398,10 +2398,10 @@
       "nombre": "Búho",
       "peligrosa": true,
       "estacionEspacial": [
-
+        3,3,1
       ],
       "teletransportador": [
-
+        3,0,3
       ],
       "sprite": {
         "posx": 317,
@@ -3013,12 +3013,16 @@
             "selected": "sistemasolar2"
           },
           "planetas": [{
-              "nombre": "Planeta 1",
-              "tipo": "ecombustible",
+              "nombre": "Planeta1",
+              "tipo": "planeta",
+              "iridio": 5425,
+              "platino": 2452,
+              "paladio": 3663,
+              "elementoZero": 5412,
               "sprite": {
                 "posx": 119,
                 "posy": 105,
-                "selected": "estacionEspacial1"
+                "selected": "planeta2"
               }
             },
             {
@@ -3216,10 +3220,10 @@
       "nombre": "Espirógrafo",
       "peligrosa": false,
       "estacionEspacial": [
-
+        4,4,2
       ],
       "teletransportador": [
-
+        4,4,3
       ],
       "sprite": {
         "posx": 596,
