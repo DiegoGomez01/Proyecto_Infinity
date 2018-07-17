@@ -50,6 +50,8 @@ function cargarNebulosas(nebulosas) {
                 }
             }
             var nebulosa = new Nebulosa(idNeb, nombre, peligrosa, nebulaSprite);
+            nebulosa.estacionEspacial= neb.estacionEspacial;
+            nebulosa.teletransportador = neb.teletransportador;
             galaxia.nebulosas.push(nebulosa);
             cargarSistemasPlanetarios(nebulosa, neb.sistemasPlanetarios);
             cargarLineasJson(nebulosa, neb.lineas, neb.matrizAdy, "Nebulosa");
