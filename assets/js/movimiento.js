@@ -5,6 +5,7 @@ var maxCupo;
 function empezarMovimiento() {
     if (caminoActual.length) {
         flagMovimiento = true;
+        calcularMejorRuta();
         moverNave();
     }
 }
@@ -46,7 +47,6 @@ function moverNave() {
                 });
             }
             preloadExtraerElementos();
-            calcularMejorRuta();
         }
     });
     rotacion.start();

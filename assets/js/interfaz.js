@@ -1,6 +1,13 @@
 $(document).ready(function () {
     $("#btnPruebas").on("click", function () {
-        nave.sprite.rotation += 0.5;
+        for (let index = 0; index < galaxia.nebulosas.length; index++) {
+            const element = galaxia.nebulosas[index].estacionEspacial;
+            if (element.length > 0) {
+                alert("una tiene");
+            } else {
+                alert("no tiene");
+            }
+        }
     });
 
     $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
@@ -412,10 +419,10 @@ function cargarFormularioNave() {
     $("#combustibleNaveContainer").removeClass("d-none");
     $("#inputSondasContainer").removeClass("d-none");
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
-    $("#cantIridioRango").val(0);
-    $("#cantPlatinoRango").val(0);
-    $("#cantPaladioRango").val(0);
-    $("#cantEZeroRango").val(0);
+    $("#cantIridioRango").val(2000);
+    $("#cantPlatinoRango").val(2000);
+    $("#cantPaladioRango").val(2000);
+    $("#cantEZeroRango").val(2000);
     $("#cantCombustibleInicial").val(100000);
     $("#cantIridioRango,#cantPlatinoRango,#cantPaladioRango,#cantEZeroRango,#cantCombustibleInicial").trigger("input");
     $("#btnIniciarNave").removeClass("d-none");

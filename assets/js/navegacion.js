@@ -1,4 +1,6 @@
 var costoActual = Infinity;
+var estadosCreador = 0;
+var caminoglobal = [];
 
 function calcularMejorRuta() {
     var planetasCandidatos = getPlanetasC();
@@ -26,17 +28,21 @@ function calcularMejorRuta() {
         eZero: nave.cantEZero,
         mejoras: nave.mejoras
     };
-    caminoActual = estado(ubicacionActual, 0, planetasCandidatos, naveEst, [""]); // estado inicial
-    if (caminoActual !== undefined) {
+    caminoglobal = estado(ubicacionActual, 0, planetasCandidatos, naveEst, [""]); // estado inicial
+    alert(costoActual);
+    alert(estadosCreador);
+    if (caminoglobal !== undefined && caminoglobal.length > 0) {
         alertify.success('¡Recorriendo una nueva ruta!');
+        console.log(caminoglobal);
     } else {
         alertify.error('Lastimosamente, no se encontró una solución al problema. <br/> ¡La tierra está perdida! :(', 0);
     }
 }
 
 function estado(ubicacionActual, costo, planetas, naveEst, accion) {
+    estadosCreador++;
     let costoLocal = costo;
-    let caminoLocal;
+    let caminoLocal = [];
     let siguienteCamino;
     //Actualizar el estado
     switch (accion[0]) {
@@ -87,6 +93,7 @@ function estado(ubicacionActual, costo, planetas, naveEst, accion) {
     }
     let necesidadesM = calcularNecesidadMejoras(naveEst);
     let estacionEC = galaxia.nebulosas[ubicacionActual[2]].sistemasPlanetarios[ubicacionActual[1]].planetas[ubicacionActual[0]].estacionECercana;
+    alert(estacionEC.length);
     actualizarBeneficioXCosto(ubicacionActual[1], ubicacionActual[2], planetas, naveEst, necesidadesM);
     if (naveEst.sondas >= 2) {
         //Visitar Planeta
@@ -118,8 +125,8 @@ function estado(ubicacionActual, costo, planetas, naveEst, accion) {
                     cantEeZero = planeta.eZero;
                 }
                 if ((planeta.costo + costoLocal) < costoActual) {
-                    siguienteCamino = estado(planeta.pos, planeta.costo + costoLocal, jQuery.extend(true, {}, planetas), jQuery.extend(true, {}, naveEst), ["V", p, cantEiridio, cantEplatino, cantEpaladio, cantEeZero]);
-                    if (siguienteCamino !== undefined) {
+                    siguienteCamino = estado(planeta.pos, planeta.costo + costoLocal, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["V", p, cantEiridio, cantEplatino, cantEpaladio, cantEeZero]);
+                    if (siguienteCamino.length > 0) {
                         obtenerCamino(planeta.pos[0], planeta.pos[1], planeta.pos[2], ubicacionActual[0], ubicacionActual[1], ubicacionActual[2], caminoLocal);
                         caminoLocal.push(siguienteCamino);
                     }
@@ -134,9 +141,12 @@ function estado(ubicacionActual, costo, planetas, naveEst, accion) {
         let necPlatino = (compraCombustible[1] * necCombustible) / compraCombustible[4];
         let necPaladio = (compraCombustible[2] * necCombustible) / compraCombustible[4];
         let necEZero = (compraCombustible[3] * necCombustible) / compraCombustible[4];
+        alert(estacionEC[3]);
+        // alert((costoLocal + estacionEC[3]) < costoActual);
         if ((naveEst.iridio >= necIridio && naveEst.platino >= necPlatino && naveEst.paladio >= necPaladio && naveEst.eZero >= necEZero) && (costoLocal + estacionEC[3]) < costoActual) {
-            siguienteCamino = estado([estacionEC[0], estacionEC[1], estacionEC[2]], estacionEC[3] + costoLocal, jQuery.extend(true, {}, planetas), jQuery.extend(true, {}, naveEst), ["CC", necIridio, necPlatino, necPaladio, necEZero, necCombustible]);
-            if (siguienteCamino !== undefined) {
+            alert("kvrass");
+            siguienteCamino = estado([estacionEC[0], estacionEC[1], estacionEC[2]], estacionEC[3] + costoLocal, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["CC", necIridio, necPlatino, necPaladio, necEZero, necCombustible]);
+            if (siguienteCamino.length > 0) {
                 obtenerCamino(estacionEC[0], estacionEC[1], estacionEC[2], ubicacionActual[0], ubicacionActual[1], ubicacionActual[2], caminoLocal);
                 caminoLocal.push(siguienteCamino);
             }
@@ -146,18 +156,23 @@ function estado(ubicacionActual, costo, planetas, naveEst, accion) {
     //Comprar un paquete de sondas
     let puedoComprarSondas = (naveEst.iridio >= compraSondas[0]) && (naveEst.platino >= compraSondas[1]) && (naveEst.paladio >= compraSondas[2]) && (naveEst.eZero >= compraSondas[3]);
     if (puedoComprarSondas && (costoLocal + estacionEC[3]) < costoActual) {
-        siguienteCamino = estado([estacionEC[0], estacionEC[1], estacionEC[2]], estacionEC[3] + costoLocal, jQuery.extend(true, {}, planetas), jQuery.extend(true, {}, naveEst), ["CS"]);
-        if (siguienteCamino !== undefined) {
+        siguienteCamino = estado([estacionEC[0], estacionEC[1], estacionEC[2]], estacionEC[3] + costoLocal, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["CS"]);
+        if (siguienteCamino.length > 0) {
             obtenerCamino(estacionEC[0], estacionEC[1], estacionEC[2], ubicacionActual[0], ubicacionActual[1], ubicacionActual[2], caminoLocal);
             caminoLocal.push(siguienteCamino);
         }
     }
-
+    // alert(naveEst.mejoras.length);
     for (let m = 0; m < naveEst.mejoras.length; m++) {
         const mejora = naveEst.mejoras[m];
-        if (naveEst.iridio >= mejora.iridio && naveEst.platino >= mejora.platino && naveEst.paladio >= mejora.paladio && naveEst.eZero >= mejora.eZero) {
-            siguienteCamino = estado(ubicacionActual, costoLocal, jQuery.extend(true, {}, planetas), jQuery.extend(true, {}, naveEst), ["M", m, mejora.nombre]);
-            if (siguienteCamino !== undefined) {
+        // alert(naveEst.iridio + ">=" + mejora.iridio);
+        // alert(naveEst.platino + ">=" + mejora.platino);
+        // alert(naveEst.paladio + ">=" + mejora.paladio);
+        // alert(naveEst.eZero + ">=" + mejora.zero);
+        if (naveEst.iridio >= mejora.iridio && naveEst.platino >= mejora.platino && naveEst.paladio >= mejora.paladio && naveEst.eZero >= mejora.zero) {
+            // alert("kvrass.com");
+            siguienteCamino = estado(ubicacionActual, costoLocal, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["M", m, mejora.nombre]);
+            if (siguienteCamino.length > 0) {
                 caminoLocal.push(siguienteCamino);
             }
         }
@@ -204,12 +219,12 @@ function getPlanetasC() {
                 planetaAux = sistemasolar.planetas[iP];
                 if (planetaAux.estacionECercana.length == 0) {
                     if (planetaAux.tipo == "ecombustible") {
-                        planetaAux.estacionECercana = [iP, iS, iN, 0];
+                        sistemasolar.planetas[iP].estacionECercana = [iP, iS, iN, 0];
                     } else {
-                        planetaAux.estacionECercana = estacionMasCercana(iS, iN);
+                        sistemasolar.planetas[iP].estacionECercana = estacionMasCercana(iS, iN);
                     }
                 }
-                if (planetaAux.tipo == "planeta") {
+                if (sistemasolar.planetas[iP].tipo == "planeta") {
                     planetasCandidatos.push({
                         pos: [iP, iS, iN],
                         estacionEC: planetaAux.estacionECercana,
@@ -238,7 +253,7 @@ function calcularNecesidadMejoras(naveEst) {
         cantIridio += naveEst.mejoras[index].iridio;
         cantPaladio += naveEst.mejoras[index].paladio;
         cantPlatino += naveEst.mejoras[index].platino;
-        cantEZero += naveEst.mejoras[index].eZero;
+        cantEZero += naveEst.mejoras[index].zero;
     }
     total = cantEZero + cantIridio + cantPaladio + cantPlatino;
     res[0] = ((cantIridio / total) * naveEst.capacidad) - naveEst.iridio;
