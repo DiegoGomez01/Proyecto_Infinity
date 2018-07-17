@@ -284,8 +284,7 @@ function enemigoFueEliminado() {
 
 function verificarSiMejoraVida(){
     if(nave.vida<480){//480 = 40%
-        mejoraVidaNave();
-        // nave.mejoras.splice(0, 0, new Mejora("vidaNave", 2500, 1000, 1000, 1000));
+        hacerMejora("vidaNave");
     }    
 }
 
@@ -329,7 +328,7 @@ function collNave(enemies, bullet) {
     cantidadDisparosANave++;
     efectoExplosion(sprite);
     colision(bullet);
-
+    comprarPlasma();
     if (nave.escudo > 0) {
         nave.setEscudo(nave.escudo - dañoEnemigo, "quitar");
     } else {
@@ -342,6 +341,16 @@ function collNave(enemies, bullet) {
         }
     } else {
         game.time.events.add(Phaser.Timer.SECOND * 2, activarTurnoNave, this);
+    }
+}
+
+function comprarPlasma(){
+    if(nave.dañoArmaBase==60 && enemigoAtacando!="exploradores" && vidaEnemigo>vidaMaximaEnemigo/2){
+        mejoraCañonPlasma();
+        nave.setCantIridio(nave.cantIridio - 500);
+        nave.setCantPlatino(nave.cantPlatino - 600);
+        nave.setCantPaladio(nave.cantPaladio - 800);
+        nave.setCantEZero(nave.cantEZero - 250);
     }
 }
 
