@@ -6,7 +6,7 @@ $(document).ready(function () {
                 alert("una tiene");
             } else {
                 alert("no tiene");
-            }
+             }
         }
     });
 

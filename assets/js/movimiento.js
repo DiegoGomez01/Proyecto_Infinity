@@ -57,9 +57,14 @@ function moverse(arregloMovimiento) {
             case "SN":
                 salidaNave(true);
                 break;
+            case "S":
+                salidaNave(false);
+                break;
+            case "E":
+                salidaNave(false);
+                break;
         }
     }
-
 }
 
 function empezarMovimiento() {
@@ -327,21 +332,35 @@ function salidaNave(salidaN) {
     salida.start();
 }
 
-function entradaNave() {
+function entradaNave(iPD) {
     var entrada = game.add.tween(nave.sprite.scale);
     entrada.to({
         x: 0.001,
         y: 0.001,
-    }, 2000);
+    }, 500);
     entrada.onComplete.add(function () {
         entrada.stop();
-        // nave.sprite.width = 100;
-        // nave.sprite.height = 100;
+        planetaActual = sistemaSolarActual.planetas[iPD];
+        actualizarVista();
+        nave.sprite.x = 100;
+        nave.sprite.y = 300;
+        nave.sprite.rotation = 0;
+        nave.sprite.scale.setTo(1, 1);
+        var entrada2 = game.add.tween(nave.sprite);
+        entrada2.to({
+            width: 100,
+            height: 100
+        }, 500);
+        entrada2.onComplete.add(function () {
+            entrada2.stop();
+            alert("entre a planeta");
+        });
+        entrada2.start();
     });
     entrada.start();
 }
 
-function teletransportar() {
+function teletransportar(iND) {
     var cantRotacion = game.physics.arcade.angleBetween(nave.sprite, {
         x: 0,
         y: 300
@@ -363,6 +382,7 @@ function teletransportar() {
     }, 1500);
     teletransporte.onComplete.add(function () {
         teletransporte.stop();
+        var tele = galaxia.nebulosas[iND].teletransportador;
         alert("ya");
     });
     setTimeout(() => {
