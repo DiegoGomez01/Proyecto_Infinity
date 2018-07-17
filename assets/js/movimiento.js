@@ -1,6 +1,60 @@
 // Motor de Movimiento
 var sonidoTaladro;
 var maxCupo;
+var caminoglobal = [];
+
+function ejecutarAccion() {
+    var accion;
+    if (caminoglobal.length == 0 && nave.mejoras.length == 0) {
+        alertify.success("¡Felicidades la tierra se ha salvado!");
+    } else {
+        accion = caminoglobal.shift();
+    }
+    switch (accion[0]) {
+        case "Ex": //extraer Materiales
+            accion[0] //iri
+            accion[1] //pla
+            accion[2] //pal
+            accion[3] //eze
+            break;
+        case "CC":
+            nave.iridio -= accion[1];
+            nabe.platino -= accion[2];
+            nave.paladio -= accion[3];
+            nave.eZero -= accion[4];
+            nave.combustible.set(nave.combustible.value + accion[5]);
+            break;
+        case "CS":
+            nave.iridio -= compraSondas[0];
+            nave.platino -= compraSondas[1];
+            nave.paladio -= compraSondas[2];
+            nave.eZero -= compraSondas[3];
+            nave.sondas += compraSondas[4];
+            break;
+        case "ME": //mejora
+            accion[2] //nombre
+            break;
+        case "MOV":
+            moverse(accion[1]);
+            break;
+    }
+}
+
+function moverse(arregloMovimiento) {
+    caminoActual.push([500, 100, 0]);
+    for (let i = 0; i < arregloMovimiento.length; i++) {
+        const movi = arregloMovimiento[i];
+        switch (movi[0]) {
+            case "T":
+                teletransportar(accion[1]);
+                break;
+            case "SN":
+                salidaNave(true);
+                break;
+        }
+    }
+
+}
 
 function empezarMovimiento() {
     if (caminoActual.length) {
@@ -233,7 +287,7 @@ function consumirCombustible(cantCombustible, tiempo) {
     }
 }
 
-function salidaNave() {
+function salidaNave(salidaN) {
     var salida = game.add.tween(nave.sprite.scale);
     salida.to({
         x: 1,
@@ -248,6 +302,7 @@ function salidaNave() {
         } else {
             nave.sprite.x = sistemaSolarActual.sprite.x;
             nave.sprite.y = sistemaSolarActual.sprite.y;
+            salidaN = false;
         }
         salir();
         var salida2 = game.add.tween(nave.sprite);
@@ -257,6 +312,9 @@ function salidaNave() {
         }, 500);
         salida2.onComplete.add(function () {
             salida2.stop();
+            if (salidaN) {
+                salidaNave(false);
+            }
         });
         salida2.start();
     });
