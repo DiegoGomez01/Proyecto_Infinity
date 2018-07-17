@@ -1,8 +1,8 @@
 {
   "planetaOrigen": [
-    1,
+    3,
     0,
-    0
+    2
   ],
   "nebulosas": [
     {
@@ -1535,7 +1535,7 @@
     },
     {
       "nombre": "Nebulosa Peligrosa 4",
-      "peligrosa": false,
+      "peligrosa": true,
       "estacionEspacial": [
         
       ],
@@ -1995,7 +1995,7 @@
     },
     {
       "nombre": "Nebulosa Peligrosa 5",
-      "peligrosa": false,
+      "peligrosa": true,
       "estacionEspacial": [
         4,
         2,

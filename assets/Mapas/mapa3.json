@@ -7,7 +7,7 @@
     "nebulosas": [
       {
         "nombre": "Hélix",
-        "peligrosa": false,
+        "peligrosa": true,
         "estacionEspacial": [
           0,
           4,
@@ -2436,7 +2436,7 @@
       },
       {
         "nombre": "Búho",
-        "peligrosa": false,
+        "peligrosa": true,
         "estacionEspacial": [
           3,
           3,

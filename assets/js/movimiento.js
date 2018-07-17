@@ -5,17 +5,23 @@ var caminoglobal = [];
 
 function ejecutarAccion() {
     var accion;
-    if (caminoglobal.length == 0 && nave.mejoras.length == 0) {
+    if (caminoglobal.length == 0 || nave.mejoras.length == 0) {
         alertify.success("¡Felicidades la tierra se ha salvado!");
     } else {
-        accion = caminoglobal.shift();
+        //console.log(caminoglobal);
+        //accion = caminoglobal.shift();
+        caminoglobal.splice(0, 1);
+        accion = caminoglobal;
+        console.log(accion);
     }
+    
     switch (accion[0]) {
         case "Ex": //extraer Materiales
             accion[0] //iri
             accion[1] //pla
             accion[2] //pal
             accion[3] //eze
+            preloadExtraerElementos();
             break;
         case "CC":
             nave.iridio -= accion[1];
@@ -241,7 +247,7 @@ function modificarBarraExtraccion(porcentaje) {
         }
     } else {
         alertify.success("La extracción de los materiales se realizó correctamente.");
-        extraerElementos(2000, 2000, 2000, 2000); //
+        extraerElementos(2000,2000,2000,2000);
         $barraCantidad.width("0%");
         $("#progressBarSonda").html("");
     }

@@ -29,7 +29,6 @@ function calcularMejorRuta() {
     caminoglobal = estado(ubicacionActual, planetasCandidatos, naveEst, [""]); // estado inicial
     if (caminoglobal !== undefined && caminoglobal.length > 0) {
         alertify.success('¡Recorriendo una nueva ruta!');
-        console.log(caminoglobal);
     } else {
         alertify.error('Lastimosamente, no se encontró una solución al problema. <br/> ¡La tierra está perdida! :(', 0);
     }
@@ -90,7 +89,6 @@ function estado(ubicacionActual, planetas, naveEst, accion) {
             siguienteCamino = estado(ubicacionActual, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["M", m, mejora.nombre]);
             if (siguienteCamino != undefined) {
                 siguienteCamino.unshift(accionLocal);
-                console.log(siguienteCamino);
                 return siguienteCamino;
             }
         }

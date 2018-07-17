@@ -169,7 +169,7 @@ function generarJson() {
         if (neb != undefined) {
             salida += '{';
             salida += '"nombre":"' + neb.nombre + '",';
-            if (neb.peligrosa) {
+            if (neb.esPeligrosa) {
                 salida += '"peligrosa":true,';
             } else {
                 salida += '"peligrosa":false,';

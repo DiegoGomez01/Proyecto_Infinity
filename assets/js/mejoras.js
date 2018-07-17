@@ -84,13 +84,12 @@ function mejoraCañonPlasma() {
 function mejoraCapacidadDepositos() {
     nave.capacidadCarga *= 1.5;
     nave.mejoras.splice(posicionDeMejora, 1);
-    alertify.success("La camacidad de carga se aumentó en un 50%");
+    alertify.success("La capacidad de carga se aumentó en un 50%");
 }
 
 function mejoraVidaNave() {
     nave.setVida(1200, "aumentar");
     $("#vidaNave").width("100%");
-    nave.mejoras.splice(posicionDeMejora, 1);
     alertify.success("La nave tiene vida completa.");
 }
 
