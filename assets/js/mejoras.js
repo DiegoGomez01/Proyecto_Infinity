@@ -90,6 +90,7 @@ function mejoraCapacidadDepositos() {
 function mejoraVidaNave() {
     nave.setVida(1200, "aumentar");
     $("#vidaNave").width("100%");
+    nave.mejoras.splice(posicionDeMejora, 1);
     alertify.success("La nave tiene vida completa.");
 }
 
