@@ -1,7 +1,13 @@
 $(document).ready(function () {
-
     $("#btnPruebas").on("click", function () {
-        nave.sprite.rotation += 0.5;
+        for (let index = 0; index < galaxia.nebulosas.length; index++) {
+            const element = galaxia.nebulosas[index].estacionEspacial;
+            if (element.length > 0) {
+                alert("una tiene");
+            } else {
+                alert("no tiene");
+            }
+        }
     });
 
     $(document).on('contextmenu', "canvas, .ajs-modal", function (e) {
@@ -172,20 +178,28 @@ $(document).ready(function () {
             game.state.start('attack');
             $("#vidaNaveEnemiga").width("100%");
             $("#vidaNaveEnemiga").html("Vida Enemiga al 100%");
-            setTimeout(function(){
-                $("#containerEstadoVidaEnemigo").css({ opacity: 1 });
+            setTimeout(function () {
+                $("#containerEstadoVidaEnemigo").css({
+                    opacity: 1
+                });
                 selected = $(".estiloEnemigo.activo").attr("data-tipoenemigo");
                 switch (selected) {
                     case "Nave de Avanzada":
-                        $("#optionAttackAvanzada").css({ opacity: 0 });
+                        $("#optionAttackAvanzada").css({
+                            opacity: 0
+                        });
                         AvanzadaAlAtaque();
                         break;
                     case "Nave Exploradora":
-                        $("#optionAttackExp").css({ opacity: 0 });
+                        $("#optionAttackExp").css({
+                            opacity: 0
+                        });
                         ExplAlAtaque();
                         break;
                     case "Nave Nodriza":
-                        $("#optionAttackNodriza").css({ opacity: 0 });  
+                        $("#optionAttackNodriza").css({
+                            opacity: 0
+                        });
                         NodrizaAlAtaque();
                         break;
                 }
@@ -405,10 +419,10 @@ function cargarFormularioNave() {
     $("#combustibleNaveContainer").removeClass("d-none");
     $("#inputSondasContainer").removeClass("d-none");
     $("#materialesPlaneta").removeClass("d-none"); //mostrar materiales
-    $("#cantIridioRango").val(0);
-    $("#cantPlatinoRango").val(0);
-    $("#cantPaladioRango").val(0);
-    $("#cantEZeroRango").val(0);
+    $("#cantIridioRango").val(2000);
+    $("#cantPlatinoRango").val(2000);
+    $("#cantPaladioRango").val(2000);
+    $("#cantEZeroRango").val(2000);
     $("#cantCombustibleInicial").val(100000);
     $("#cantIridioRango,#cantPlatinoRango,#cantPaladioRango,#cantEZeroRango,#cantCombustibleInicial").trigger("input");
     $("#btnIniciarNave").removeClass("d-none");
@@ -474,7 +488,9 @@ function ocultarInterfazNave() {
 function actualizarBarraMaterial(cant, material) {
     var porcentaje = (100 * cant) / 8000;
     var $barraCantidad = $("#cant" + material + "Nave");
-    $barraCantidad.css({ width: (porcentaje + "%")});
+    $barraCantidad.css({
+        width: (porcentaje + "%")
+    });
     if (porcentaje < 5) {
         $barraCantidad.attr("data-content", "Cantidad " + material + ": " + cant + "T");
         $barraCantidad.text("");
