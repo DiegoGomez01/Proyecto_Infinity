@@ -58,6 +58,7 @@ Portada del Juego
 
 #menuPrincipal {
     background-color: #424242;
+    background-image: url("/assets/images/galaxia.jpg");
 }
 
 #menuContainer {
