@@ -666,16 +666,17 @@ function cambiarPrecioCombustible() {
             var cpa = document.getElementById("cantPaladioCC").value;
             var cez = document.getElementById("cantEZeroCC").value;
             var cco = document.getElementById("cantComb").value;
-            if ($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cco)) {
+            if (($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cco)) && cir >= 0 && cir <= 100 && cpl >= 0 && cpl <= 100 && cpa >= 0 && cpa <= 100 && cez >= 0 && cez <= 100) {
                 compraCombustible[0] = cir;
                 compraCombustible[1] = cpl;
                 compraCombustible[2] = cpa;
                 compraCombustible[3] = cez;
                 compraCombustible[4] = cco;
                 alertify.confirm().destroy();
+                alertify.success("Información guardada con exito");
             } else {
                 closeEvent.cancel = true;
-                alertify.error('Ingrese un valores numérico');
+                alertify.error('Ingrese un valores numérico entre 0-100');
             }
         },
         function () {
@@ -721,16 +722,17 @@ function cambiarPrecioSondas() {
             var cpa = document.getElementById("cantPaladioSC").value;
             var cez = document.getElementById("cantEZeroSC").value;
             var cso = document.getElementById("cantSondasP").value;
-            if ($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cso)) {
+            if (($.isNumeric(cir) && $.isNumeric(cpl) && $.isNumeric(cpa) && $.isNumeric(cez) && $.isNumeric(cso)) && cir >= 0 && cir <= 100 && cpl >= 0 && cpl <= 100 && cpa >= 0 && cpa <= 100 && cez >= 0 && cez <= 100) {
                 compraSondas[0] = cir;
                 compraSondas[1] = cpl;
                 compraSondas[2] = cpa;
                 compraSondas[3] = cez;
                 compraSondas[4] = cso;
+                alertify.success("Información guardada con exito");
                 alertify.confirm().destroy();
             } else {
                 closeEvent.cancel = true;
-                alertify.error('Ingrese un valores numérico');
+                alertify.error('Ingrese un valores numérico entre 0-100');
             }
         },
         function () {

@@ -1,5 +1,4 @@
 var costoActual = Infinity;
-var caminoglobal = [];
 
 function calcularMejorRuta() {
     var planetasCandidatos = getPlanetasC();
@@ -51,7 +50,7 @@ function estado(ubicacionActual, planetas, naveEst, accion) {
             planetas[0].paladio -= accion[3];
             planetas[0].eZero -= accion[4];
             naveEst.sondas -= 2;
-            accionLocal.push(["Ex", accion[2], accion[3], accion[4], accion[5]]);
+            accionLocal.push(["Ex", accion[1], accion[2], accion[3], accion[4]]);
             // planetas.splice(0, 1);
             break;
         case "CC":
@@ -308,9 +307,7 @@ function obtenerCamino(iPD, iSD, iND, iPAct, iSAct, iNAct, caminoAS) {
             caminoAS.push(["M", newiSAct[0], newiSAct[1]]);
             iSAct = newiSAct[0];
         } while (iSAct != iSD);
-        var pE = Object.keys(galaxia.nebulosas[iNAct].sistemasPlanetarios[iSAct].planetas)[0];
-        caminoAS.push(["ES", pE]);
-        obtenerCamino(iPD, iSD, iND, pE, iSAct, iNAct, caminoAS);
+        caminoAS.push(["ES", iPD, iSD]);
     } else if (iPAct !== iPD) {
         caminoAS.push(["S"]);
         do {
