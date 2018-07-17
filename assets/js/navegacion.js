@@ -86,10 +86,11 @@ function estado(ubicacionActual, planetas, naveEst, accion) {
     //Mejorar
     for (let m = 0; m < naveEst.mejoras.length; m++) {
         const mejora = naveEst.mejoras[m];
-        if (naveEst.iridio >= mejora.iridio && naveEst.platino >= mejora.platino && naveEst.paladio >= mejora.paladio && naveEst.eZero >= mejora.zero) {
+        if (naveEst.iridio >= mejora.iridio || naveEst.platino >= mejora.platino || naveEst.paladio >= mejora.paladio || naveEst.eZero >= mejora.zero) {
             siguienteCamino = estado(ubicacionActual, jQuery.extend(true, [], planetas), jQuery.extend(true, {}, naveEst), ["M", m, mejora.nombre]);
             if (siguienteCamino != undefined) {
                 siguienteCamino.unshift(accionLocal);
+                console.log(siguienteCamino);
                 return siguienteCamino;
             }
         }
@@ -203,28 +204,34 @@ function getPlanetasC() {
     var planetaAux;
     for (var iN in galaxia.nebulosas) {
         var nebulosa = galaxia.nebulosas[iN];
-        for (var iS in nebulosa.sistemasPlanetarios) {
-            var sistemasolar = nebulosa.sistemasPlanetarios[iS];
-            for (var iP in sistemasolar.planetas) {
-                planetaAux = sistemasolar.planetas[iP];
-                if (planetaAux.estacionECercana.length == 0) {
-                    if (planetaAux.tipo == "ecombustible") {
-                        sistemasolar.planetas[iP].estacionECercana = [iP, iS, iN, 0];
-                    } else {
-                        sistemasolar.planetas[iP].estacionECercana = estacionMasCercana(iS, iN);
+        if(nebulosa!=undefined){
+            for (var iS in nebulosa.sistemasPlanetarios) {
+                var sistemasolar = nebulosa.sistemasPlanetarios[iS];
+                if(sistemasolar!=undefined){
+                    for (var iP in sistemasolar.planetas) {
+                        planetaAux = sistemasolar.planetas[iP];
+                        if(planetaAux!=undefined){
+                            if (planetaAux.estacionECercana.length == 0) {
+                                if (planetaAux.tipo == "ecombustible") {
+                                    sistemasolar.planetas[iP].estacionECercana = [iP, iS, iN, 0];
+                                } else {
+                                    sistemasolar.planetas[iP].estacionECercana = estacionMasCercana(iS, iN);
+                                }
+                            }
+                            if (sistemasolar.planetas[iP].tipo == "planeta") {
+                                planetasCandidatos.push({
+                                    pos: [iP, iS, iN],
+                                    estacionEC: planetaAux.estacionECercana,
+                                    iridio: planetaAux.iridio,
+                                    platino: planetaAux.platino,
+                                    paladio: planetaAux.paladio,
+                                    eZero: planetaAux.elementoZero,
+                                    BeneficioXCosto: 0,
+                                    costo: 0
+                                });
+                            }
+                        }
                     }
-                }
-                if (sistemasolar.planetas[iP].tipo == "planeta") {
-                    planetasCandidatos.push({
-                        pos: [iP, iS, iN],
-                        estacionEC: planetaAux.estacionECercana,
-                        iridio: planetaAux.iridio,
-                        platino: planetaAux.platino,
-                        paladio: planetaAux.paladio,
-                        eZero: planetaAux.elementoZero,
-                        BeneficioXCosto: 0,
-                        costo: 0
-                    });
                 }
             }
         }

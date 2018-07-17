@@ -77,11 +77,19 @@ function clickPlaneta(sprite, pointer) {
             var tipoaux = this.tipo;
             setTimeout(function () {
                 if (!isDrag() && tipoaux === "planeta") {
+                    // alert(nebulosaActual.nombre+": "+nebulosaActual.id);
+                    // alert(sistemaSolarActual.nombre+": "+sistemaSolarActual.id);
+                    // alert(sistemaSolarActual.planetas[idaux].nombre+": "+sistemaSolarActual.planetas[idaux].id);
                     deseleccionar();
                     planetaActual = sistemaSolarActual.planetas[idaux];
                     cargarVistaEdicion("P");
                     actualizarVista();
                 }
+                // else if(!isDrag()){
+                //     alert(nebulosaActual.nombre+": "+nebulosaActual.id);
+                //     alert(sistemaSolarActual.nombre+": "+sistemaSolarActual.id);
+                //     alert(sistemaSolarActual.planetas[idaux].nombre+": "+sistemaSolarActual.planetas[idaux].id);
+                // }
             }, 200);
         } else {
             createLine([pointer.position.x, pointer.position.y, this.id]); //Click DERECHO

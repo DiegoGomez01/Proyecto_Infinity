@@ -269,6 +269,7 @@ function enemigoFueEliminado() {
         alertify.success("Enemigo Eliminado");
         enemigoAtacando = undefined;
         verificarSiMejoraVida();
+        hacerAlgunaMejora();
         preloadExtraerElementos();
         if(enemigosYaAtacados.length==3){
             $("#btnAtacar").css({ opacity: 0 });
@@ -282,9 +283,18 @@ function enemigoFueEliminado() {
 }
 
 function verificarSiMejoraVida(){
-    if(nave.vida<480){//480 = 40%
-        hacerMejora("vidaNave");
-    }
+    if(nave.vida<480 && nave.mejoras[0].nombre!="vidaNave"){//480 = 40%
+        nave.mejoras.splice(0, 0, new Mejora("vidaNave", 2500, 1000, 1000, 1000));
+    }    
+}
+
+function hacerAlgunaMejora(){
+    var encontrado=false;
+    nave.mejoras.forEach(function(mejora){
+        if(!encontrado && hacerMejora(mejora.nombre)){
+            encontrado=true;
+        }
+    });
 }
 
 function collAvz(bullet, enemies) {

@@ -205,8 +205,8 @@ function extraerElementos(cantIridio, cantPaladio, cantPlatino, cantEZero) {
 }
 
 function finalizarEstadiaPlaneta() {
-    alertify.success("La estadía en el planete ha terminado");
     reiniciarElementosPlaneta();
+    alertify.success("La estadía en el planete ha terminado");
 }
 
 function reiniciarElementosPlaneta() {
